@@ -14,39 +14,12 @@ type SideBarItem = {
 }
 
 export const SideBarItems: SideBarItem[] = [
-    {
-        title: "Orders",
-        url: "/dashboard/orders",
-        icon: OrderImage,
-    },
-    {
-        title: "Products",
-        url: "/dashboard/products",
-        icon: ProductImage,
-    },
-    {
-        title: "Appointments",
-        url: "/dashboard/appointments",
-        icon: AppointmentImage,
-    },
-        {
-        title: "Services",
-        url: "/dashboard/services",
-        icon: ServiceImage,
-    },
-    {
-        title: "Users",
-        url: "/dashboard/users",
-        icon: UserImage,
-    },
-    {
-        title: "Comments",
-        url: "/dashboard/comments",
-        icon: CommentImage,
-    },
-    {
-        title: "Contacts",
-        url: "/dashboard/contacts",
-        icon: ContactImage,
-    },
-]
+  { title: "Orders", url: "orders", icon: OrderImage },
+  { title: "Products", url: "products", icon: ProductImage },
+  { title: "Appointments", url: "appointments", icon: AppointmentImage },
+  { title: "Services", url: "services", icon: ServiceImage },
+  { title: "Users", url: "users", icon: UserImage },
+  { title: "Comments", url: "comments", icon: CommentImage },
+  { title: "Contacts", url: "contacts", icon: ContactImage },
+];
+
