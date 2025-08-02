@@ -3,6 +3,7 @@ import CommentImage from "@/assets/svg/dashboard/comment.svg"
 import ContactImage from "@/assets/svg/dashboard/contact.svg"
 import OrderImage from "@/assets/svg/dashboard/orders.svg"
 import ProductImage from "@/assets/svg/dashboard/product.svg"
+import ProfileImage from "@/assets/svg/dashboard/profile.svg"
 import ServiceImage from "@/assets/svg/dashboard/service.svg"
 import UserImage from "@/assets/svg/dashboard/user.svg"
 
@@ -21,5 +22,6 @@ export const SideBarItems: SideBarItem[] = [
   { title: "Users", url: "users", icon: UserImage },
   { title: "Comments", url: "comments", icon: CommentImage },
   { title: "Contacts", url: "contacts", icon: ContactImage },
+  { title: "Profile", url: "profile", icon: ProfileImage },
 ];
 

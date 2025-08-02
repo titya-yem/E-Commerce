@@ -45,6 +45,7 @@ import ContactsPage from "./pages/Dashboard/admin/contacts.tsx";
 import OrdersPage from "./pages/Dashboard/admin/orders.tsx";
 import ProductsPage from "./pages/Dashboard/admin/products.tsx";
 import ServicesPage from "./pages/Dashboard/admin/services.tsx";
+import UsersPage from "./pages/Dashboard/admin/UsersPage.tsx";
 
 // User Pages
 import UserComments from "./pages/Dashboard/user/UserComments.tsx";
@@ -93,9 +94,10 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="products" element={<ProductsPage />} />
                   <Route path="appointments" element={<AppointmentsPage />} />
                   <Route path="services" element={<ServicesPage />} />
-                  <Route path="users" element={<AdminProfile />} />
+                  <Route path="users" element={<UsersPage />} />
                   <Route path="comments" element={<CommentsPage />} />
                   <Route path="contacts" element={<ContactsPage />} />
+                  <Route path="profile" element={<AdminProfile />} />
                 </Route>
 
                 {/* User Routes (Dynamic) */}
