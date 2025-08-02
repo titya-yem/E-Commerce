@@ -5,7 +5,7 @@ import LineGraph from "@/components/dashboard/LineGraph"
 import Total from "@/components/dashboard/Total"
 import { Flex } from "@radix-ui/themes"
 
-const DashboardPage = () => {
+const AdminDashboard = () => {
   return (
     <div className="pl-4 w-full">
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Dashboard</h2>
@@ -40,4 +40,4 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default AdminDashboard
