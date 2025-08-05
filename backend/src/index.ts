@@ -5,8 +5,9 @@ import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+dotenv.config();
 
-// Database
+// Database and Routes
 import connectDB from "./config/db";
 
 // Routes
@@ -14,13 +15,17 @@ import appointmentRoute from "./routes/appointment.route";
 import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
 import contactRoute from "./routes/contact.route";
+import paymentRoute from "./routes/payment.route";
 import productRoute from "./routes/product.route";
 import serviceRoutes from "./routes/service.route";
 import userRoutes from "./routes/user.route";
+import webhookRoute from "./routes/webhook.route";
 
 const app = express();
-dotenv.config();
 connectDB();
+
+// Webhook Routes
+app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoute);
 
 // Middlewares
 app.use(cors({
@@ -39,6 +44,7 @@ app.use("/api/comment", commentRoutes)
 app.use("/api/product", productRoute)
 app.use("/api/appointment", appointmentRoute)
 app.use("/api/contact", contactRoute)
+app.use("/api/payment", paymentRoute)
 
 // Login route
 app.use("/api/auth", authRoutes)
