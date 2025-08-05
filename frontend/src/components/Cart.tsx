@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clearCart, removeFromCart } from "@/store/slices/Cart-Slice";
 import { Box, Container, Text } from "@radix-ui/themes";
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import type { CartItem, RootState } from "../types/cartTypes";
 import { Button } from "./ui/button";
@@ -10,7 +12,9 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const totalPrice = cart.items.reduce(
-    (total: number, item: CartItem) => total + item.price * item.quantity,0);
+    (total: number, item: CartItem) => total + item.price * item.quantity,
+    0
+  );
 
   const handleRemoveItem = (itemId: number) => {
     dispatch(removeFromCart(itemId.toString()));
@@ -24,56 +28,105 @@ const Cart = () => {
           cart: cart.items,
           totalAmount: totalPrice,
           totalQuantity: cart.totalQuantity,
-        }, { withCredentials: true });
+        },
+        { withCredentials: true }
+      );
 
       if (res.data.sessionUrl) {
+        toast.success("Redirecting to checkout...");
         dispatch(clearCart());
-        window.location.href = res.data.sessionUrl;
+
+        setTimeout(() => {
+          window.location.href = res.data.sessionUrl;
+        }, 1000);
       }
-    } catch (error) {
+
+      console.log({
+        cart: cart.items,
+        totalAmount: totalPrice,
+        totalQuantity: cart.totalQuantity,
+      });
+    } catch (error: any) {
       console.error("Stripe checkout failed:", error);
-      alert("Checkout failed. Please try again.");
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Stripe checkout failed. Please try again.";
+
+      toast.error(message);
     }
   };
 
   return (
     <Box className="bg-[#1F272B] min-h-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <Container className="bg-white p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-[#1F272B]">Your Cart</h1>
-          <Text as="p" className="text-gray-600">Total Items: {cart.totalQuantity}</Text>
+          <Text as="p" className="text-gray-600">
+            Total Items: {cart.totalQuantity}
+          </Text>
         </div>
 
         {cart.items.length === 0 ? (
-          <Text as="p" className="text-center text-gray-500">Your cart is empty.</Text>
+          <Text as="p" className="text-center text-gray-500">
+            Your cart is empty.
+          </Text>
         ) : (
           <div className="space-y-4">
             {cart.items.map((item: CartItem) => (
-              <div key={item.id} className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+              <div
+                key={item.id}
+                className="grid grid-cols-3 bg-gray-50 p-4 rounded-lg items-center"
+              >
+                {/* Product info */}
                 <div className="flex items-center gap-4">
-                  <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-md" />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-16 h-16 object-cover rounded-md"
+                  />
                   <div>
-                    <Text as="p" className="font-medium text-[#1F272B]">{item.name}</Text>
-                    <Text as="p" className="text-gray-600">${item.price.toFixed(2)}</Text>
+                    <Text as="p" className="font-medium text-[#1F272B]">
+                      {item.name}
+                    </Text>
+                    <Text as="p" className="text-gray-600">
+                      ${item.price.toFixed(2)}
+                    </Text>
                   </div>
                 </div>
-                <div className="flex gap-4">
-                  <Text as="p" className="text-gray-600">Qty: {item.quantity}</Text>
+
+                {/* Quantity & subtotal */}
+                <div className="flex justify-center">
+                  <Text as="p" className="pr-2 text-gray-600">
+                    Qty: {item.quantity}
+                  </Text>
                   <Text as="p" className="text-[#FF6135] font-semibold">
                     ${(item.price * item.quantity).toFixed(2)}
                   </Text>
                 </div>
-                <Button className="bg-red-500 text-white" onClick={() => handleRemoveItem(item.id)}>
-                  Remove
-                </Button>
+
+                {/* Remove button */}
+                <div className="flex justify-end">
+                  <Button
+                    className="cursor-pointer bg-red-500 hover:bg-red-400 text-white"
+                    onClick={() => handleRemoveItem(item.id)}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
         )}
 
         <div className="mt-8 border-t pt-6 flex justify-between items-center">
-          <Text as="p" className="text-xl font-bold text-[#1F272B]">Total:</Text>
-          <Text as="p" className="text-xl font-bold text-[#FF6135]">${totalPrice.toFixed(2)}</Text>
+          <Text as="p" className="text-xl font-bold text-[#1F272B]">
+            Total:
+          </Text>
+          <Text as="p" className="text-xl font-bold text-[#FF6135]">
+            ${totalPrice.toFixed(2)}
+          </Text>
         </div>
 
         <div className="mt-6 flex justify-end">
