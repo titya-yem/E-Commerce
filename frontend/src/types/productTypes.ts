@@ -14,3 +14,8 @@ export interface productProps {
   itemsToShow: number;
   products: Product[];
 }
+
+export type categoryProps = {
+  startIndex: number;
+  itemsToShow: number;
+};

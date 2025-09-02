@@ -1,6 +1,21 @@
-import { Box, Flex } from "@radix-ui/themes"
+import type { Order } from "@/types/orderTypes";
+import { Box, Flex } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-const orders = () => {
+const Orders: React.FC = () => {
+  const { isLoading, isError, data, error } = useQuery<Order[]>({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/order`);
+      return res.data;
+    },
+  })
+
+  if (isLoading) return <h1 className="text-xl text-center">Loading...</h1>;
+  if (isError) return <h1 className="text-xl text-center">Error: {(error as Error).message}</h1>;
+  if (!data) return <h1 className="text-xl text-center">No Products Available</h1>;
+
   return (
     <div className="pl-4 w-full">
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">
@@ -9,13 +24,15 @@ const orders = () => {
     
       <div className="flex flex-col lg:flex-row items-center justify-between bg-white">
         <Box className="w-full lg:w-1/2 bg-white p-2 rounded-lg">
-          <h4 className="text-base text-right font-medium">
+          <h4 className="text-base text-center font-medium">
             Order of each users
           </h4>
 
-          <Flex align="center" justify="center" className="mt-2">
-            
-          </Flex>
+          {data.map((item) => (
+            <Flex align="center" justify="center" className="mt-2" key={item._id}>
+              
+            </Flex>
+          ))}
         </Box>
 
         <div></div>
@@ -24,4 +41,4 @@ const orders = () => {
   )
 }
 
-export default orders
+export default Orders

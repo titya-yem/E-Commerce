@@ -1,18 +1,13 @@
 import star from "@/assets/svg/Star.svg";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { AppDispatch } from "@/store/store";
-import type { Product } from "@/types/productTypes";
+import type { categoryProps, Product } from "@/types/productTypes";
 import { Box, Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
-
-type categoryProps = {
-  startIndex: number;
-  itemsToShow: number;
-};
 
 const slugify = (name: string) => {
   return name
@@ -32,9 +27,9 @@ const CategoryFood: React.FC<categoryProps> = ({ startIndex, itemsToShow }: cate
     },
   })
 
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error: {(error as Error).message}</h1>;
-  if (!data) return <h1>No Products Available</h1>;
+  if (isLoading) return <h1 className="text-xl text-center">Loading...</h1>;
+  if (isError) return <h1 className="text-xl text-center">Error: {(error as Error).message}</h1>;
+  if (!data) return <h1 className="text-xl text-center">No Products Available</h1>;
 
   return (
     <div className="flex justify-between items-center overflow-hidden gap-x-4 xl:gap-x-0 w-[85%]">

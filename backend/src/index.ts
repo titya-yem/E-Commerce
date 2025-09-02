@@ -15,6 +15,7 @@ import appointmentRoute from "./routes/appointment.route";
 import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
 import contactRoute from "./routes/contact.route";
+import orderRoute from "./routes/order.route";
 import paymentRoute from "./routes/payment.route";
 import productRoute from "./routes/product.route";
 import serviceRoutes from "./routes/service.route";
@@ -45,6 +46,7 @@ app.use("/api/product", productRoute)
 app.use("/api/appointment", appointmentRoute)
 app.use("/api/contact", contactRoute)
 app.use("/api/payment", paymentRoute)
+app.use("/api/order", orderRoute)
 
 // Login route
 app.use("/api/auth", authRoutes)
