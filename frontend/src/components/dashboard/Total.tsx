@@ -26,7 +26,7 @@ const Total = ({ title, img, value, percentage, isCurrency = false }: TotalProps
           <Text
             as="span"
             className={`text-[12px] font-medium ${
-              percentage > 0 ? "text-green-500" : "text-red-500"
+              percentage >= 0 ? "text-green-500" : "text-red-500"
             }`}
           >
             {percentage.toFixed(2)}%
