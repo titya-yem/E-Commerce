@@ -1,13 +1,13 @@
-import { Box, Text } from "@radix-ui/themes"
+import { Box, Text,  } from "@radix-ui/themes"
 
-const TotalAppointments = () => {
+const CommentsApproval = () => {
   return (
     <Box className="w-[300px] space-y-8 p-4 shadow-md rounded-lg bg-white">
       <Text as="p" className="text-xl font-medium text-center"> 
-          Total Appointments
+          Comments Approval
       </Text>
     </Box>
   )
 }
 
-export default TotalAppointments
+export default CommentsApproval

@@ -1,7 +1,9 @@
 import SalesImage from "@/assets/svg/dashboard/circle-dollar-sign.svg";
 import OrderImage from "@/assets/svg/dashboard/shopping-cart.svg";
+import CommentsApproval from "@/components/dashboard/CommentsApproval";
 import LineGraph from "@/components/dashboard/LineGraph";
 import Total from "@/components/dashboard/Total";
+import TotalAppointments from "@/components/dashboard/TotalAppointments";
 import { Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -24,7 +26,7 @@ const AdminDashboard = () => {
   return (
     <div className="pl-4 w-full">
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Dashboard</h2>
-      <div>
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Total Sales & Orders */}
         <div className="w-[47%]">
           <Flex gap="4">
@@ -40,6 +42,13 @@ const AdminDashboard = () => {
             <LineGraph data={revenueData} />
           </div>
         </div>
+
+        {/* Total Appoinments & Totals Component */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          <TotalAppointments />
+          <CommentsApproval />
+        </div>
+
       </div>
     </div>
   );
