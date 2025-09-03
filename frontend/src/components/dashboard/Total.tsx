@@ -32,7 +32,7 @@ const Total = ({ title, img, value, percentage, isCurrency = false }: TotalProps
             {percentage.toFixed(2)}%
           </Text>
           <Text as="span" className="text-[12px]">
-            vs last week
+            vs last month
           </Text>
         </Flex>
       </Flex>

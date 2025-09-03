@@ -35,6 +35,7 @@ import ServicePage from "./pages/ServicePage.tsx";
 import ShopPage from "./pages/ShopPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
+import SuccessPage from "./pages/SuccessPage.tsx";
 
 // Admin Pages
 import AdminDashboard from "./pages/Dashboard/admin/AdminDashboardPage.tsx";
@@ -107,6 +108,9 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="comments" element={<UserComments />} />
                   <Route path="profile" element={<UserProfile />} />
                 </Route>
+
+                {/* Redirect after order Routes */}
+                <Route path="/success" element={<SuccessPage />} />
               </Routes>
               <Footer />
             </AuthWrapper>
