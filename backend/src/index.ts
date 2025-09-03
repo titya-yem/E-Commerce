@@ -20,6 +20,7 @@ import paymentRoute from "./routes/payment.route";
 import productRoute from "./routes/product.route";
 import serviceRoutes from "./routes/service.route";
 import userRoutes from "./routes/user.route";
+import adminAnalyticsRoutes from "./routes/adminAnalytics.route";
 import webhookRoute from "./routes/webhook.route";
 
 const app = express();
@@ -47,6 +48,7 @@ app.use("/api/appointment", appointmentRoute)
 app.use("/api/contact", contactRoute)
 app.use("/api/payment", paymentRoute)
 app.use("/api/order", orderRoute)
+app.use("/api/adminAnalytics", adminAnalyticsRoutes)
 
 // Login route
 app.use("/api/auth", authRoutes)

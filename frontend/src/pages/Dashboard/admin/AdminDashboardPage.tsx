@@ -1,6 +1,5 @@
 import SalesImage from "@/assets/svg/dashboard/circle-dollar-sign.svg"
 import OrderImage from "@/assets/svg/dashboard/shopping-cart.svg"
-import ComboBox from "@/components/Combobox"
 import LineGraph from "@/components/dashboard/LineGraph"
 import Total from "@/components/dashboard/Total"
 import { Flex } from "@radix-ui/themes"
@@ -23,7 +22,6 @@ const AdminDashboard = () => {
               <h3 className="font-medium pl-7">
                 Revenue Analytics
               </h3>
-              <ComboBox />
             </Flex>
             {/* Line graph */}
             <LineGraph />
