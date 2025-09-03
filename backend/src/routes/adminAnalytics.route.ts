@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.get("/sales/month", auth, admin, getSalesPerMonth);
 router.get("/orders/month", auth, admin, getOrdersPerMonth);
-router.get("/revenue", auth, admin, getRevenueAnalytics);
+router.get("/revenue/five-months", auth, admin, getRevenueAnalytics);
 
 export default router;

@@ -1,57 +1,85 @@
-import Order from "../models/order.model";
-import { AuthRequest } from "../middlewares/auth.middleware";
 import { Response } from "express";
+import { AuthRequest } from "../middlewares/auth.middleware";
+import Order from "../models/order.model";
 
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+// Total sales per month
 export const getSalesPerMonth = async (req: AuthRequest, res: Response) => {
-    try {
-        const sales = await Order.aggregate([{
-            $group: {
-                _id: { $month: "$createdAt" },
-                totalSales: { $sum: "$totalPrice" },
-            }
-        },
-        { $sort: {_id: 1} },
-        ]);
-        
-        res.json(sales);
-    } catch (error) {
-        console.log(error);
-    res.status(500).json({ message: "Failed to fetch sales per month" });
-    }
-}
-
-export const getOrdersPerMonth = async (req: AuthRequest, res: Response) => {
-    try {
-        const orders = await Order.aggregate([{
-            $group: {
-                _id: { $month: "$createdAt" },
-                orderCount: { $sum: 1 },
-            }
-        },
-        { $sort: {_id: 1} },
-        ]);
-
-        res.json(orders);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Failed to fetch orders per month" });
-    }
-}
-
-export const getRevenueAnalytics = async (req: AuthRequest, res: Response) => {
   try {
-    const revenue = await Order.aggregate([
+    const sales = await Order.aggregate([
       {
         $group: {
-          _id: { $ceil: { $divide: [{ $month: "$createdAt" }, 5] } },
-          totalRevenue: { $sum: "$totalPrice" },
+          _id: { $month: "$createdAt" },
+          totalSales: { $sum: "$totalAmount" },
         },
       },
-      { $sort: { _id: 1 } },
+      { $sort: { "_id": 1 } },
     ]);
-    res.json(revenue);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Failed to fetch revenue analytics" });
+
+    const result = sales.map(item => ({
+      month: months[item._id - 1],
+      totalSales: item.totalSales
+    }));
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch monthly sales" });
+  }
+};
+
+// Total orders per month
+export const getOrdersPerMonth = async (req: AuthRequest, res: Response) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          totalOrders: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+
+    const result = orders.map(item => ({
+      month: months[item._id - 1],
+      totalOrders: item.totalOrders
+    }));
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch monthly orders" });
+  }
+};
+
+// Revenue analytics for last 5 months
+export const getRevenueAnalytics = async (req: AuthRequest, res: Response) => {
+  try {
+    const now = new Date();
+    const fiveMonthsAgo = new Date();
+    fiveMonthsAgo.setMonth(now.getMonth() - 5);
+
+    const revenue = await Order.aggregate([
+      { $match: { createdAt: { $gte: fiveMonthsAgo } } },
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          totalRevenue: { $sum: "$totalAmount" },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+
+    const result = revenue.map(item => ({
+      month: months[item._id - 1],
+      totalRevenue: item.totalRevenue
+    }));
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch revenue" });
   }
 };
