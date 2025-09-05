@@ -6,7 +6,7 @@ import { Box, Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const slugify = (name: string) => {

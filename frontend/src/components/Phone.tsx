@@ -1,5 +1,5 @@
 import phoneIcon from "@/assets/svg/Phone.svg";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 interface PhoneSVGProps {
   title: string;

@@ -11,7 +11,7 @@ import {
 import { SideBarItems } from "@/constants/SideBar";
 import type { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const location = useLocation();

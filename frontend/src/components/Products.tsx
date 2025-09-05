@@ -7,7 +7,7 @@ import { Box, Container, Flex } from "@radix-ui/themes";
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useDispatch } from "react-redux";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 // Helper function to slugify product names
 const slugify = (name: string) => {

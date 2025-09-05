@@ -5,7 +5,7 @@ import phoneIcon from "@/assets/svg/footer-phone.svg";
 import line from "@/assets/svg/Line.svg";
 import { NavbarLists } from "@/constants/Navbar";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (

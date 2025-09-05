@@ -3,7 +3,7 @@ import type { Service } from "@/types/serviceTypes";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 
 interface ServicesCardsProps {

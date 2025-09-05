@@ -15,12 +15,6 @@ import AdminLayout from "./layouts/Dashboard/AdminDashboardLayout.tsx";
 import UserLayout from "./layouts/Dashboard/UserDashboardLayout.tsx";
 import AuthRedirect from "./lib/AuthRedirect.tsx";
 
-// Components
-import Cart from "./components/Cart.tsx";
-import ProductDetailPage from "./components/ProductDetails.tsx";
-import Footer from "./components/shared/Footer.tsx";
-import Navbar from "./components/shared/Navbar.tsx";
-
 // Layouts
 import RootLayout from "./layouts/RootLayout.tsx";
 import ServicesLayout from "./layouts/ServicesLayout.tsx";
@@ -54,6 +48,10 @@ import UserDashboard from "./pages/Dashboard/user/UserDashboard.tsx";
 import UserOrders from "./pages/Dashboard/user/UserOrders.tsx";
 import UserProfile from "./pages/Dashboard/user/UserProfile.tsx";
 
+// Components
+import Cart from "./components/Cart.tsx";
+import ProductDetailPage from "./components/ProductDetails.tsx";
+
 axios.defaults.withCredentials = true;
 const queryClient = new QueryClient();
 
@@ -64,31 +62,34 @@ createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <AuthWrapper>
-              <Navbar />
               <Routes>
                 {/* Role-based redirect */}
                 <Route path="/dashboard" element={<AuthRedirect />} />
 
-                {/* Public Routes */}
+                {/* Public Routes wrapped with RootLayout */}
                 <Route path="/" element={<RootLayout />}>
                   <Route index element={<HomePage />} />
-                </Route>
-                <Route path="/appointment" element={<AppointmentPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/services" element={<ServicesLayout />}>
-                  <Route index element={<ServicePage />} />
-                </Route>
-                <Route path="/shop" element={<ShopLayout />}>
-                  <Route index element={<ShopPage />} />
-                </Route>
-                <Route path="/shop/:slug" element={<ShopDetailLayout />}>
-                  <Route index element={<ProductDetailPage />} />
-                </Route>
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/signin" element={<SignInPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
+                  <Route path="appointment" element={<AppointmentPage />} />
+                  <Route path="contact" element={<ContactPage />} />
+                  <Route path="services" element={<ServicesLayout />}>
+                    <Route index element={<ServicePage />} />
+                  </Route>
 
-                {/* Admin Routes (Dynamic) */}
+                  {/* Shop Routes */}
+                  <Route path="shop" element={<ShopLayout />}>
+                    <Route index element={<ShopPage />} />
+                    <Route path=":slug" element={<ShopDetailLayout />}>
+                      <Route index element={<ProductDetailPage />} />
+                    </Route>
+                  </Route>
+
+                  <Route path="cart" element={<Cart />} />
+                  <Route path="signin" element={<SignInPage />} />
+                  <Route path="signup" element={<SignUpPage />} />
+                  <Route path="success" element={<SuccessPage />} />
+                </Route>
+
+                {/* Admin Routes */}
                 <Route path="/admin/dashboard" element={<AdminLayout />}>
                   <Route index element={<AdminDashboard />} />
                   <Route path="orders" element={<OrdersPage />} />
@@ -101,18 +102,14 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="profile" element={<AdminProfile />} />
                 </Route>
 
-                {/* User Routes (Dynamic) */}
+                {/* User Routes */}
                 <Route path="/user/dashboard" element={<UserLayout />}>
                   <Route index element={<UserDashboard />} />
                   <Route path="orders" element={<UserOrders />} />
                   <Route path="comments" element={<UserComments />} />
                   <Route path="profile" element={<UserProfile />} />
                 </Route>
-
-                {/* Redirect after order Routes */}
-                <Route path="/success" element={<SuccessPage />} />
               </Routes>
-              <Footer />
             </AuthWrapper>
           </BrowserRouter>
         </QueryClientProvider>

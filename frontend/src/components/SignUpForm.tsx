@@ -3,8 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaUser, FaUserLock } from "react-icons/fa";
-import { Link } from "react-router";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const SignUpForm = () => {

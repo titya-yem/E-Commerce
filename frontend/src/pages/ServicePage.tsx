@@ -2,7 +2,7 @@ import serviceImage from "@/assets/image/service-image.png";
 import LinkButton from "@/components/shared/LinkButton";
 import { Box, Container, Text } from "@radix-ui/themes";
 import { FaCalendarAlt } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const ServicesPage = () => {
   return (
