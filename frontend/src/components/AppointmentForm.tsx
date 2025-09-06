@@ -52,7 +52,7 @@ const onSubmit = async (data: any) => {
   const serviceCategories: string[] = [
     "Vacation",
     "Bathing",
-    "Cut and Trim hair",
+    "Cut & Trim hair",
     "Food & Supplies",
     "Party",
   ];

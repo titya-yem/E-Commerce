@@ -1,7 +1,7 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
-const appointmentType = ["Vacation", "Bathing", "Cut and Trim hair", "Food and Supplies", "Party"]
+const appointmentType = ["Vacation", "Bathing", "Cut & Trim hair", "Food & Supplies", "Party"]
 
 const isObjectId = (value: string, helpers: any) => {
   if (!mongoose.Types.ObjectId.isValid(value)) {

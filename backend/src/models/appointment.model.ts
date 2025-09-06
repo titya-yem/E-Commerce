@@ -3,8 +3,8 @@ import mongoose, { Document } from "mongoose";
 enum appointmentTypes {
     Vacation = "Vacation",
     Bathing = "Bathing",
-    CutAndTrim = "Cut and Trim hair",
-    FoodAndSupplies = "Food and Supplies",
+    CutAndTrim = "Cut & Trim hair",
+    FoodAndSupplies = "Food & Supplies",
     Party = "Party",
 }
 

@@ -1,6 +1,6 @@
 import SalesImage from "@/assets/svg/dashboard/circle-dollar-sign.svg";
 import OrderImage from "@/assets/svg/dashboard/shopping-cart.svg";
-import CommentsApproval from "@/components/dashboard/CommentsApproval";
+import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import LineGraph from "@/components/dashboard/LineGraph";
 import Total from "@/components/dashboard/Total";
 import TotalAppointments from "@/components/dashboard/TotalAppointments";
@@ -44,9 +44,9 @@ const AdminDashboard = () => {
         </div>
 
         {/* Total Appoinments & Totals Component */}
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="space-y-4 w-full mr-4">
+          <WelcomeDashboard />
           <TotalAppointments />
-          <CommentsApproval />
         </div>
 
       </div>

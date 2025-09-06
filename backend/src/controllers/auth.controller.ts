@@ -44,6 +44,7 @@ export const signIn = async (req: Request, res: Response): Promise<void | any> =
         res.status(200).json({ message: 'Login successful', token, 
             user: {
                 id: user._id,
+                userName: user.userName,
                 email: user.email,
                 role: user.role
             }
@@ -99,6 +100,7 @@ export const getMe = async (req: Request, res: Response): Promise<void | any> =>
       isAuthenticated: true,
       user: {
         id: user._id,
+        userName: user.userName,
         email: user.email,
         role: user.role
       },
