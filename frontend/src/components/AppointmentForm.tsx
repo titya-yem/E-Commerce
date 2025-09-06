@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import type { RootState } from "@/store/store";
 import {
   Popover,
   PopoverContent,
@@ -12,26 +13,32 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaCalendarAlt, FaEnvelope, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const AppointmentForm = () => {
   const { register, handleSubmit, reset } = useForm();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [appointmentType, setAppointmentType] = useState("Vacation");
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const userId = currentUser?.id
 
+  if (!userId) {
+    toast.error("You must be logged in to book an appointment.");
+    return;
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSubmit = async (data: any) => {
   try {
     const payload = {
-      name: data.name,
+      name: userId,
       email: data.email,
       time: data.time,
       message: data.message || "",
       type: appointmentType,
-      date: selectedDate?.toISOString(),
+      date: selectedDate?.toISOString().split("T")[0],
     };
 
     console.log("Payload:", payload);
-
     await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
     
     toast.success("Appointment booked successfully!");

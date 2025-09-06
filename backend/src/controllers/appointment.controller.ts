@@ -22,7 +22,8 @@ export const createAppointment = async (req: Request, res: Response): Promise<vo
     try {
         const { error, value } = AppointmentValidation.validate(req.body, { abortEarly: false });
         if (error) {
-            return res.status(400).json({ message: error.details[0].message });
+        console.log("Validation Error:", error.details);
+        return res.status(400).json({ message: error.details[0].message });
         }
 
         const newAppointment = new Appointment(value)
