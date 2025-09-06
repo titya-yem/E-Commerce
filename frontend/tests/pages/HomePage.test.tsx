@@ -15,11 +15,7 @@ vi.mock('@/assets/image/hero-dog.png', () => ({ default: 'hero-dog.png' }));
 
 describe('HomePage', () => {
   it('renders hero text and image', () => {
-    render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    );
+    render(<HomePage />, { wrapper: MemoryRouter });
 
     // Text check
     expect(
@@ -30,5 +26,9 @@ describe('HomePage', () => {
     const image = screen.getByAltText('hero') as HTMLImageElement;
     expect(image).toBeInTheDocument();
     expect(image.src).toContain('hero-dog.png');
+
+    // Button check
+    expect(screen.getByRole("link", { name: /Shop Now/i})).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Schedule a Call/i})).toBeInTheDocument();
   });
 });

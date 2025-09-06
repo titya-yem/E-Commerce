@@ -21,7 +21,7 @@ const ServicesPage = () => {
 
           <Text
             as="p"
-            className="md:text-lg text-center md:text-start lg:w-1/2 font-medium text-[#029FE3]"
+            className="md:text-lg text-center md:text-start pb-2 lg:w-1/2 font-medium text-[#029FE3]"
           >
             Affordable pet services that you cannot find anywhere{" "}
             <span className="text-[#2F398B]">but here</span>
