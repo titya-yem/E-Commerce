@@ -1,12 +1,27 @@
 import { Box, Text } from '@radix-ui/themes'
+import DashboardImage from '@/assets/image/Dashboard-Image.png'
+import DashboardBackgroundImage from '@/assets/image/Dashboard-Background-Image.jpg'
 
 const WelcomeDashboard = () => {
   return (
-    <Box className="space-y-8 p-4 shadow-md rounded-lg bg-white">
-      <Text as="p" className="text-xl font-medium text-center"> 
+    <div className="h-44 relative flex justify-between items-center space-y-8 p-4 shadow-md rounded-lg bg-[#2954e4]">
+      <Box className='w-3/5'>
+        <Text as="p" className="text-2xl font-medium text-white"> 
           Welcome to Your Dashboard!
-      </Text>
-    </Box>
+        </Text>
+        <Text as="p" className="text-sm text-white mt-2">
+          Here you can manage your projects, view analytics, and customize your settings.
+        </Text>
+      </Box>
+      <Box>
+        <img src={DashboardBackgroundImage} alt="Dashboard Background" 
+          className="absolute right-0 bottom-0 w-full h-full rounded-lg opacity-20"
+        />
+        <img src={DashboardImage} alt="Dashboard Image" 
+          className="absolute right-0 bottom-0 w-60"
+        />
+      </Box>
+    </div>
   )
 }
 

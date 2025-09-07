@@ -4,7 +4,7 @@ import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import LineGraph from "@/components/dashboard/LineGraph";
 import Total from "@/components/dashboard/Total";
 import TotalAppointments from "@/components/dashboard/TotalAppointments";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -28,14 +28,10 @@ const AdminDashboard = () => {
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Dashboard</h2>
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Total Sales & Orders */}
-        <div className="w-[47%]">
-          <Flex gap="4">
-            <Total title="Total Sales" value={lastSales} percentage={salesChange} isCurrency img={SalesImage} />
-            <Total title="Total Orders" value={lastOrders} percentage={ordersChange} img={OrderImage} />
-          </Flex>
-
+        <div className="flex flex-col w-full space-y-4">
+          <WelcomeDashboard />
           {/* Revenue Analytics Line Graph */}
-          <div className="mt-4 pt-3 pb-2 rounded-lg shadow-md bg-white">
+          <div className="pt-3 pb-2 rounded-lg shadow-md bg-white">
             <Flex align="center" justify="between" className="pb-6">
               <h3 className="font-medium pl-7">Revenue Analytics (Last 5 Months)</h3>
             </Flex>
@@ -45,7 +41,13 @@ const AdminDashboard = () => {
 
         {/* Total Appoinments & Totals Component */}
         <div className="space-y-4 w-full mr-4">
-          <WelcomeDashboard />
+          <Text as="p" className="text-xl pb-5 font-medium text-gray-500">
+            Vitals
+          </Text>
+          <Flex gap="5">
+            <Total title="Total Sales" value={lastSales} percentage={salesChange} isCurrency img={SalesImage} />
+            <Total title="Total Orders" value={lastOrders} percentage={ordersChange} img={OrderImage} />
+          </Flex>
           <TotalAppointments />
         </div>
 
