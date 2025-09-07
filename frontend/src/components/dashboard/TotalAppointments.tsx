@@ -22,22 +22,26 @@ const TotalAppointments = () => {
   return (
     <Box className="space-y-8 p-4 shadow-md rounded-lg bg-white">
       <h3 className="font-medium">
-        Total Appointments (monthly): {data.length} appointment{data.length !== 1 ? 's' : ''}
+        Total Appointments (monthly):
+        <Text as="span" className={`pl-2 ${data.length === 0 ? 'text-gray-500' : 'text-green-500'}` }>
+          {`${data.length} appointment${data.length !== 1 ? 's' : ''}`}
+        </Text>
       </h3>
       
       <Box>
         {data.length === 0 ? (
-          <div className="p-4 border rounded-lg bg-white max-h-[300px]">
+          <div className="p-4 border rounded-lg bg-white h-[280px]">
             <p className="text-gray-500">No appointments this month</p>
           </div>
         ) : (
-          <div className="p-4 border rounded-lg bg-white max-h-[300px] overflow-y-auto">
+          <div className="p-4 border rounded-lg bg-white h-[280px] overflow-y-auto">
             {/* Header */}
-            <div className="grid grid-cols-4 gap-4 font-medium border-b pb-2 mb-2">
+            <div className="grid grid-cols-5 gap-2 font-medium border-b pb-2 mb-2">
               <h5>Name</h5>
               <h5>Time</h5>
               <h5>Type</h5>
               <h5>Date</h5>
+              <h5>Status</h5>
             </div>
 
             {/* Rows */}
@@ -48,12 +52,13 @@ const TotalAppointments = () => {
               return (
                 <div
                   key={appointment._id}
-                  className="grid grid-cols-4 gap-4 text-sm py-1"
+                  className="grid grid-cols-5 gap-2 text-sm py-1"
                 >
                   <Text as="p">{user?.userName}</Text>
                   <Text as="p">{formattedTime}</Text>
                   <Text as="p">{appointment.type}</Text>
                   <Text as="p">{appointment.date}</Text>
+                  <Text as="p">{appointment.status}</Text>
                 </div>
               )
             })}

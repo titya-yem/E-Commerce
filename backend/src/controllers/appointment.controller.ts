@@ -74,9 +74,17 @@ export const getAppointmentsByMonthly = async (req: Request, res: Response) => {
             end.setHours(23, 59, 59, 999);
         }
 
+        if (!start || !end) {
+            return res.status(400).json({ message: "Invalid date range" });
+        }
+
         const appointments = await Appointment.find({
-            date: { $gte: start, $lte: end }
+            date: { 
+                $gte: start.toISOString().split('T')[0], 
+                $lte: end.toISOString().split('T')[0] 
+            }
         });
+
 
         // Return array, even if empty
         res.status(200).json(appointments);
