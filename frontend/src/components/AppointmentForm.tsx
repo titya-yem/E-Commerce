@@ -27,27 +27,38 @@ const AppointmentForm = () => {
     return;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSubmit = async (data: any) => {
-  try {
-    const payload = {
-      name: userId,
-      email: data.email,
-      time: data.time,
-      message: data.message || "",
-      type: appointmentType,
-      date: selectedDate?.toISOString().split("T")[0],
-    };
+  const onSubmit = async (data: any) => {
+    if (!selectedDate) {
+      toast.error("Please select a date for the appointment.");
+      return;
+    }
 
-    console.log("Payload:", payload);
-    await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
-    
-    toast.success("Appointment booked successfully!");
-    reset();
-  } catch (error) {
-    console.error("Error booking appointment:", error);
-    toast.error("Failed to book appointment.");
-  }
-};
+    const [hours, minutes] = data.time.split(":").map(Number)
+    if (hours < 9 || hours > 21 || (hours === 21 && minutes > 0)) {
+      toast.error("Please select a time between 09:00 and 9:00.");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: userId,
+        email: data.email,
+        time: data.time,
+        message: data.message?.length ? data.message : undefined,
+        type: appointmentType,
+        date: selectedDate?.toISOString().split("T")[0],
+      };
+
+      console.log("Payload:", payload);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
+      
+      toast.success("Appointment booked successfully!");
+      reset();
+    } catch (error) {
+      console.error("Error booking appointment:", error);
+      toast.error("Failed to book appointment.");
+    }
+  };
 
   const serviceCategories: string[] = [
     "Vacation",
@@ -56,6 +67,13 @@ const onSubmit = async (data: any) => {
     "Food & Supplies",
     "Party",
   ];
+
+  // Generate 24-hour time slots from 09:00 to 21:00
+  const timeSlots: string[] = [];
+  for (let hour = 9; hour <= 21; hour++) {
+    const h = hour.toString().padStart(2, "0"); // pad single digits with 0
+    timeSlots.push(`${h}:00`);
+  }
 
   return (
     <div className="w-[340px] md:w-[450px] h-[590px] p-6 shadow-lg rounded-lg lg:rounded-l-none max-w-md bg-white">
@@ -106,16 +124,25 @@ const onSubmit = async (data: any) => {
           </Box>
         </div>
 
+        {/* Time Selection */}
         <div className="flex justify-center items-center gap-4">
           <Box className="relative">
-            <input
-              {...register("time")}
-              type="time"
-              placeholder="Select Time"
-              className="w-[145px] md:w-[190px] pl-10 p-3 text-sm md:text-base border rounded-lg"
-              required
-            />
-          </Box>
+          <select
+            {...register("time")}
+            className="w-[145px] md:w-[190px] pl-3 p-3 text-sm md:text-base border rounded-lg"
+            required
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select Time
+            </option>
+            {timeSlots.map((slot) => (
+              <option key={slot} value={slot}>
+                {slot}
+              </option>
+            ))}
+          </select>
+        </Box>
 
           {/* Date Picker */}
           <Popover>
