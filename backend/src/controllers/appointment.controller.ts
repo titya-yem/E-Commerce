@@ -55,3 +55,39 @@ export const deleteAppointment = async (req: Request, res: Response): Promise<vo
         res.status(500).json({ message: "Failed to delete appointment" });
     }
 }
+
+export const getAppointmentByUserId = async (req: Request, res: Response): Promise<void | any> => {
+    try {
+        const range = req.query.range as string || 'weekly'
+        let filter = {}
+        let start: Date | undefined;
+        let end: Date | undefined;
+
+        if (range === 'weekly') {
+            start = new Date()
+            start.setDate(1)  // start of month
+            start.setHours(0, 0, 0, 0)
+
+            end = new Date(start)
+            end.setMonth(end.getMonth() + 1)
+            end.setDate(0) // last day of month
+            end.setHours(23, 59, 59, 999)
+
+            filter = { date: { $gte: start.toISOString().split('T')[0], $lt: end.toISOString().split('T')[0] } }
+        }
+
+        if (!start || !end) {
+            return res.status(400).json({ message: "Invalid date range" });
+        }
+
+        const appointments = await Appointment.find({ date: { $gte: start, $lte: end }})
+        if (!appointments || appointments.length === 0) {
+            return res.status(404).json({ message: "No appointments found" });
+        }
+        
+        res.status(200).json(appointments);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to get appointments" });
+    }
+}
