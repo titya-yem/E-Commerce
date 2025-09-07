@@ -3,13 +3,13 @@ import {
     createAppointment,
     deleteAppointment,
     getAllAppointments,
-    getAppointmentByUserId
+    getAppointmentsByMonthly
 } from "../controllers/appointment.controller";
 
 const router = Router();
 
 router.get("/", getAllAppointments)
-router.get("/monthly", getAllAppointments)
+router.get("/monthly", getAppointmentsByMonthly)
 router.post("/create", createAppointment)
 router.delete("/:id", deleteAppointment)
 

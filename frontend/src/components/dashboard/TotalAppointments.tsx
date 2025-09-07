@@ -27,7 +27,9 @@ const TotalAppointments = () => {
       
       <Box>
         {data.length === 0 ? (
-          <p className="text-gray-500">No appointments this month</p>
+          <div className="p-4 border rounded-lg bg-white max-h-[300px]">
+            <p className="text-gray-500">No appointments this month</p>
+          </div>
         ) : (
           <div className="p-4 border rounded-lg bg-white max-h-[300px] overflow-y-auto">
             {/* Header */}
