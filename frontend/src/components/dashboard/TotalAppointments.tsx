@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge, Box, Heading, Text } from "@radix-ui/themes"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import type { RootState } from "@/store/store"
 import { useSelector } from "react-redux"
+import type { AppointmentTypes } from "@/types/AppointmentTypes"
 
 
 const TotalAppointments = () => {
@@ -15,7 +15,7 @@ const TotalAppointments = () => {
       return res.data
     }
   })
-  console.log(data)
+  
   if (isLoading) return <Heading as="h1" className="text-center">Loading...</Heading>
   if (isError) return <Heading as="h1" className="text-center">Error: {(error as Error).message}</Heading>
 
@@ -45,7 +45,7 @@ const TotalAppointments = () => {
             </div>
 
             {/* Rows */}
-            {data.map((appointment: any) => {
+            {data.map((appointment: AppointmentTypes) => {
               const formattedTime = new Date(`1970-01-01T${appointment.time}`)
                 .toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true })
 

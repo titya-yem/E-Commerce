@@ -34,13 +34,13 @@ import SuccessPage from "./pages/SuccessPage.tsx";
 // Admin Pages
 import AdminDashboard from "./pages/Dashboard/admin/AdminDashboardPage.tsx";
 import AdminProfile from "./pages/Dashboard/admin/AdminProfile.tsx";
-import AppointmentsPage from "./pages/Dashboard/admin/appointment.tsx";
-import CommentsPage from "./pages/Dashboard/admin/comments.tsx";
-import ContactsPage from "./pages/Dashboard/admin/contacts.tsx";
-import OrdersPage from "./pages/Dashboard/admin/orders.tsx";
-import ProductsPage from "./pages/Dashboard/admin/products.tsx";
-import ServicesPage from "./pages/Dashboard/admin/services.tsx";
-import UsersPage from "./pages/Dashboard/admin/UsersPage.tsx";
+import AppointmentsPage from "./pages/Dashboard/admin/AdminAppointment.tsx";
+import CommentsPage from "./pages/Dashboard/admin/AdminComments.tsx";
+import ContactsPage from "./pages/Dashboard/admin/AdminContacts.tsx";
+import OrdersPage from "./pages/Dashboard/admin/AdminOrders.tsx";
+import ProductsPage from "./pages/Dashboard/admin/AdminProducts.tsx";
+import ServicesPage from "./pages/Dashboard/admin/AdminServices.tsx";
+import UsersPage from "./pages/Dashboard/admin/AdminUsersPage.tsx";
 
 // User Pages
 import UserComments from "./pages/Dashboard/user/UserComments.tsx";

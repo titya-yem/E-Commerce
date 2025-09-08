@@ -3,7 +3,7 @@ import { Box, Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const Orders: React.FC = () => {
+const AdminOrders: React.FC = () => {
   const { isLoading, isError, data, error } = useQuery<Order[]>({
     queryKey: ["orders"],
     queryFn: async () => {
@@ -41,4 +41,4 @@ const Orders: React.FC = () => {
   )
 }
 
-export default Orders
+export default AdminOrders
