@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Heading, Text } from "@radix-ui/themes"
+import { Badge, Box, Heading, Text } from "@radix-ui/themes"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import type { RootState } from "@/store/store"
@@ -36,7 +36,7 @@ const TotalAppointments = () => {
         ) : (
           <div className="p-4 border rounded-lg bg-white h-[280px] overflow-y-auto">
             {/* Header */}
-            <div className="grid grid-cols-5 gap-2 font-medium border-b pb-2 mb-2">
+            <div className="grid grid-cols-5 gap-2 font-medium border-b pb-2 pl-2 mb-2">
               <h5>Name</h5>
               <h5>Time</h5>
               <h5>Type</h5>
@@ -54,11 +54,11 @@ const TotalAppointments = () => {
                   key={appointment._id}
                   className="grid grid-cols-5 gap-2 text-sm py-1"
                 >
-                  <Text as="p">{user?.userName}</Text>
-                  <Text as="p">{formattedTime}</Text>
-                  <Text as="p">{appointment.type}</Text>
-                  <Text as="p">{appointment.date}</Text>
-                  <Text as="p">{appointment.status}</Text>
+                  <Badge color="indigo" size="2" radius="large">{user?.userName}</Badge>
+                  <Badge color="crimson" size="2" radius="large">{formattedTime}</Badge>
+                  <Badge color="cyan" size="2" radius="large">{appointment.type}</Badge>
+                  <Badge color="violet" size="2" radius="large">{appointment.date}</Badge>
+                  <Badge color="orange" size="2" radius="large">{appointment.status}</Badge>
                 </div>
               )
             })}

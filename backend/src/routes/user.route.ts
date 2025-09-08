@@ -3,14 +3,19 @@ import {
     createUser,
     deleteUser,
     getAllUsers,
-    updateUser,
+    updateUser
 } from "../controllers/user.controller";
+import auth from "../middlewares/auth.middleware";
+import admin from "../middlewares/admin.middleware";
 
 const router = Router()
 
-router.get("/", getAllUsers);
+// user routes & public routes
 router.post("/signup", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.put("/:id", auth, updateUser);
+router.delete("/:id", auth, deleteUser);
+
+// admin routes
+router.get("/", auth, admin, getAllUsers);
 
 export default router

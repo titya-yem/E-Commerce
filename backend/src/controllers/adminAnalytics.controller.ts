@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import Order from "../models/order.model";
+import User from "../models/user.model";
 
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
@@ -81,5 +82,28 @@ export const getRevenueAnalytics = async (req: AuthRequest, res: Response) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch revenue" });
+  }
+};
+
+// Total users
+export const getTotalUsers = async (req: AuthRequest, res: Response) => {
+  try {
+    const users = await User.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          totalUsers: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+    const result = users.map(item => ({
+      month: months[item._id - 1],
+      totalUsers: item.totalUsers
+    }));
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch total users" });
   }
 };

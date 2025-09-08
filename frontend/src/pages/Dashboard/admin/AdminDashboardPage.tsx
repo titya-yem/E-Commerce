@@ -1,5 +1,3 @@
-import SalesImage from "@/assets/svg/dashboard/circle-dollar-sign.svg";
-import OrderImage from "@/assets/svg/dashboard/shopping-cart.svg";
 import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import LineGraph from "@/components/dashboard/LineGraph";
 import Total from "@/components/dashboard/Total";
@@ -13,6 +11,7 @@ const AdminDashboard = () => {
   const { data: salesData = [] } = useQuery({ queryKey: ["sales"], queryFn: () => fetchAnalytics("/api/adminAnalytics/sales/month") });
   const { data: ordersData = [] } = useQuery({ queryKey: ["orders"], queryFn: () => fetchAnalytics("/api/adminAnalytics/orders/month") });
   const { data: revenueData = [] } = useQuery({ queryKey: ["revenue"], queryFn: () => fetchAnalytics("/api/adminAnalytics/revenue/five-months") });
+  const { data: userData = [] } = useQuery({queryKey: ["users"],queryFn: () => fetchAnalytics("/api/adminAnalytics/total/users") });
 
   // Calculate totals & percentages
   const lastSales = salesData[salesData.length - 1]?.totalSales || 0;
@@ -22,6 +21,10 @@ const AdminDashboard = () => {
   const lastOrders = ordersData[ordersData.length - 1]?.totalOrders || 0;
   const prevOrders = ordersData[ordersData.length - 2]?.totalOrders || 0;
   const ordersChange = prevOrders ? ((lastOrders - prevOrders) / prevOrders) * 100 : 0;
+
+  const lastUsers = userData[userData.length - 1]?.totalUsers || 0;
+  const prevUsers = userData[userData.length - 2]?.totalUsers || 0;
+  const usersChange = prevUsers ? ((lastUsers - prevUsers) / prevUsers) * 100 : 0;
 
   return (
     <div className="pl-4 w-full">
@@ -40,13 +43,14 @@ const AdminDashboard = () => {
         </div>
 
         {/* Total Appoinments & Totals Component */}
-        <div className="space-y-4 w-full mr-4">
-          <Text as="p" className="text-xl pb-5 font-medium text-gray-500">
-            Vitals
+        <div className="space-y-4 overflow-y-auto w-full mr-4">
+          <Text as="p" className="text-xl pb-2 font-medium text-gray-500">
+            Vitals per Month
           </Text>
-          <Flex gap="5">
-            <Total title="Total Sales" value={lastSales} percentage={salesChange} isCurrency img={SalesImage} />
-            <Total title="Total Orders" value={lastOrders} percentage={ordersChange} img={OrderImage} />
+          <Flex gap="4">
+            <Total title="Total Sales" value={lastSales} percentage={salesChange} isCurrency  />
+            <Total title="Total Orders" value={lastOrders} percentage={ordersChange}  />
+            <Total title="Total Users" value={lastUsers} percentage={usersChange}  />
           </Flex>
           <TotalAppointments />
         </div>
