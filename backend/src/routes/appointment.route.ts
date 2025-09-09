@@ -3,7 +3,8 @@ import {
     createAppointment,
     deleteAppointment,
     getAllAppointments,
-    getAppointmentsByMonthly
+    getAppointmentsByMonthly,
+    updateAppointment
 } from "../controllers/appointment.controller";
 import auth from "../middlewares/auth.middleware";
 import admin from "../middlewares/admin.middleware";
@@ -16,6 +17,7 @@ router.post("/create", auth, createAppointment)
 // admin routes
 router.get("/", auth, admin, getAllAppointments)
 router.get("/monthly", auth, admin, getAppointmentsByMonthly)
+router.patch("/:id/status", auth, admin, updateAppointment)
 router.delete("/:id", auth, admin, deleteAppointment)
 
 export default router;

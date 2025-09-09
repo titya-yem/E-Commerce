@@ -36,6 +36,38 @@ export const createAppointment = async (req: Request, res: Response): Promise<vo
     }
 }
 
+// Update an appointment
+export const updateAppointment = async (req: Request, res: Response): Promise<void | any> => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        if (!id || !status) {
+            return res.status(400).json({ message: "Appointment ID and Status are required!" });
+        }
+
+        if (!["Incomplete", "Completed"].includes(status)) {
+            return res.status(400).json({ message: "Invalid status value" });
+        }
+
+        const updated = await Appointment.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Appointment not found!" });
+        }
+
+        res.status(200).json(updated);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to update appointment status" });
+    }
+};
+
+
 // Delete a appointment
 export const deleteAppointment = async (req: Request, res: Response): Promise<void | any> => {
     try {

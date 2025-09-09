@@ -1,11 +1,13 @@
 import type { RootState } from "@/store/store"
 import type { AppointmentTypes } from "@/types/AppointmentTypes"
-import { Box, Heading, Text } from "@radix-ui/themes"
-import { useQuery } from "@tanstack/react-query"
+import { Box, Flex, Heading, Select, Text } from "@radix-ui/themes"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
 const AdminAppointments = () => {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["appointments"],
     queryFn: async () => {
@@ -14,6 +16,18 @@ const AdminAppointments = () => {
       )
       return res.data
     },
+  })
+
+  const updateStatus = useMutation({
+    mutationFn: async ({ id, status }: { id: string, status: string }) => {
+      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/api/appointment/${id}/status`,
+        { status }
+      )
+      return res.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+    }
   })
 
   const user = useSelector((state: RootState) => state.auth.user)
@@ -58,15 +72,29 @@ const AdminAppointments = () => {
               return (  
                 <div
                   key={appointment._id}
-                  className="p-4 *:text-sm text-center grid grid-cols-[100px_240px_150px_100px_120px_150px]"
+                  className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
                 >
-                  <Text as="p" className="font-medium rounded-md py-1 bg-blue-100 text-blue-500">{user?.userName}</Text>
-                  <Text as="p" className="font-medium rounded-md py-1 bg-sky-100 text-sky-500">{appointment.email}</Text>
-                  <Text as="p" className="font-medium rounded-md py-1 bg-cyan-100 text-cyan-500">{appointment.type}</Text>
-                  <Text as="p" className="font-medium rounded-md py-1 bg-rose-100 text-rose-500">{formattedTime}</Text>
-                  <Text as="p" className="font-medium rounded-md py-1 bg-violet-100 text-violet-500">{appointment.date}</Text>
-                  {/* make status is combobox to change status */}
-                  <Text as="p" className="font-medium rounded-md py-1 bg-orange-100 text-orange-500">{appointment.status}</Text>
+                  <Text as="p" className="font-medium rounded-md text-blue-500">{user?.userName}</Text>
+                  <Text as="p" className="font-medium rounded-md text-cyan-500">{appointment.email}</Text>
+                  <Text as="p" className="font-medium rounded-md text-teal-500">{appointment.type}</Text>
+                  <Text as="p" className="font-medium rounded-md text-rose-500">{formattedTime}</Text>
+                  <Text as="p" className="font-medium rounded-md text-violet-500">{appointment.date}</Text>
+                  {/* combobox to change status */}
+                  <Flex className="pl-7">
+                    <Select.Root
+                      size="2"
+                      defaultValue={appointment.status}
+                      onValueChange={(value) => {
+                        updateStatus.mutate({ id: appointment._id, status: value });
+                      }}
+                    >
+                      <Select.Trigger color="orange" variant="soft" />
+                      <Select.Content color="orange" position="popper">
+                        <Select.Item value="Incomplete">Incomplete</Select.Item>
+                        <Select.Item value="Completed">Completed</Select.Item>
+                      </Select.Content>
+                    </Select.Root>
+                  </Flex>
                 </div>
               )
             })}
