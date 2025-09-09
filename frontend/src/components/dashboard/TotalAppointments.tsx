@@ -30,11 +30,11 @@ const TotalAppointments = () => {
       
       <Box>
         {data.length === 0 ? (
-          <div className="p-4 border rounded-lg bg-white h-[280px]">
+          <div className="p-4 border rounded-lg bg-white h-[280px] max-h-full">
             <p className="text-gray-500">No appointments this month</p>
           </div>
         ) : (
-          <div className="p-4 border rounded-lg bg-white h-[280px] overflow-y-auto">
+          <div className="p-4 border rounded-lg bg-white h-[280px] max-h-full overflow-y-auto">
             {/* Header */}
             <div className="grid grid-cols-5 gap-2 font-medium border-b pb-2 pl-2 mb-2">
               <h5>Name</h5>

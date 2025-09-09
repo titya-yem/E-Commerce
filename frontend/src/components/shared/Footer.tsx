@@ -6,6 +6,7 @@ import line from "@/assets/svg/Line.svg";
 import { NavbarLists } from "@/constants/Navbar";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
+import ScrollToTop from "../scollToTop";
 
 const Footer: React.FC = () => {
   return (
@@ -91,6 +92,7 @@ const Footer: React.FC = () => {
       <Text as="p" className="text-sm text-center md:text-start md:pl-3 text-amber-50">
         Copyright by Pet Shop. (Titya Yem)
       </Text>
+      <ScrollToTop />
     </Container>
   );
 };
