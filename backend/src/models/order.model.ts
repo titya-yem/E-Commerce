@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
 export enum orderStatus {
-  Pending = "Pending",
-  Paid = "Paid",
-  Shipped = "Shipped",
-  Delivered = "Delivered",
   Cancelled = "Cancelled",
+  Pending = "Pending",
+  Shipped = "Shipped",
+  Paid = "Paid",
 }
 
 interface OrderItem {
@@ -34,12 +33,12 @@ const orderSchema = new mongoose.Schema<OrderProps>(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     items: [
       {
-        id: String,
-        name: String,
-        category: String,
-        price: Number,
-        quantity: Number,
-        image: String,
+        id: { type: String, required: true },
+        name: { type: String, required: true },
+        category: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
+        image: { type: String, required: true },
       },
     ],
     totalAmount: { type: Number, required: true },

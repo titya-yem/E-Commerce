@@ -11,6 +11,7 @@ interface CustomRequest extends Request {
   };
 }
 
+// Create Stripe Checkout Session
 export const createCheckoutSession = async (req: CustomRequest, res: Response): Promise<void | any> => {
   const { error } = orderValidation.validate(req.body, { abortEarly: false });
   
@@ -57,7 +58,7 @@ export const createCheckoutSession = async (req: CustomRequest, res: Response): 
       totalQuantity,
       status: "Pending",
       isPaid: false,
-      paymentIntentId: session.id,
+      paymentIntentId: session.payment_intent as string,
     });
 
     res.status(200).json({ sessionUrl: session.url });

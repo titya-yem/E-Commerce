@@ -11,7 +11,7 @@ export type Order = {
   }[];
   totalAmount: number;
   totalQuantity: number;
-  status: "Pending" | "Paid" | "Shipped" | "Delivered" | "Cancelled";
+  status: "Pending" | "Paid" | "Shipped" | "Cancelled";
   isPaid: boolean;
   paidAt?: string;
   paymentIntentId?: string;

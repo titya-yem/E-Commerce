@@ -3,6 +3,7 @@ import { AuthRequest } from "../middlewares/auth.middleware";
 import Order from "../models/order.model";
 import orderValidation from "../validations/order.validation";
 
+// Get all orders
 export const getOrders = async (req: AuthRequest, res: Response): Promise<void | any> => {
     try {
         let orders;
@@ -24,6 +25,7 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void |
     }
 }
 
+// Get Order By ID
 export const getOrderById = async (req: AuthRequest, res: Response): Promise<void | any> => {
     const { id } = req.params;
     try {
@@ -44,6 +46,7 @@ export const getOrderById = async (req: AuthRequest, res: Response): Promise<voi
     }
 }
 
+// Update order by ID
 export const updateOrder = async (req: AuthRequest, res: Response): Promise<void | any> => {
     const { id } = req.params;
     try {
@@ -69,6 +72,7 @@ export const updateOrder = async (req: AuthRequest, res: Response): Promise<void
     }
 }
 
+// Delete order by ID
 export const deleteOrder = async (req: AuthRequest, res: Response): Promise<void | any> => {
     const { id } = req.params;
     try {

@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+const status = ["Cancelled", "Pending", "Shipped", "Paid"];
+
 export const orderItemSchema = Joi.object({
   id: Joi.string().required(),
   name: Joi.string().required(),
@@ -13,9 +15,15 @@ export const orderItemSchema = Joi.object({
 });
 
 const orderValidation = Joi.object({
-  cart: Joi.array().items(orderItemSchema).required(),
+  user: Joi.string().required(),
+  items: Joi.array().items(orderItemSchema).min(1).required(),
   totalAmount: Joi.number().positive().required(),
   totalQuantity: Joi.number().positive().required(),
+  status: Joi.string().valid(...status).required(),
+  isPaid: Joi.boolean().optional(),
+  paidAt: Joi.date().optional(),
+  paymentIntentId: Joi.string().optional(),
+  receiptUrl: Joi.string().uri().optional(),
 });
 
 export default orderValidation;
