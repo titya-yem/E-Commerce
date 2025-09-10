@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { RootState } from "@/store/store";
 import type { Order } from "@/types/orderTypes";
 import { Box, Button, Dialog, Flex, Select, Table, Text } from "@radix-ui/themes";
@@ -12,8 +13,15 @@ const AdminOrders: React.FC = () => {
   const { isLoading, isError, data, error } = useQuery<Order[], Error>({
     queryKey: ["orders"],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/order`);
-      return res.data as Order[];
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/order`);
+        return res.data as Order[];
+      } catch (err: any) {
+        if (err.response?.status === 404) {
+          return [];
+        }
+        throw new Error(err.response?.data?.message || "Failed to fetch orders");
+      }
     },
   });
 
@@ -27,22 +35,24 @@ const AdminOrders: React.FC = () => {
     },
   });
 
+  console.log(data)
+
   if (isLoading) return <h1 className="text-xl text-center">Loading...</h1>;
   if (isError) return <h1 className="text-xl text-center">Error: {error?.message}</h1>;
-  if (!data || data.length === 0) return <h1 className="text-xl text-center">No Orders Available</h1>;
+  if (!data || data.length === 0) return <h1 className="text-xl mt-10 mx-auto">No Orders Available</h1>;
 
   return (
     <div className="pl-4 w-full">
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Orders</h2>
 
-      <Box className="w-[99%] p-2 rounded-md bg-white max-overflow-y-auto">
+      <Box className="w-[99%] h-[600px] p-2 rounded-md bg-white max-overflow-y-auto">
         <Box className="overflow-x-auto">
           {/* Header */}
-          <div className="p-4 text-center grid grid-cols-[150px_300px_200px_150px_150px_150px] border-b border-gray-300">
+          <div className="p-4 text-center grid grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300">
             <Text as="p">Names</Text>
             <Text as="p">Emails</Text>
             <Text as="p">Products</Text>
-            <Text as="p">Quantity</Text>
+            <Text as="p">Date</Text>
             <Text as="p">Amount</Text>
             <Text as="p">Status</Text>
           </div>
@@ -51,7 +61,7 @@ const AdminOrders: React.FC = () => {
           {data.map((order: Order) => (
             <div
               key={order._id}
-              className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
+              className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_180px_150px_150px]"
             >
               <Text as="p" className="font-medium rounded-md text-blue-500">
                 {user?.userName ?? "N/A"}
@@ -113,8 +123,12 @@ const AdminOrders: React.FC = () => {
                 </Dialog.Content>
               </Dialog.Root>
 
-              <Text as="p" className="font-medium rounded-md text-rose-500">
-                {order.totalQuantity ?? 0} products
+              <Text as="p" className="font-medium rounded-md text-purple-500">
+                {order.createdAt ? new Date(order.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }) : "N/A"}
               </Text>
               <Text as="p" className="font-medium rounded-md text-amber-500">
                 ${order.totalAmount?.toFixed(2) ?? "0.00"}

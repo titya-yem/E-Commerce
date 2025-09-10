@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Order from "../models/order.model";
 import stripe from "../utils/stripe";
-import orderValidation from "../validations/order.validation";
+import { checkoutValidation } from "../validations/checkout.validation";
 
 interface CustomRequest extends Request {
   user?: {
@@ -13,8 +13,11 @@ interface CustomRequest extends Request {
 
 // Create Stripe Checkout Session
 export const createCheckoutSession = async (req: CustomRequest, res: Response): Promise<void | any> => {
-  const { error } = orderValidation.validate(req.body, { abortEarly: false });
+  const { error } = checkoutValidation.validate(req.body, { abortEarly: false });
   
+  console.log("Request body:", req.body);
+console.log("User:", req.user);
+
   if (error) {
     return res.status(400).json({ message: error.details.map((d) => d.message).join(", ") });
   }

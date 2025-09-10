@@ -1,19 +1,19 @@
 export interface Order {
   _id: string;
-  user: {
-    _id: string;
-    userName: string;
-    email: string;
+  user?: {
+    email?: string;
+    // other user fields
   };
-  items: {
+  items?: Array<{
     id: string;
-    name: string;
-    category: string;
-    price: number;
-    quantity: number;
-    image: string;
-  }[];
-  totalAmount: number;
-  totalQuantity: number;
-  status: string;
+    name?: string;
+    image?: string;
+    category?: string;
+    quantity?: number;
+    price?: number;
+  }>;
+  totalAmount?: number;
+  status?: string;
+  createdAt?: string; // Added createdAt property
+  // other order fields
 }

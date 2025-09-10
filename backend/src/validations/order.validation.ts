@@ -20,6 +20,7 @@ const orderValidation = Joi.object({
   totalAmount: Joi.number().positive().required(),
   totalQuantity: Joi.number().positive().required(),
   status: Joi.string().valid(...status).required(),
+  date: Joi.date(),
   isPaid: Joi.boolean().optional(),
   paidAt: Joi.date().optional(),
   paymentIntentId: Joi.string().optional(),

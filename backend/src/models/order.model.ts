@@ -22,6 +22,7 @@ export interface OrderProps extends mongoose.Document {
   totalAmount: number;
   totalQuantity: number;
   status: orderStatus;
+  date: Date
   isPaid: boolean;
   paidAt?: Date;
   paymentIntentId?: string;
@@ -44,6 +45,7 @@ const orderSchema = new mongoose.Schema<OrderProps>(
     totalAmount: { type: Number, required: true },
     totalQuantity: { type: Number, required: true },
     status: { type: String, enum: Object.values(orderStatus), required: true },
+    date: { type: Date },
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
     paymentIntentId: { type: String },
