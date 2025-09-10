@@ -72,7 +72,7 @@ const AdminAppointments = () => {
               return (  
                 <div
                   key={appointment._id}
-                  className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
+                  className="p-3 *:text-sm  text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
                 >
                   <Text as="p" className="font-medium rounded-md text-blue-500">{user?.userName}</Text>
                   <Text as="p" className="font-medium rounded-md text-cyan-500">{appointment.email}</Text>

@@ -1,6 +1,6 @@
 import type { RootState } from "@/store/store";
 import type { Order } from "@/types/orderTypes";
-import { Box, Flex, Heading, Select, Text } from "@radix-ui/themes";
+import { Box, Button, Dialog, Flex, Heading, Select, Table, Text } from "@radix-ui/themes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const AdminOrders: React.FC = () => {
       return res.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
     }
   })
 
@@ -65,12 +65,65 @@ const AdminOrders: React.FC = () => {
                   className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
                 >
                   <Text as="p" className="font-medium rounded-md text-blue-500">{user?.userName}</Text>
-                  <Text as="p" className="font-medium rounded-md text-cyan-500">{order.user}</Text>
-                  <Text as="p" className="font-medium rounded-md text-teal-500">
-                    {order.items.map((item) => item.name).join(", ")}
-                  </Text>
-                  <Text as="p" className="font-medium rounded-md text-rose-500">{order.totalQuantity}</Text>
-                  <Text as="p" className="font-medium rounded-md text-rose-500">${order.totalAmount.toFixed(2)}</Text>
+                  <Text as="p" className="font-medium rounded-md text-cyan-500">{order.user?.email}</Text>
+                  
+                  {/* View each orders details */}
+                 <Dialog.Root>
+                    <Dialog.Trigger>
+                      <Button>View orders</Button>
+                    </Dialog.Trigger>
+                    <Dialog.Content>
+                      <Dialog.Title>Orders</Dialog.Title>
+                      <Dialog.Description mb="2">
+                        The following orders of the user.
+                      </Dialog.Description>
+
+                      {/* scrollable area inside */}
+                      <div className="max-h-[60vh] overflow-y-auto rounded-md border">
+                        <Table.Root>
+                          <Table.Header>
+                            <Table.Row>
+                              <Table.ColumnHeaderCell>Image</Table.ColumnHeaderCell>
+                              <Table.ColumnHeaderCell>Product's names</Table.ColumnHeaderCell>
+                              <Table.ColumnHeaderCell>Category</Table.ColumnHeaderCell>
+                              <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
+                              <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
+                            </Table.Row>
+                          </Table.Header>
+
+                          <Table.Body>
+                            {order.items.map((item) => (
+                              <Table.Row key={item.id}>
+                                <Table.RowHeaderCell>
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="h-12 mx-auto object-cover rounded-md"
+                                  />
+                                </Table.RowHeaderCell>
+                                <Table.Cell className="font-medium">{item.name}</Table.Cell>
+                                <Table.Cell className="pl-6">{item.category}</Table.Cell>
+                                <Table.Cell>{item.quantity}</Table.Cell>
+                                <Table.Cell>${item.price.toFixed(2)}</Table.Cell>
+                              </Table.Row>
+                            ))}
+                          </Table.Body>
+                        </Table.Root>
+                      </div>
+
+                      <Flex gap="3" justify="end" className="pt-4">
+                        <Dialog.Close>
+                          <Button variant="soft" color="gray">
+                            Close
+                          </Button>
+                        </Dialog.Close>
+                      </Flex>
+                    </Dialog.Content>
+                  </Dialog.Root>
+
+                  <Text as="p" className="font-medium rounded-md text-rose-500">{order.totalQuantity} products</Text>
+                  <Text as="p" className="font-medium rounded-md text-amber-500">${order.totalAmount.toFixed(2)}</Text>
+                  
                   {/* combobox to change status */}
                   <Flex className="pl-7">
                     <Select.Root

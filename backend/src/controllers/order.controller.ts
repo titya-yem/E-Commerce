@@ -9,9 +9,9 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void |
         let orders;
 
         if (req.user?.role === "admin") {
-            orders = await Order.find({}).select("-__v");
+            orders = await Order.find({}).select("-__v").populate("user", "email");;
         } else {
-            orders = await Order.find({ user: req.user?.id }).select("-__v");
+            orders = await Order.find({ user: req.user?.id }).select("-__v").populate("user", "email");;
         }
 
         if (!orders || orders.length === 0) {
@@ -27,50 +27,47 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void |
 
 // Get Order By ID
 export const getOrderById = async (req: AuthRequest, res: Response): Promise<void | any> => {
-    const { id } = req.params;
-    try {
-        const order = await Order.findById(id).select("-__v");
-
-        if (!order) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-
-        if (req.user?.role === "admin" && order.user.toString() !== req.user?.id) {
-            return res.status(403).json({ message: "Forbidden: You can only view your own orders" });
-        }
-
-        res.status(200).json( order );
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Failed to get order" });
+  const { id } = req.params;
+  try {
+    const order = await Order.findById(id)
+      .select("-__v")
+      .populate("user", "email");
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
-}
+
+    if (req.user?.role !== "admin" && order.user._id.toString() !== req.user?.id) {
+      return res.status(403).json({ message: "Forbidden: You can only view your own orders" });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to get order" });
+  }
+};
 
 // Update order by ID
-export const updateOrder = async (req: AuthRequest, res: Response): Promise<void | any> => {
-    const { id } = req.params;
-    try {
-        const { error, value } = orderValidation.validate(req.body, { abortEarly: false });
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
+export const updateOrderStatus = async (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
 
-        const updateData = {
-            status: value.status,
-            isPaid: value.isPaid,
-        };
+  if (!status) return res.status(400).json({ message: "Status is required" });
 
-        const updatedOrder = await Order.findByIdAndUpdate(id, updateData, { new: true });
-        if (!updatedOrder) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-        
-        res.status(200).json({ message: "Order updated successfully", order: updatedOrder });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Failed to update order" });
-    }
-}
+  try {
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    res.status(200).json({ message: "Status updated", order });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to update status" });
+  }
+};
 
 // Delete order by ID
 export const deleteOrder = async (req: AuthRequest, res: Response): Promise<void | any> => {

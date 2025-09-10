@@ -1,6 +1,10 @@
-export type Order = {
+export interface Order {
   _id: string;
-  user: string;
+  user: {
+    _id: string;
+    userName: string;
+    email: string;
+  };
   items: {
     id: string;
     name: string;
@@ -11,11 +15,5 @@ export type Order = {
   }[];
   totalAmount: number;
   totalQuantity: number;
-  status: "Pending" | "Paid" | "Shipped" | "Cancelled";
-  isPaid: boolean;
-  paidAt?: string;
-  paymentIntentId?: string;
-  receiptUrl?: string;
-  createdAt: string;
-  updatedAt: string;
-};
+  status: string;
+}
