@@ -8,6 +8,7 @@ export type Product = {
   reviews: number;
   category: string;
   description?: string;
+  createdAt: number
 };
 
 export interface productProps {
