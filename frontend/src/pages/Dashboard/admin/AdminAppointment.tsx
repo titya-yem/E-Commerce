@@ -44,7 +44,7 @@ const AdminAppointments = () => {
       <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto">
         {!data ? (
           <Heading as="h1" className="text-center py-10">
-            No appointments
+            No appointments available
           </Heading>
         ) : (
           <Box className="overflow-x-auto">
@@ -52,7 +52,7 @@ const AdminAppointments = () => {
             <div className="p-4 text-center grid grid-cols-[150px_300px_200px_150px_150px_150px] border-b border-gray-300">
               <Text as="p">Names</Text>
               <Text as="p">Emails</Text>
-              <Text as="p">Types of Service</Text>
+              <Text as="p">Types of Services</Text>
               <Text as="p">Times</Text>
               <Text as="p">Dates</Text>
               <Text as="p">Status</Text>

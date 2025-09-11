@@ -6,6 +6,7 @@ interface productTypes extends Document {
     name: string;
     category: CategoryType;
     price: number;
+    stock: number;
     rating: number;
     reviews?: number;
     description: string;
@@ -16,6 +17,7 @@ const productSchema = new Schema<productTypes>({
     name: { type: String, required: true, trim: true, unique: true },
     category: { type: String, required: true, enum: ['cat', 'dog', 'bird', 'rabbit', 'goldfish'] },
     price: { type: Number, required: true, default: 0 },
+    stock: { type: Number, required: true, default: 0 },
     rating: { type: Number, required: true, default: 0 },
     reviews: { type: Number, default: 0 },
     description: { type: String, required: true, trim: true},
