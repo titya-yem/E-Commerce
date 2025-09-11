@@ -32,14 +32,8 @@ const AdminAppointments = () => {
 
   const user = useSelector((state: RootState) => state.auth.user)
 
-  if (isLoading)
-    return <Heading as="h1" className="text-center">Loading...</Heading>
-  if (isError)
-    return (
-      <Heading as="h1" className="text-center">
-        Error: {(error as Error).message}
-      </Heading>
-    )
+  if (isLoading) <Heading as="h1" className="text-center">Loading...</Heading>
+  if (isError) <Heading as="h1" className="text-center">Error: {(error as Error).message}</Heading>
 
   return (
     <div className="pl-4 w-full">
@@ -48,7 +42,7 @@ const AdminAppointments = () => {
       </h2>
 
       <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto">
-        {data.length === 0 ? (
+        {!data ? (
           <Heading as="h1" className="text-center py-10">
             No appointments
           </Heading>
@@ -69,7 +63,7 @@ const AdminAppointments = () => {
               const formattedTime = new Date(`1970-01-01T${appointment.time}`)
                 .toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true });
 
-              return (  
+              return (
                 <div
                   key={appointment._id}
                   className="p-3 *:text-sm  text-center grid grid-cols-[150px_300px_200px_150px_150px_150px]"
@@ -79,6 +73,7 @@ const AdminAppointments = () => {
                   <Text as="p" className="font-medium rounded-md text-teal-500">{appointment.type}</Text>
                   <Text as="p" className="font-medium rounded-md text-rose-500">{formattedTime}</Text>
                   <Text as="p" className="font-medium rounded-md text-violet-500">{appointment.date}</Text>
+
                   {/* combobox to change status */}
                   <Flex className="pl-7">
                     <Select.Root
@@ -90,6 +85,7 @@ const AdminAppointments = () => {
                     >
                       <Select.Trigger color="orange" variant="soft" />
                       <Select.Content color="orange" position="popper">
+                        <Select.Item value="Cancelled">Cancelled</Select.Item>
                         <Select.Item value="Incomplete">Incomplete</Select.Item>
                         <Select.Item value="Completed">Completed</Select.Item>
                       </Select.Content>

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { RootState } from "@/store/store";
 import type { Order } from "@/types/orderTypes";
-import { Box, Button, Dialog, Flex, Select, Table, Text } from "@radix-ui/themes";
+import { AlertDialog, Box, Button, Dialog, Flex, Select, Table, Text } from "@radix-ui/themes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import toast from 'react-hot-toast';
 
 const AdminOrders: React.FC = () => {
   const queryClient = useQueryClient();
@@ -37,14 +38,33 @@ const AdminOrders: React.FC = () => {
     },
   });
 
+  const deleteOrder = useMutation({
+    mutationFn: async (id: string) => {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/order/${id}`)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] })
+      toast.success("Order deleted successfully", {
+        position: "top-center"
+      })
+    },
+    onError: () => {
+      toast.error("Faled to delete order", {
+        position: "top-center"
+      })
+    }
+  })
+
   if (isLoading) return <h1 className="text-xl text-center">Loading...</h1>;
   if (isError) return <h1 className="text-xl text-center">Error: {error?.message}</h1>;
   if (!data || data.length === 0) return <h1 className="text-xl mt-10 mx-auto">No Orders Available</h1>;
 
+  // Getting actual date from createdAt from MongoDB
   const sortedData = data.slice().sort(
     (a, b) => new Date(b.createdAt ?? "").getTime() - new Date(a.createdAt ?? "").getTime()
   );
 
+  // Creating pagination
   const totalPages = Math.ceil(sortedData.length / ordersPerPage);
   const currentOrders = sortedData.slice(
     (currentPage - 1) * ordersPerPage,
@@ -128,6 +148,36 @@ const AdminOrders: React.FC = () => {
                 </div>
 
                 <Flex gap="3" justify="end" className="pt-4">
+                  <AlertDialog.Root>
+                    <AlertDialog.Trigger>
+                      <Button color="red">Delete</Button>
+                    </AlertDialog.Trigger>
+                    <AlertDialog.Content maxWidth="450px">
+                      <AlertDialog.Title>Delete orders</AlertDialog.Title>
+                      <AlertDialog.Description size="2">
+                        Are you sure? This order will be 
+                        <Text as="span" color="red" weight="medium">
+                          permenantly deleted
+                        </Text>.
+                      </AlertDialog.Description>
+
+                      <Flex gap="3" mt="4" justify="end">
+                        <AlertDialog.Cancel>
+                          <Button variant="soft" color="gray">
+                            Cancel
+                          </Button>
+                        </AlertDialog.Cancel>
+                        <AlertDialog.Action>
+                          <Button variant="solid" color="red"
+                            onClick={() => deleteOrder.mutate(order._id)}
+                          >
+                            Delete orders
+                          </Button>
+                        </AlertDialog.Action>
+                      </Flex>
+                    </AlertDialog.Content>
+                  </AlertDialog.Root>
+
                   <Dialog.Close>
                     <Button variant="soft" color="gray">
                       Close
@@ -172,7 +222,7 @@ const AdminOrders: React.FC = () => {
         ))}
       </Box>
 
-      {/* Pagination always at bottom */}
+      {/* Pagination always */}
       <Flex justify="end" gap="2" className="mr-4 my-4">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <Button

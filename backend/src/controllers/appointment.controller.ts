@@ -36,7 +36,7 @@ export const createAppointment = async (req: Request, res: Response): Promise<vo
     }
 }
 
-// Update an appointment
+// Update an appointment (status)
 export const updateAppointment = async (req: Request, res: Response): Promise<void | any> => {
     try {
         const { id } = req.params;
@@ -46,7 +46,7 @@ export const updateAppointment = async (req: Request, res: Response): Promise<vo
             return res.status(400).json({ message: "Appointment ID and Status are required!" });
         }
 
-        if (!["Incomplete", "Completed"].includes(status)) {
+        if (!["Incomplete", "Completed", "Cancelled"].includes(status)) {
             return res.status(400).json({ message: "Invalid status value" });
         }
 

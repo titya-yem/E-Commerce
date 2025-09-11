@@ -15,7 +15,7 @@ interface appointmentProps extends Document{
     time: string;
     date: string;
     message: string;
-    status: "Incomplete" | "Completed";
+    status: "Incomplete" | "Completed" | "Cancelled";
 }
 
 const appointmentSchema = new mongoose.Schema<appointmentProps>({
@@ -25,7 +25,7 @@ const appointmentSchema = new mongoose.Schema<appointmentProps>({
     time: {type: String, required: true},
     date: {type: String, required: true},
     message: { type: String },
-    status: { type: String, enum: ["Incomplete", "Completed"], default: "Incomplete", optional: true },
+    status: { type: String, enum: ["Incomplete", "Completed", "Cancelled"], default: "Incomplete", optional: true },
 }, { timestamps: true });
 
 const Appointment = mongoose.model<appointmentProps>("Appointment", appointmentSchema);

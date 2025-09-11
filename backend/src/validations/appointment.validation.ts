@@ -17,7 +17,7 @@ const appointmentValidation = Joi.object({
     time: Joi.string().required(),
     date: Joi.string().required(),
     message: Joi.string().min(5).max(400).optional(),
-    status: Joi.string().valid("Incomplete", "Completed").optional(),
+    status: Joi.string().valid("Incomplete", "Completed", "Cancelled").optional(),
 })
 
 export default appointmentValidation;
