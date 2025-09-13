@@ -64,8 +64,8 @@ const ProductEditForm = ({ product, onCancel, onSave, onDelete }: ProductEditFor
                 control={control}
                 render={({ field }) => (
                   <Select.Root value={field.value || "cat"} onValueChange={field.onChange}>
-                    <Select.Trigger color="crimson" variant="soft">{field.value || "Select category"}</Select.Trigger>
-                    <Select.Content color="crimson">
+                    <Select.Trigger />
+                    <Select.Content position="popper">
                       {categories.map((c) => (
                         <Select.Item key={c} value={c}>{c}</Select.Item>
                       ))}

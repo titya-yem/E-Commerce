@@ -20,21 +20,21 @@ const AdminProducts = () => {
     },
   });
 
-const updateProduct = useMutation({
-  mutationFn: async (updatedProduct: Partial<Product> & { _id: string }) => {
-    const { _id, ...data } = updatedProduct;
-    const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/product/${_id}`, data);
-    return res.data;
-  },
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["products"] });
-    toast.success("Product updated successfully");
-    setEditingProduct(null);
-  },
-  onError: () => {
-    toast.error("Failed to update product");
-  },
-});
+  const updateProduct = useMutation({
+    mutationFn: async (updatedProduct: Partial<Product> & { _id: string }) => {
+      const { _id, ...data } = updatedProduct;
+      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/product/${_id}`, data);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Product updated successfully");
+      setEditingProduct(null);
+    },
+    onError: () => {
+      toast.error("Failed to update product");
+    },
+  });
 
   const deleteProduct = useMutation({
     mutationFn: async (id: string) => {

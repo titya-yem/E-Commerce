@@ -4,7 +4,7 @@ import Product from "../models/product.model";
 import productValidation from "../validations/product.validation";
 
 // Define the allowed fields for product creation and update
-const allowedFields = ["name", "category", "price", "rating", "reviews", "description", "image"];
+const allowedFields = ["name", "category", "price", "stock", "rating", "reviews", "description", "image"];
 
 // Get all products
 export const getAllProducts = async (req: Request, res: Response): Promise<void | any> => {
