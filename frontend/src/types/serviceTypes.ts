@@ -8,3 +8,12 @@ export interface Service {
   price: number | string;
   duration?: number | string;
 }
+
+export type ServiceFormData = {
+  title: string;
+  description: string;
+  price: number;
+  duration?: number | string;
+  image?: string;
+  alt?: string;
+};

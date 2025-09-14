@@ -6,16 +6,17 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import ServiceEditForm from "@/components/dashboard/AdminServiceUpdate";
+import AdminAddServices from "@/components/dashboard/AdminAddServices";
 
 const AdminServices = () => {
   const queryClient = useQueryClient();
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [addingProduct, setAddingProduct] = useState(false);
 
   const { data, error, isError, isLoading } = useQuery<Service[]>({
     queryKey: ["services"],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/service`);
-      // map MongoDB _id to id
       return res.data.map((s: any) => ({ ...s, id: s._id }));
     },
   });
@@ -52,7 +53,15 @@ const AdminServices = () => {
 
   return (
     <div className="pl-4 w-full">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl pt-5 font-medium">Services</h2>
+      <Flex justify="between" align="center">
+        <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Services</h2>
+        <Button 
+          mr="4"
+          size="2"
+          onClick={() => setAddingProduct(true)}>
+          + Add Service
+        </Button>
+      </Flex>
 
       <Flex wrap="wrap" gap="6" my="2">
         {data.map((service: Service, index: number) => (
@@ -92,24 +101,49 @@ const AdminServices = () => {
             </Card>
           </Box>
         ))}
+
+        {/* Add Service Dialog */}
+        <Box>
+          {addingProduct && (
+            <Dialog.Root open={true} onOpenChange={(open) => !open && setAddingProduct(false)}>
+              <Dialog.Content maxWidth="800px">
+                <Dialog.Title>Add Service</Dialog.Title>
+                <Dialog.Description size="2" mb="2">Fill in the service details below.</Dialog.Description>
+                
+                <AdminAddServices
+                  onSuccess={() => {
+                    setAddingProduct(false); // ✅ close dialog
+                    queryClient.invalidateQueries({ queryKey: ["services"] }); // ✅ refresh data
+                  }}
+                />
+
+                <Flex justify="end" mt="4">
+                  <Button variant="soft" color="gray" onClick={() => setAddingProduct(false)}>Cancel</Button>
+                </Flex>
+              </Dialog.Content>
+            </Dialog.Root>
+          )}
+        </Box>
+
+        {/* Update Service Dialog */}
+        {editingService && (
+          <Dialog.Root open={true} onOpenChange={(open) => !open && setEditingService(null)}>
+            <Dialog.Content maxWidth="600px">
+              <Dialog.Title>Update Service</Dialog.Title>
+              <Dialog.Description size="2" mb="2">
+                Edit service details below.
+              </Dialog.Description>
+
+              <ServiceEditForm
+                service={editingService}
+                onCancel={() => setEditingService(null)}
+                onSave={(updated) => updateService.mutate(updated)}
+                onDelete={() => deleteService.mutate(editingService.id!)}
+              />
+            </Dialog.Content>
+          </Dialog.Root>
+        )}
       </Flex>
-
-      {/* Update Dialog */}
-      {editingService && (
-        <Dialog.Root open={true} onOpenChange={(open) => !open && setEditingService(null)}>
-          <Dialog.Content maxWidth="600px">
-            <Dialog.Title>Update Service</Dialog.Title>
-            <Dialog.Description size="2" mb="2">Edit service details below.</Dialog.Description>
-
-            <ServiceEditForm
-              service={editingService}
-              onCancel={() => setEditingService(null)}
-              onSave={(updated) => updateService.mutate(updated)}
-              onDelete={() => deleteService.mutate(editingService.id!)}
-            />
-          </Dialog.Content>
-        </Dialog.Root>
-      )}
     </div>
   );
 };
