@@ -88,3 +88,29 @@ export const deleteComment = async (req: Request, res: Response): Promise<void |
         res.status(500).json({ message: "Cannot delete comment" });
     }
 }
+
+export const updateCommentStatus = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!id || !status) {
+    return res.status(400).json({ message: "Comment ID and status are required" });
+  }
+
+  try {
+    const updatedComment = await Comment.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedComment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    res.status(200).json({ message: "Comment status updated", comment: updatedComment });
+  } catch (error) {
+    console.error("Error updating comment status:", error);
+    res.status(500).json({ message: "Cannot update comment status" });
+  }
+};
