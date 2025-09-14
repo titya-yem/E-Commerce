@@ -90,7 +90,7 @@ export const getMe = async (req: Request, res: Response): Promise<void | any> =>
     // Type assertion or use JwtPayload interface
     const { id } = decoded as { id: string };
 
-    const user = await User.findById(id).select('-password');
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -102,6 +102,7 @@ export const getMe = async (req: Request, res: Response): Promise<void | any> =>
         id: user._id,
         userName: user.userName,
         email: user.email,
+        isActive: user.isActive,
         role: user.role
       },
     });

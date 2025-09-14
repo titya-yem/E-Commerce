@@ -34,6 +34,7 @@ const AdminAppointments = () => {
 
   if (isLoading) <Heading as="h1" className="text-center">Loading...</Heading>
   if (isError) <Heading as="h1" className="text-center">Error: {(error as Error).message}</Heading>
+  if (!data) return <Heading as="h1" className="text-center">No Appointments available.</Heading>
 
   return (
     <div className="pl-4 w-full">

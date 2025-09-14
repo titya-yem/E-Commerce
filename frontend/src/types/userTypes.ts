@@ -12,3 +12,12 @@ export interface UserListResponse {
   users: User[];
   total: number;
 }
+
+export interface getMe {
+  _id: string;
+  userName: string;
+  email: string;
+  password: string;
+  isActive: boolean;
+  role: string;
+}
