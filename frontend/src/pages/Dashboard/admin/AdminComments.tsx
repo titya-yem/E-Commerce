@@ -28,6 +28,14 @@ const AdminComments = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Comments"] }),
   });
 
+  const deleteComment = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/comment/${id}`);
+      return res.data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Comments"] }),
+  });
+
   if (isLoading) return <Heading className="text-center py-10">Loading...</Heading>;
   if (isError) return <Heading className="text-center py-10">Error: {(error as Error).message}</Heading>;
   if (!data || data.length === 0) return <Heading className="text-center py-10">No comments available</Heading>;
@@ -42,19 +50,20 @@ const AdminComments = () => {
       <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto min-h-[580px]">
         <Box className="overflow-x-auto">
           {/* Header */}
-          <div className="p-4 text-center grid grid-cols-[200px_300px_200px_250px_200px] border-b border-gray-300">
+          <div className="p-4 text-center grid grid-cols-[150px_300px_150px_250px_150px_200px] border-b border-gray-300">
             <Text as="p">User Name</Text>
             <Text as="p">Title</Text>
             <Text as="p">Text</Text>
             <Text as="p">Type</Text>
             <Text as="p">Approval</Text>
+            <Text as="p">Actions</Text>
           </div>
 
           {/* Rows */}
           {paginatedData.map((comment: Comment) => (
             <div
               key={comment._id}
-              className="p-3 text-sm pl-4 text-center grid grid-cols-[200px_300px_200px_250px_200px]"
+              className="p-3 text-sm pl-4 text-center grid grid-cols-[150px_300px_150px_250px_150px_200px]"
             >
               <Text as="p" className="font-medium rounded-md text-blue-500">
                 {comment.userName?.userName || "N/A"}
@@ -73,7 +82,7 @@ const AdminComments = () => {
               <Text as="p" className="font-medium rounded-md text-amber-500">{comment.type}</Text>
 
               {/* Combobox for approval */}
-              <Flex className="pl-10">
+              <Flex className="pl-7">
                 <Select.Root
                   size="2"
                   defaultValue={comment.status || "Cancelled"}
@@ -85,6 +94,18 @@ const AdminComments = () => {
                     <Select.Item value="Approved">Approved</Select.Item>
                   </Select.Content>
                 </Select.Root>
+              </Flex>
+
+              {/* Delete button */}
+              <Flex justify="center">
+                <Button
+                  color="red"
+                  size="2"
+                  variant="soft"
+                  onClick={() => deleteComment.mutate(comment._id)}
+                >
+                  Delete
+                </Button>
               </Flex>
             </div>
           ))}
