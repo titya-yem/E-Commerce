@@ -112,8 +112,8 @@ const AdminServices = () => {
                 
                 <AdminAddServices
                   onSuccess={() => {
-                    setAddingProduct(false); // ✅ close dialog
-                    queryClient.invalidateQueries({ queryKey: ["services"] }); // ✅ refresh data
+                    setAddingProduct(false);
+                    queryClient.invalidateQueries({ queryKey: ["services"] });
                   }}
                 />
 
