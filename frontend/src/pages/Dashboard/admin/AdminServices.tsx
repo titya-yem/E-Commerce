@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Service } from "@/types/serviceTypes";
 import { Badge, Box, Button, Card, Dialog, Flex, Heading, Inset, Text } from "@radix-ui/themes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,7 +16,7 @@ const AdminServices = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/service`);
-      return res.data.map((s: any) => ({ ...s, id: s._id }));
+      return res.data.map((s: Service) => ({ ...s, id: s._id }));
     },
   });
 
@@ -65,7 +64,7 @@ const AdminServices = () => {
 
       <Flex wrap="wrap" gap="6" my="2">
         {data.map((service: Service, index: number) => (
-          <Box key={service.id || index} maxWidth="280px">
+          <Box key={service._id || index} maxWidth="280px">
             <Card size="2">
               <Inset clip="padding-box" side="top" pb="current">
                 <img
@@ -95,7 +94,7 @@ const AdminServices = () => {
               <Text as="p" size="2" className="text-center text-gray-600">{service.description}</Text>
 
               <Flex align="center" justify="between" gap="4" pt="4">
-                <Button color="red" onClick={() => deleteService.mutate(service.id)}>Delete</Button>
+                <Button color="red" onClick={() => deleteService.mutate(service._id)}>Delete</Button>
                 <Button onClick={() => setEditingService(service)}>Update</Button>
               </Flex>
             </Card>
@@ -138,7 +137,7 @@ const AdminServices = () => {
                 service={editingService}
                 onCancel={() => setEditingService(null)}
                 onSave={(updated) => updateService.mutate(updated)}
-                onDelete={() => deleteService.mutate(editingService.id!)}
+                onDelete={() => deleteService.mutate(editingService._id!)}
               />
             </Dialog.Content>
           </Dialog.Root>

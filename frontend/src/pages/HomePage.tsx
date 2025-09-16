@@ -2,7 +2,7 @@ import TopCategories from "@/components/cateogry/TopCategories";
 import HeroCat from "@/components/HeroCat";
 import OurBrands from "@/components/OurBrands";
 import Recommendation from "@/components/Recommendation";
-import Services from "@/components/services/Services";
+import Services from "@/components/Services";
 import AboutSection from "@/components/shared/AboutSection";
 
 import heroImage from "@/assets/image/hero-dog.png";

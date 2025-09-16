@@ -1,5 +1,5 @@
 import Recommendation from "@/components/Recommendation";
-import Services from "@/components/services/Services";
+import Services from "@/components/Services";
 import { Outlet } from "react-router-dom";
 
 const ServicesLayout = () => {
