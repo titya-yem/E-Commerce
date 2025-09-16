@@ -7,6 +7,9 @@ dist/
 # Environment variables
 .env
 
+# docker-compose
+docker-compose.override.yml
+
 # Logs
 logs/
 *.log
