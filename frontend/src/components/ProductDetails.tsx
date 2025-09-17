@@ -23,7 +23,7 @@ const ProductDetailPage = () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/product/${id}`);
       return res.data;
     },
-    enabled: !!id, // Avoid running query if ID is undefined
+    enabled: !!id,
   });
 
   if (isLoading) return <div>Loading product...</div>;

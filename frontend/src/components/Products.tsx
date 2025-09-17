@@ -24,19 +24,21 @@ const ProductsComponent: React.FC = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/product`);
-      return res.data; // return product array directly
+      return res.data;
     },
   });
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error: {(error as Error).message}</h1>;
+  if (!data || data.length === 0) return <h1>No product available</h1>
 
   return (
     <Container>
-      <h4 className="text-xl text-center lg:text-start font-semibold py-16">
+      <h4 className="text-2xl lg:text-3xl text-center font-semibold py-10 md:py-16">
         Food <span className="text-[#43606D]">& Supplies</span>
       </h4> 
-      {/* will at filter */}
+
+      {/* will at filter by category*/}
       <Box className="p-10 px-4 md:px-20 mb-14 rounded-md bg-[#DEFBFF]">
         {data?.length === 0 ? (
           <p>Sorry, No products available.</p>
@@ -50,6 +52,7 @@ const ProductsComponent: React.FC = () => {
                 className="w-[210px] bg-white rounded-md shadow-xl overflow-hidden flex-grow"
               >
                 <Link to={`/shop/${slugify(item.name)}-${item._id}`}>
+                
                 {/* Image Box */}
                   <Box className="h-[160px] py-1 flex items-center justify-center">
                     <img
@@ -59,6 +62,7 @@ const ProductsComponent: React.FC = () => {
                     />
                   </Box>
                 </Link>
+
                 {/* Info Box */}
                 <Box className="bg-[#253239] w-full p-4 text-white flex-grow rounded-b-md">
                   <h4 className="text-base font-medium mb-2">{item.name}</h4>

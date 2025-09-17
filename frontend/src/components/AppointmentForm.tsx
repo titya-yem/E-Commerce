@@ -48,10 +48,8 @@ const AppointmentForm = () => {
         type: appointmentType,
         date: selectedDate?.toISOString().split("T")[0],
       };
-
-      console.log("Payload:", payload);
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
       
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
       toast.success("Appointment booked successfully!");
       reset();
     } catch (error) {
@@ -76,7 +74,7 @@ const AppointmentForm = () => {
   }
 
   return (
-    <div className="w-[340px] md:w-[450px] h-[590px] p-6 shadow-lg rounded-lg lg:rounded-l-none max-w-md bg-white">
+    <div className="w-[340px] md:w-[450px] h-[590px] p-6 mx-auto shadow-lg rounded-lg lg:rounded-l-none max-w-md bg-white">
       {/* Appointment Type Selection */}
       <h2 className="text-2xl font-bold text-center pb-[17px]">
         Schedule an Appointment

@@ -9,7 +9,7 @@ const ServicesPage = () => {
     <Container className="px-4 bg-[#DEFBFF]">
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-6">
         {/* left box */}
-        <Box className="lg:mb-12  space-y-4">
+        <Box className="lg:mb-12 space-y-4">
           <h1
             className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl 
               md:w-2/3 text-[#2F398B] font-bold uppercase 
@@ -21,7 +21,7 @@ const ServicesPage = () => {
 
           <Text
             as="p"
-            className="md:text-lg text-center md:text-start pb-2 lg:w-1/2 font-medium text-[#029FE3]"
+            className="md:text-lg lg:text-xl text-center md:text-start pb-2 lg:w-2/3 font-medium text-[#029FE3]"
           >
             Affordable pet services that you cannot find anywhere{" "}
             <span className="text-[#2F398B]">but here</span>

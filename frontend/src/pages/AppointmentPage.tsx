@@ -1,7 +1,7 @@
 import aboutHeroImage from "@/assets/image/About-hero.png";
 import aboutFormImage from "@/assets/image/appointmnet-image.png";
 import AppointmentForm from "@/components/AppointmentForm";
-import { Box, Container } from "@radix-ui/themes";
+import { Box, Container, Flex } from "@radix-ui/themes";
 import { Toaster } from "react-hot-toast";
 
 const AppointmentPage = () => {
@@ -27,7 +27,7 @@ const AppointmentPage = () => {
       </Container>
 
       {/* Appointment Booking Form Section */}
-      <div className="flex py-16 justify-center items-center bg-[#1F272B]">
+      <Flex justify="center" align="center" className="py-16 bg-[#1F272B]">
         {/* Image */}
         <Box>
           <img
@@ -38,10 +38,10 @@ const AppointmentPage = () => {
         </Box>
 
         {/* Form */}
-        <Box>
+        <Box className="">
           <AppointmentForm />
         </Box>
-      </div>
+      </Flex>
     </Box>
   );
 };

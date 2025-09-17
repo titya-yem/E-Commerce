@@ -35,17 +35,8 @@ const Cart = () => {
       if (res.data.sessionUrl) {
         toast.success("Redirecting to checkout...");
         dispatch(clearCart());
-
-        setTimeout(() => {
-          window.location.href = res.data.sessionUrl;
-        }, 1000);
       }
 
-      console.log({
-        cart: cart.items,
-        totalAmount: totalPrice,
-        totalQuantity: cart.totalQuantity,
-      });
     } catch (error: any) {
       console.error("Stripe checkout failed:", error);
       const message =
@@ -58,7 +49,7 @@ const Cart = () => {
   };
 
   return (
-    <Box className="bg-[#1F272B] min-h-screen">
+    <Box className="bg-[#1F272B] ">
       <Toaster position="top-center" reverseOrder={false} />
       <Container className="bg-white p-8">
         <div className="flex justify-between items-center mb-6">
