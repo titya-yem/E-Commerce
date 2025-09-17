@@ -48,6 +48,7 @@ const Recommendation: React.FC = () => {
             </h1>
           </Box>
           <Box>
+            
             {/* Display the current comment */}
             <Flex
               align="center"

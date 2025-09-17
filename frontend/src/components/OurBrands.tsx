@@ -12,11 +12,11 @@ const OurBrands: React.FC = () => {
     <Box className="h-[650px] md:h-[400px] lg:h-[440px] bg-[#E3462C]">
       <Container>
         <Box>
-          <h1 className="text-2xl lg:text-4xl mx-auto pt-10 md:my-4 lg:mb-14 text-center font-bold uppercase text-white">
+          <h1 className="w-full max-w-4xl px-4 text-2xl md:text-3xl lg:text-4xl mx-auto pt-6 md:pt-10 md:my-4 lg:mb-14 text-center font-bold uppercase text-white">
             Our cooporate brands
           </h1>
         </Box>
-        <Box className="mt-10 md:mt-12">
+        <Box className="mt-6 md:mt-12">
           <Flex
             justify="between"
             align="center"

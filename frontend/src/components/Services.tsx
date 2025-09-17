@@ -21,17 +21,17 @@ const Services = () => {
 
   return (
     <Container className="my-10 pb-10 px-4">
-      <h1 className="text-2xl lg:text-4xl mx-auto md:mb-10 text-center font-bold uppercase">
+      <h1 className="text-2xl lg:text-4xl mx-auto mb-6 md:mb-10 text-center font-bold uppercase">
         Services
       </h1>
 
-      <div className="grid gap-6 md:grid-cols-6">
+      <div className="grid justify-center gap-6 md:grid-cols-6">
         {data.map((service: Service, index) => (
           <Box
             key={service._id}
             className={index < 3 ? "md:col-span-2" : "md:col-span-3"}
           >
-            <Card size="2" className="h-full flex flex-col">
+            <Card size="2" className="h-full flex flex-col shadow-sm">
               <Inset clip="padding-box" side="top" pb="current">
                 <img
                   src={service.image}

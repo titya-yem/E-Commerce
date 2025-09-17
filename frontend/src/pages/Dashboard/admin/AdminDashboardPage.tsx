@@ -2,7 +2,7 @@ import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import LineGraph from "@/components/dashboard/LineGraph";
 import Total from "@/components/dashboard/Total";
 import TotalAppointments from "@/components/dashboard/TotalAppointments";
-import { Flex, Text } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -27,12 +27,14 @@ const AdminDashboard = () => {
   const usersChange = prevUsers ? ((lastUsers - prevUsers) / prevUsers) * 100 : 0;
 
   return (
-    <div className="pl-4 w-full">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Dashboard</h2>
+    <div className="md:pl-4 w-full">
+      <h2 className="hidden lg:block lg:w-3xl py-5 font-medium">Dashboard</h2>
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Total Sales & Orders */}
-        <div className="flex flex-col w-full space-y-4">
-          <WelcomeDashboard />
+        <div className="w-full space-y-4">
+          <Box className="pt-6 pb-4 md:py-0">
+            <WelcomeDashboard />
+          </Box>
           {/* Revenue Analytics Line Graph */}
           <div className="pt-3 pb-2 rounded-lg shadow-md bg-white">
             <Flex align="center" justify="between" className="pb-6">
