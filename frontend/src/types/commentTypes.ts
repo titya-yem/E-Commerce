@@ -4,16 +4,24 @@ export const petType = {
   RabbitLover: "Rabbit Lover",
   BirdsLover: "Birds Lover",
   FishesLover: "Fishes Lover",
-};
+} as const;
 
-export type petType = typeof petType[keyof typeof petType];
+export type PetType = typeof petType[keyof typeof petType];
+
+export const commentStatus = {
+  Cancelled: "Cancelled",
+  Approved: "Approved",
+} as const;
+
+export type CommentStatus = typeof commentStatus[keyof typeof commentStatus];
 
 export interface Comment {
   _id: string;
   title: string;
   text: string;
   userName: { userName: string };
-  type: petType;
+  type: PetType;
+  status: CommentStatus;
   createdAt?: string;
   updatedAt?: string;
 }

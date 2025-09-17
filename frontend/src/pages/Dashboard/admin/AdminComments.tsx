@@ -53,7 +53,7 @@ const AdminComments = () => {
           <div className="p-4 text-center grid grid-cols-[150px_300px_150px_250px_150px_200px] border-b border-gray-300">
             <Text as="p">User Name</Text>
             <Text as="p">Title</Text>
-            <Text as="p">Text</Text>
+            <Text as="p">Comments</Text>
             <Text as="p">Type</Text>
             <Text as="p">Approval</Text>
             <Text as="p">Actions</Text>
@@ -72,7 +72,7 @@ const AdminComments = () => {
 
               <Dialog.Root>
                 <Dialog.Trigger>
-                  <Button color="teal" variant="soft">Text</Button>
+                  <Button color="teal" variant="soft">Comment</Button>
                 </Dialog.Trigger>
                 <Dialog.Content size="1" maxWidth="400px">
                   <Text as="p" trim="both" size="3">{comment.text}</Text>
