@@ -9,7 +9,7 @@ interface TotalProps {
 
 const Total = ({ title, value, percentage, isCurrency = false }: TotalProps) => {
   return (
-    <Box className="w-48 space-y-2 p-4 shadow-md rounded-lg bg-white">
+    <Box className="w-full xs:w-48 space-y-2 p-4 shadow-md rounded-lg bg-white">
       <Flex gap="2" align="start" justify="start" direction="column">
         <Text as="p" className="text-sm">
           {title}

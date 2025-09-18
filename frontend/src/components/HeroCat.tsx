@@ -24,7 +24,7 @@ const HeroCat: React.FC = () => {
           />
         </Flex>
 
-        <Flex className="gap-x-4 xs:gap-x-6 *:text-center *:space-y-2 mt-6 md:mt-0 lg:mt-9 text-white mx-auto">
+        <Flex className="gap-x-4 sm:gap-x-6 *:text-center *:space-y-2 mt-6 md:mt-0 lg:mt-9 text-white mx-auto">
           <Box>
             <h2 className="text-2xl lg:text-3xl font-semibold">200K+</h2>
             <p className="text-sm lg:text-base">Nutritional product</p>

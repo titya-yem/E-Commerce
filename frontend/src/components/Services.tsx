@@ -11,7 +11,7 @@ const Services = () => {
       const res = await axios.get<Service[]>(
         `${import.meta.env.VITE_API_URL}/api/service`
       );
-      return res.data.map((s: Service) => ({ ...s, id: s._id }))
+      return res.data.map((s: Service) => ({ ...s, id: s._id }));
     },
   });
 
@@ -25,13 +25,11 @@ const Services = () => {
         Services
       </h1>
 
-      <div className="grid justify-center gap-6 md:grid-cols-6">
-        {data.map((service: Service, index) => (
-          <Box
-            key={service._id}
-            className={index < 3 ? "md:col-span-2" : "md:col-span-3"}
-          >
-            <Card size="2" className="h-full flex flex-col shadow-sm">
+      {/* Responsive Grid */}
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {data.map((service: Service) => (
+          <Box key={service._id} className="md:col-span-1">
+            <Card size="2" className="h-full flex flex-col shadow-sm border rounded-lg">
               <Inset clip="padding-box" side="top" pb="current">
                 <img
                   src={service.image}
@@ -40,7 +38,7 @@ const Services = () => {
                 />
               </Inset>
 
-              <Text as="p" size="5" className="text-center pb-2" weight="bold">
+              <Text as="p" size="5" className="text-center pb-2 font-bold">
                 {service.title}
               </Text>
 
@@ -51,21 +49,22 @@ const Services = () => {
                     ? `${service.duration} day`
                     : `${service.duration} hours`}
                 </Badge>
-                <Badge color="cyan" size="3">Price: ${service.price}</Badge>
+                <Badge color="cyan" size="3">
+                  Price: ${service.price}
+                </Badge>
               </Flex>
 
-              <Text as="p" size="2" className="text-center text-gray-600 flex-1 min-h-[80px]">
+              <Text as="p" size="2" className="text-center text-gray-600 flex-1 min-h-[80px] leading-relaxed">
                 {service.description}
               </Text>
 
               <Flex align="center" justify="between" gap="4" pt="4" className="mt-auto">
-                <Button color="cyan">
+                <Button color="cyan" asChild>
                   <Link to="/contact" className="p-4">
                     ${service.price}
                   </Link>
                 </Button>
-                
-                <Button color="ruby">
+                <Button color="ruby" asChild>
                   <Link to="/appointment" className="p-4">
                     {service.duration === 1 ? `${service.duration} day` : `${service.duration} hours`}
                   </Link>
