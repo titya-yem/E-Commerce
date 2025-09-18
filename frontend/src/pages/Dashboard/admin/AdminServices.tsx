@@ -62,9 +62,9 @@ const AdminServices = () => {
         </Button>
       </Flex>
 
-      <Flex wrap="wrap" gap="6" my="2">
+      <Flex wrap="wrap" gap="4" my="2">
         {data.map((service: Service, index: number) => (
-          <Box key={service._id || index} maxWidth="280px">
+          <Box key={service._id || index} maxWidth="295px">
             <Card size="2">
               <Inset clip="padding-box" side="top" pb="current">
                 <img

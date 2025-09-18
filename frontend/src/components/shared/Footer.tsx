@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
           <Box className="mt-4 space-y-2">
             <div className="flex items-center justify-center gap-x-4">
               <img src={addressIcon} alt="Our Location" />
-              <Text as="p" className="w-[62%] md:w-1/2 text-left">
+              <Text as="p" className="w-[62%] md:w-full lg:w-1/2 text-left">
                 9400 S Normandie Ave #14 Los Angeles(CA), 90044
               </Text>
             </div>
@@ -88,6 +88,7 @@ const Footer: React.FC = () => {
           </Box>
         </Box>
       </div>
+      
       <img src={line} alt="footer-line" className="mt-8 mb-6" />
       <Text as="p" className="text-sm text-center md:text-start md:pl-3 text-amber-50">
         Copyright by Pet Shop. (Titya Yem)

@@ -6,20 +6,25 @@ type ServiceEditFormProps = {
   service: Service;
   onCancel: () => void;
   onSave: (updated: Partial<Service> & { id: string }) => void;
-  onDelete: () => void;
+  onDelete?: () => void;
+};
+
+type FormValues = Partial<Service> & {
+  price: number | string;
+  duration: number | string;
 };
 
 const ServiceEditForm = ({ service, onCancel, onSave }: ServiceEditFormProps) => {
-  const { handleSubmit, control } = useForm<Partial<Service>>({
+  const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: service,
   });
 
-  const onSubmit = (data: Partial<Service>) => {
+  const onSubmit = (data: FormValues) => {
     const updatedService: Partial<Service> & { id: string } = {
       id: service.id!,
       title: data.title?.trim() || service.title,
-      price: Number(data.price) > 0 ? Number(data.price) : service.price,
-      duration: Number(data.duration) > 0 ? Number(data.duration) : service.duration,
+      price: data.price !== undefined ? data.price : service.price,
+      duration: data.duration !== undefined ? data.duration : service.duration,
       description: data.description?.trim() || service.description,
       image: data.image?.trim() || service.image,
       alt: data.alt?.trim() || service.alt,
@@ -44,7 +49,7 @@ const ServiceEditForm = ({ service, onCancel, onSave }: ServiceEditFormProps) =>
           <Controller
             name="price"
             control={control}
-            render={({ field }) => <TextField.Root {...field} type="number" placeholder="Enter price" />}
+            render={({ field }) => <TextField.Root {...field} placeholder="Enter price" />}
           />
         </label>
 
@@ -53,7 +58,7 @@ const ServiceEditForm = ({ service, onCancel, onSave }: ServiceEditFormProps) =>
           <Controller
             name="duration"
             control={control}
-            render={({ field }) => <TextField.Root {...field} type="number" placeholder="Enter duration" />}
+            render={({ field }) => <TextField.Root {...field} placeholder="Enter duration" />}
           />
         </label>
 
@@ -66,7 +71,6 @@ const ServiceEditForm = ({ service, onCancel, onSave }: ServiceEditFormProps) =>
           />
         </label>
 
-        {/* Description takes full row */}
         <label style={{ gridColumn: "span 2" }}>
           <Text as="p" size="2" mb="1" weight="bold">Description</Text>
           <Controller
@@ -92,7 +96,8 @@ const ServiceEditForm = ({ service, onCancel, onSave }: ServiceEditFormProps) =>
         </label>
       </Grid>
 
-      <Grid columns="2" gap="2" mt="4">        <Button variant="soft" color="gray" onClick={onCancel}>Cancel</Button>
+      <Grid columns="2" gap="2" mt="4">
+        <Button variant="soft" color="gray" onClick={onCancel}>Cancel</Button>
         <Button type="submit">Save</Button>
       </Grid>
     </form>

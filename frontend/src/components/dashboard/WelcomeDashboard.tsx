@@ -5,7 +5,7 @@ import DashboardBackgroundImage from '@/assets/image/Dashboard-Background-Image.
 const WelcomeDashboard = () => {
 return (
   <div className="md:h-44 relative flex justify-between items-center space-y-8 p-4 shadow-md rounded-lg bg-[#2954e4]">
-    <Box className='w-3/6 md:w-3/5'>
+    <Box className='w-3/6 md:w-3/6 2xl:w-3/5'>
       <Text as="p" className="text-lg md:text-2xl font-medium text-white"> 
         Welcome to Your Dashboard!
       </Text>

@@ -34,7 +34,7 @@ const ProductsComponent: React.FC = () => {
 
   return (
     <Container>
-      <h4 className="text-2xl lg:text-3xl text-center font-semibold py-10 md:py-16">
+      <h4 className="text-xl md:text-2xl text-center font-semibold py-10 md:py-14">
         Food <span className="text-[#43606D]">& Supplies</span>
       </h4> 
 

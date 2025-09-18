@@ -20,13 +20,13 @@ const Services = () => {
   if (!data || data.length === 0) return <Heading className="text-center py-10">No Services available</Heading>;
 
   return (
-    <Container className="my-10 pb-10 px-4">
+    <Container className="my-10 pb-10 px-2">
       <h1 className="text-2xl lg:text-4xl mx-auto mb-6 md:mb-10 text-center font-bold uppercase">
         Services
       </h1>
 
       {/* Responsive Grid */}
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {data.map((service: Service) => (
           <Box key={service._id} className="md:col-span-1">
             <Card size="2" className="h-full flex flex-col shadow-sm border rounded-lg">

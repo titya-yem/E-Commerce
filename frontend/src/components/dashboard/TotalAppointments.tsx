@@ -18,6 +18,7 @@ const TotalAppointments = () => {
   
   if (isLoading) return <Heading as="h1" className="text-center">Loading...</Heading>
   if (isError) return <Heading as="h1" className="text-center">Error: {(error as Error).message}</Heading>
+  if (!data || data.length === 0) return <Heading className="text-center py-10">No appointment available, this month</Heading>;
 
   return (
     <Box className="space-y-8 p-4 shadow-md rounded-lg bg-white">
@@ -36,7 +37,7 @@ const TotalAppointments = () => {
         ) : (
           <div className="p-4 border rounded-lg bg-white h-[280px] max-h-full overflow-y-auto">
             {/* Header */}
-            <div className="grid grid-cols-5 gap-2 font-medium border-b pb-2 pl-2 mb-2">
+            <div className="grid grid-cols-5 gap-2 *:text-center font-medium border-b pb-2 mb-2">
               <h5>Name</h5>
               <h5>Time</h5>
               <h5>Type</h5>
@@ -52,13 +53,27 @@ const TotalAppointments = () => {
               return (
                 <div
                   key={appointment._id}
-                  className="grid grid-cols-5 gap-2 text-sm py-1"
+                  className="grid grid-cols-5 *:text-center gap-2 text-sm py-1"
                 >
-                  <Badge color="indigo" size="2" radius="large">{user?.userName}</Badge>
-                  <Badge color="crimson" size="2" radius="large">{formattedTime}</Badge>
-                  <Badge color="cyan" size="2" radius="large">{appointment.type}</Badge>
-                  <Badge color="violet" size="2" radius="large">{appointment.date}</Badge>
-                  <Badge color="orange" size="2" radius="large">{appointment.status}</Badge>
+                  <Badge color="indigo" size="2" radius="large" className="flex items-center justify-center">
+                    {user?.userName}
+                  </Badge>
+
+                  <Badge color="crimson" size="2" radius="large" className="flex items-center justify-center">
+                    {formattedTime}
+                  </Badge>
+
+                  <Badge color="cyan" size="2" radius="large" className="flex items-center justify-center">
+                    {appointment.type}
+                  </Badge>
+                  
+                  <Badge color="violet" size="2" radius="large" className="flex items-center justify-center">
+                    {appointment.date}
+                  </Badge>
+
+                  <Badge color="orange" size="2" radius="large" className="flex items-center justify-center">
+                    {appointment.status}
+                  </Badge>
                 </div>
               )
             })}

@@ -27,9 +27,9 @@ const AdminDashboard = () => {
   const usersChange = prevUsers ? ((lastUsers - prevUsers) / prevUsers) * 100 : 0;
 
   return (
-    <div className="md:px-4 lg:px-0 lg:pl-4 w-full">
+    <div className="md:px-4 xl:pr-0 w-full 2xl:w-[1600px] 2xl:mx-auto">
       <h2 className="hidden md:block md:text-2xl py-5 font-medium">Dashboard</h2>
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col xl:flex-row gap-6">
         {/* Total Sales & Orders */}
         <div className="w-full space-y-4">
           <Box className="pt-6 pb-4 md:py-0">
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
         {/* Total Appoinments & Totals Component */}
         <div className="space-y-4 overflow-y-auto w-full mr-4">
-          <Text as="p" className="text-xl text-center md:text-left pb-4 md:pb-2 font-medium text-gray-500">
+          <Text as="p" className="text-lg text-center md:text-left pb-4 md:pb-2 font-medium text-gray-500">
             Vitals per Month
           </Text>
 
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
             <Total title="Total Users" value={lastUsers} percentage={usersChange}  />
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:block pb-6 xl:pb-0">
             <TotalAppointments />
           </div>
         </div>
