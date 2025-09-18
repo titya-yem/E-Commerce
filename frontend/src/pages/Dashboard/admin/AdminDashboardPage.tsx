@@ -38,7 +38,7 @@ const AdminDashboard = () => {
           {/* Revenue Analytics Line Graph */}
           <div className="pt-3 pb-2 rounded-lg shadow-md bg-white">
             <Flex align="center" justify="between" className="pb-6">
-              <h3 className="font-medium pl-7">Revenue Analytics (Last 5 Months)</h3>
+              <h3 className="font-medium pl-6 md:pl-7">Revenue Analytics (Last 5 Months)</h3>
             </Flex>
             <LineGraph data={revenueData} />
           </div>
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
         {/* Total Appoinments & Totals Component */}
         <div className="space-y-4 overflow-y-auto w-full mr-4">
-          <Text as="p" className="text-xl pb-2 font-medium text-gray-500">
+          <Text as="p" className="text-xl text-center md:text-left pb-4 md:pb-2 font-medium text-gray-500">
             Vitals per Month
           </Text>
           <Flex gap="4">
@@ -54,7 +54,10 @@ const AdminDashboard = () => {
             <Total title="Total Orders" value={lastOrders} percentage={ordersChange}  />
             <Total title="Total Users" value={lastUsers} percentage={usersChange}  />
           </Flex>
-          <TotalAppointments />
+
+          <div className="hidden md:block">
+            <TotalAppointments />
+          </div>
         </div>
 
       </div>
