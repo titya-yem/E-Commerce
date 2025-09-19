@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { RootState } from "@/store/store";
 import type { Order } from "@/types/orderTypes";
-import { AlertDialog, Box, Button, Dialog, Flex, Select, Table, Text } from "@radix-ui/themes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Button, Flex } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import toast from 'react-hot-toast';
+import AdminOrderTable from "@/components/dashboard/adminOrderTable";
 
 const AdminOrders: React.FC = () => {
-  const queryClient = useQueryClient();
-  const user = useSelector((state: RootState) => state.auth.user);
-
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 8;
 
@@ -28,43 +23,16 @@ const AdminOrders: React.FC = () => {
     },
   });
 
-  const updateStatus = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/api/order/${id}/status`, { status });
-      return res.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-    },
-  });
+  if (isLoading) return <h1 className="text-xl text-center mt-10">Loading...</h1>;
+  if (isError) return <h1 className="text-xl text-center mt-10">Error: {error?.message}</h1>;
+  if (!data || data.length === 0) return <h1 className="text-xl mt-10 text-center">No Orders Available</h1>;
 
-  const deleteOrder = useMutation({
-    mutationFn: async (id: string) => {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/order/${id}`)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] })
-      toast.success("Order deleted successfully", {
-        position: "top-center"
-      })
-    },
-    onError: () => {
-      toast.error("Faled to delete order", {
-        position: "top-center"
-      })
-    }
-  })
-
-  if (isLoading) return <h1 className="text-xl text-center">Loading...</h1>;
-  if (isError) return <h1 className="text-xl text-center">Error: {error?.message}</h1>;
-  if (!data || data.length === 0) return <h1 className="text-xl mt-10 mx-auto">No Orders Available</h1>;
-
-  // Getting actual date from createdAt from MongoDB
+  // Sort by date
   const sortedData = data.slice().sort(
     (a, b) => new Date(b.createdAt ?? "").getTime() - new Date(a.createdAt ?? "").getTime()
   );
 
-  // Creating pagination
+  // Pagination
   const totalPages = Math.ceil(sortedData.length / ordersPerPage);
   const currentOrders = sortedData.slice(
     (currentPage - 1) * ordersPerPage,
@@ -72,157 +40,12 @@ const AdminOrders: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-screen pl-4 w-full">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Orders</h2>
+    <div className="flex flex-col min-h-screen px-2 xl:px-4 w-full">
+      <h2 className="text-xl lg:text-2xl text-center lg:text-left py-5 font-medium">Orders</h2>
 
-      {/* Table container */}
-      <Box className="w-[99%] p-2 rounded-md bg-white flex-1 overflow-x-auto">
-        {/* Table Header */}
-        <div className="p-4 text-center grid grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300">
-          <Text as="p">Names</Text>
-          <Text as="p">Emails</Text>
-          <Text as="p">Products</Text>
-          <Text as="p">Date</Text>
-          <Text as="p">Amount</Text>
-          <Text as="p">Status</Text>
-        </div>
+      <AdminOrderTable currentOrders={currentOrders} />
 
-        {/* Table Rows */}
-        {currentOrders.map((order: Order) => (
-          <div
-            key={order._id}
-            className="p-4 *:text-sm text-center grid grid-cols-[150px_300px_200px_180px_150px_150px]"
-          >
-            <Text className="font-medium rounded-md text-blue-500">
-              {user?.userName ?? "N/A"}
-            </Text>
-            <Text className="font-medium rounded-md text-cyan-500">
-              {order.user?.email ?? "N/A"}
-            </Text>
-
-            {/* Order Details Dialog */}
-            <Dialog.Root>
-              <Dialog.Trigger>
-                <Button>View orders</Button>
-              </Dialog.Trigger>
-              <Dialog.Content>
-                <Dialog.Title>Orders</Dialog.Title>
-                <Dialog.Description mb="2">
-                  The following orders of the user.
-                </Dialog.Description>
-
-                <div className="max-h-[60vh] overflow-y-auto rounded-md border">
-                  <Table.Root>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.ColumnHeaderCell>Image</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Product's names</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Category</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {order.items?.map((item) => (
-                        <Table.Row key={item.id}>
-                          <Table.RowHeaderCell>
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="h-12 mx-auto object-cover rounded-md"
-                            />
-                          </Table.RowHeaderCell>
-                          <Table.Cell className="font-medium">{item.name ?? "N/A"}</Table.Cell>
-                          <Table.Cell className="pl-6">{item.category ?? "N/A"}</Table.Cell>
-                          <Table.Cell>{item.quantity ?? 0}</Table.Cell>
-                          <Table.Cell>${item.price?.toFixed(2) ?? "0.00"}</Table.Cell>
-                        </Table.Row>
-                      )) ?? (
-                        <Table.Row>
-                          <Table.Cell colSpan={5}>No items</Table.Cell>
-                        </Table.Row>
-                      )}
-                    </Table.Body>
-                  </Table.Root>
-                </div>
-
-                <Flex gap="3" justify="end" className="pt-4">
-                  <AlertDialog.Root>
-                    <AlertDialog.Trigger>
-                      <Button color="red">Delete</Button>
-                    </AlertDialog.Trigger>
-                    <AlertDialog.Content maxWidth="450px">
-                      <AlertDialog.Title>Delete orders</AlertDialog.Title>
-                      <AlertDialog.Description size="2">
-                        Are you sure? This order will be 
-                        <Text as="span" color="red" weight="medium">
-                          permenantly deleted
-                        </Text>.
-                      </AlertDialog.Description>
-
-                      <Flex gap="3" mt="4" justify="end">
-                        <AlertDialog.Cancel>
-                          <Button variant="soft" color="gray">
-                            Cancel
-                          </Button>
-                        </AlertDialog.Cancel>
-                        <AlertDialog.Action>
-                          <Button variant="solid" color="red"
-                            onClick={() => deleteOrder.mutate(order._id)}
-                          >
-                            Delete orders
-                          </Button>
-                        </AlertDialog.Action>
-                      </Flex>
-                    </AlertDialog.Content>
-                  </AlertDialog.Root>
-
-                  <Dialog.Close>
-                    <Button variant="soft" color="gray">
-                      Close
-                    </Button>
-                  </Dialog.Close>
-                </Flex>
-              </Dialog.Content>
-            </Dialog.Root>
-
-            <Text className="font-medium rounded-md text-purple-500">
-              {order.createdAt
-                ? new Date(order.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })
-                : "N/A"}
-            </Text>
-            <Text className="font-medium rounded-md text-amber-500">
-              ${order.totalAmount?.toFixed(2) ?? "0.00"}
-            </Text>
-
-            {/* Status Select */}
-            <Flex className="pl-7">
-              <Select.Root
-                size="2"
-                defaultValue={order.status ?? "Pending"}
-                onValueChange={(value) => {
-                  updateStatus.mutate({ id: order._id, status: value });
-                }}
-              >
-                <Select.Trigger color="orange" variant="soft" />
-                <Select.Content color="orange" position="popper">
-                  <Select.Item value="Paid">Paid</Select.Item>
-                  <Select.Item value="Cancelled">Cancelled</Select.Item>
-                  <Select.Item value="Pending">Pending</Select.Item>
-                  <Select.Item value="Shipped">Shipped</Select.Item>
-                </Select.Content>
-              </Select.Root>
-            </Flex>
-          </div>
-        ))}
-      </Box>
-
-      {/* Pagination always */}
+      {/* Pagination */}
       <Flex justify="end" gap="2" className="mr-4 my-4">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <Button
