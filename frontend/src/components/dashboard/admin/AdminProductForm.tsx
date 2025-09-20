@@ -2,14 +2,14 @@ import type { Product } from "@/types/productTypes";
 import { Button, Flex, Grid, Select, Text, TextField } from "@radix-ui/themes";
 import { Controller, useForm } from "react-hook-form";
 
-type ProductEditFormProps = {
+type AdminProductFormProps = {
   product: Product;
   onCancel: () => void;
   onSave: (updated: Partial<Product> & { _id: string }) => void;
   onDelete: () => void;
 };
 
-const ProductEditForm = ({ product, onCancel, onSave, onDelete }: ProductEditFormProps) => {
+const AdminProductForm = ({ product, onCancel, onSave, onDelete }: AdminProductFormProps) => {
   const categories = ["cat", "dog", "bird", "rabbit", "goldfish"];
 
   const { handleSubmit, control } = useForm<Partial<Product>>({
@@ -155,4 +155,4 @@ const ProductEditForm = ({ product, onCancel, onSave, onDelete }: ProductEditFor
   );
 };
 
-export default ProductEditForm;
+export default AdminProductForm;

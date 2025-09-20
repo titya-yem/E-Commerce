@@ -37,7 +37,7 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
   });
 
   return (
-    <Box className="p-2 rounded-md bg-white flex-1">
+    <Box className="p-2 rounded-md bg-white flex-1 h-[590px] max-h-[600px]">
       {/* Table Header */}
       <div className="hidden xl:grid xl:grid-cols-[100px_250px_150px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300 p-4 text-center">
         <Text as="p">Names</Text>

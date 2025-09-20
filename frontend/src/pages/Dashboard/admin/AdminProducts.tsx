@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import ProductEditForm from "@/components/dashboard/admin/AdminProductForm";
+import AdminProductForm from "@/components/dashboard/admin/AdminProductForm";
 import AdminAddProduct from "@/components/dashboard/admin/AdminAddProduct";
 
 const AdminProducts = () => {
@@ -64,20 +64,22 @@ const AdminProducts = () => {
   const currentProducts = sortedData.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   return (
-    <div className="pl-4 w-full">
-      <Flex justify="between" align="center">
-        <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Products</h2>
+    <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-4 w-full">
+      <Flex justify="between" align="center" className="gap-4 sm:gap-0">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-medium py-6">Products</h2>
         <Button 
-        mr="4"
-        size="2"
-        onClick={() => setAddingProduct(true)}>
+          mr="4"
+          size="2"
+          onClick={() => setAddingProduct(true)}>
           + Add Product
         </Button>
       </Flex>
 
-      <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto min-h-[580px]">
+      <Box className="p-2 sm:p-4 rounded-md bg-white overflow-x-auto h-[590px] max-h-[600px]">
         <Box className="overflow-x-auto">
-          <div className="p-4 text-center grid grid-cols-[158px_260px_150px_220px_200px_150px] border-b border-gray-300">
+
+          {/* ===== TABLE HEADER (XL ONLY) ===== */}
+          <div className="hidden xl:grid xl:grid-cols-[130px_260px_150px_200px_130px_200px] p-4 text-center gap-2 border-b border-gray-300">
             <Text>Images</Text>
             <Text>Name of Products</Text>
             <Text>Categories</Text>
@@ -86,26 +88,100 @@ const AdminProducts = () => {
             <Text>Actions</Text>
           </div>
 
+          {/* ===== PRODUCT ROWS ===== */}
           {currentProducts.map((product: Product) => (
-            <div key={product._id} className="p-3 text-sm text-center grid grid-cols-[160px_260px_150px_220px_200px_150px] border-b border-gray-200">
-              <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded-md mx-auto" />
-              <Text className="pt-1 font-medium text-gray-500">{product.name}</Text>
-              <Text className="pt-1 font-medium text-gray-500">{product.category}</Text>
-              <Text className="pt-1 font-medium text-gray-500">
-                {product.stock <= 50 ? <><span>{product.stock}</span> <span className="text-red-500 font-medium">Low stocks</span></> : product.stock}
-              </Text>
-              <Text className="pt-1 font-medium text-gray-500">${product.price}</Text>
-              <Button onClick={() => setEditingProduct(product)}>Edit Product</Button>
+            <div key={product._id} className="border-b border-gray-200 last:border-0">
+
+              {/* ===== XL: TABLE ROW ===== */}
+              <div className="hidden xl:grid xl:grid-cols-[130px_260px_150px_200px_130px_200px] p-3 text-sm text-center gap-2 items-center">
+                <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded-md mx-auto" />
+                <Text className="pt-1 font-medium text-gray-500">{product.name}</Text>
+                <Text className="pt-1 font-medium text-gray-500">{product.category}</Text>
+                <Text className="pt-1 font-medium text-gray-500">
+                  {product.stock <= 50 ? (
+                    <>
+                      <span>{product.stock}</span> <span className="text-red-500 font-medium">Low stocks</span>
+                    </>
+                  ) : product.stock}
+                </Text>
+                <Text className="pt-1 font-medium text-gray-500">${product.price}</Text>
+                <Flex align="center" justify="center" className="min-w-0">
+                  <Button size="2" className="whitespace-nowrap" onClick={() => setEditingProduct(product)}>
+                    Edit Product
+                  </Button>
+                </Flex>
+              </div>
+
+              {/* ===== MD-LG: 2x3 GRID LAYOUT ===== */}
+              <div className="hidden md:grid md:grid-cols-2 md:grid-rows-1 p-4 gap-4 xl:hidden">
+                {/* Left Column: Image, Name, Price */}
+                <div className="md:col-span-1 flex flex-col items-start">
+                  <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded-md mb-2" />
+                  <Text className="font-medium text-gray-700 text-sm">{product.name}</Text>
+                  <Text className="text-gray-500 text-sm">${product.price}</Text>
+                </div>
+
+                {/* Right Column: Category, Stock, Edit Button */}
+                <div className="md:col-span-1 flex flex-col justify-between">
+                  <Text className="text-gray-600 text-sm font-medium">Category: {product.category}</Text>
+                  <Text className="text-gray-500 text-sm">
+                    {product.stock <= 50 ? (
+                      <>
+                        <span>{product.stock}</span> <span className="text-red-500 font-medium">Low stocks</span>
+                      </>
+                    ) : (
+                      product.stock
+                    )}
+                  </Text>
+                  <Button
+                    size="2"
+                    variant="solid"
+                    color="blue"
+                    className="w-1/2 mt-2"
+                    onClick={() => setEditingProduct(product)}
+                  >
+                    Edit Product
+                  </Button>
+                </div>
+              </div>
+
+              {/* ===== INITIAL (MOBILE): CARD ===== */}
+              <div className="p-4 md:hidden">
+                <div className="flex flex-col items-center text-center">
+                  <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded-md mb-3" />
+                  <Text className="font-medium text-gray-700 text-sm mb-1">{product.name}</Text>
+                  <Text className="text-gray-500 text-sm mb-3">${product.price}</Text>
+                  <Text className="text-gray-600 text-sm font-medium mb-1">Category: {product.category}</Text>
+                  <Text className="text-gray-500 text-sm mb-4">
+                    {product.stock <= 50 ? (
+                      <>
+                        <span>{product.stock}</span> <span className="text-red-500 font-medium">Low stocks</span>
+                      </>
+                    ) : (
+                      product.stock
+                    )}
+                  </Text>
+                  <Button
+                    size="2"
+                    variant="solid"
+                    color="blue"
+                    onClick={() => setEditingProduct(product)}
+                  >
+                    Edit Product
+                  </Button>
+                </div>
+              </div>
+
             </div>
           ))}
 
-          {/* Edit Product Dialog */}
+          {/* ===== DIALOGS — OUTSIDE SCROLL CONTAINER ===== */}
           {editingProduct && (
             <Dialog.Root open={true} onOpenChange={(open) => !open && setEditingProduct(null)}>
-              <Dialog.Content maxWidth="800px">
+              <Dialog.Content className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl lg:max-w-5xl max-h-screen p-4 sm:p-6 mx-auto overflow-y-auto">
                 <Dialog.Title>Edit Product</Dialog.Title>
                 <Dialog.Description size="2" mb="2">Update product details below.</Dialog.Description>
-                <ProductEditForm
+                <AdminProductForm
                   product={editingProduct}
                   onCancel={() => setEditingProduct(null)}
                   onSave={(updated) => updateProduct.mutate({ ...updated, _id: editingProduct!._id })}
@@ -115,10 +191,9 @@ const AdminProducts = () => {
             </Dialog.Root>
           )}
 
-          {/* Add Product Dialog */}
           {addingProduct && (
             <Dialog.Root open={true} onOpenChange={(open) => !open && setAddingProduct(false)}>
-              <Dialog.Content maxWidth="800px">
+              <Dialog.Content className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl lg:max-w-5xl max-h-screen p-4 sm:p-6 mx-auto overflow-y-auto">
                 <Dialog.Title>Add Product</Dialog.Title>
                 <Dialog.Description size="2" mb="2">Fill in the product details below.</Dialog.Description>
                 <AdminAddProduct />
@@ -132,11 +207,11 @@ const AdminProducts = () => {
       </Box>
 
       {/* Pagination */}
-      <Flex justify="end" gap="2" className="mr-4 my-4">
+      <Flex justify={{ initial: "center", sm: "end" }} gap="2" className="my-4 flex-wrap">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <Button
             key={page}
-            size="2"
+            size={{ initial: '1', sm: '2' }}
             variant={page === currentPage ? "solid" : "soft"}
             onClick={() => setCurrentPage(page)}
           >
