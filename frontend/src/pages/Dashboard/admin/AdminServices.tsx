@@ -4,8 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import ServiceEditForm from "@/components/dashboard/AdminServiceUpdate";
-import AdminAddServices from "@/components/dashboard/AdminAddServices";
+import ServiceEditForm from "@/components/dashboard/admin/AdminServiceUpdate";
+import AdminAddServices from "@/components/dashboard/admin/AdminAddServices";
 
 const AdminServices = () => {
   const queryClient = useQueryClient();

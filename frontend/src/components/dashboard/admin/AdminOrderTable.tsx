@@ -58,7 +58,7 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
           <Text className="rounded-md text-cyan-500">{order.user?.email ?? "N/A"}</Text>
 
           {/* View Order Details */}
-          <Box className="w-2/3 xl:w-full mx-auto xl:mx-0">
+          <Box className="w-2/3 mx-auto">
             <AdminProductDetails order={order} onDelete={(id: string) => deleteOrder.mutate(id)} />
           </Box>
 

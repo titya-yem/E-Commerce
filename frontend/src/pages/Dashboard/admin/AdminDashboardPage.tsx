@@ -1,7 +1,7 @@
 import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
-import LineGraph from "@/components/dashboard/LineGraph";
-import Total from "@/components/dashboard/Total";
-import TotalAppointments from "@/components/dashboard/TotalAppointments";
+import LineGraph from "@/components/dashboard/admin/LineGraph";
+import Total from "@/components/dashboard/admin/Total";
+import TotalAppointments from "@/components/dashboard/admin/TotalAppointments";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

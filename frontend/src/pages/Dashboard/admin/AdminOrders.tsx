@@ -4,7 +4,7 @@ import { Button, Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import AdminOrderTable from "@/components/dashboard/adminOrderTable";
+import AdminOrderTable from "@/components/dashboard/admin/AdminOrderTable";
 
 const AdminOrders: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -4,8 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import ProductEditForm from "@/components/dashboard/AdminProductForm";
-import AdminAddProduct from "@/components/dashboard/AdminAddProduct";
+import ProductEditForm from "@/components/dashboard/admin/AdminProductForm";
+import AdminAddProduct from "@/components/dashboard/admin/AdminAddProduct";
 
 const AdminProducts = () => {
   const queryClient = useQueryClient();
