@@ -15,8 +15,14 @@ import { Link, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const location = useLocation();
-  const role = useSelector((state: RootState) => state.auth.user?.role);
+
+  const role = useSelector(
+    (state: RootState) => state.auth.user?.role
+  ) as "admin" | "user" | undefined;
+
   const prefix = role === "admin" ? "/admin/dashboard" : "/user/dashboard";
+
+  if (!role) return null; 
 
   return (
     <Sidebar className="sticky top-0 left-0">
@@ -27,7 +33,7 @@ const SideBar = () => {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {SideBarItems.map((item) => {
+              {SideBarItems.filter(item => item.roles.includes(role)).map((item) => {
                 const fullPath = `${prefix}/${item.url}`;
                 return (
                   <SidebarMenuItem key={item.title}>

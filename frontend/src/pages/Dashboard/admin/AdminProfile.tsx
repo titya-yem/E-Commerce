@@ -20,7 +20,7 @@ const AdminProfile = () => {
   const profile: getMe = data
 
   return (
-    <div className="px-4 md:pr-0 mx-auto md:mx-0 w-full">
+    <div className="px-4 md:pr-0 mx-auto md:mx-0 w-full 2xl:w-[1600px] 2xl:mx-auto">
       <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left py-5 font-medium">Profile</h2>
 
       <Box className="md:w-fit p-4 rounded-md bg-white overflow-x-auto">

@@ -53,7 +53,7 @@ const AdminServices = () => {
   if (!data || data.length === 0) return <Heading className="text-center py-10">No Services available</Heading>;
 
   return (
-    <div className="px-4 w-full">
+    <div className="px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
       <Flex justify="between" align="center">
         <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Services</h2>
         <Button mr="4" size="2" onClick={() => setAddingProduct(true)}>+ Add Service</Button>

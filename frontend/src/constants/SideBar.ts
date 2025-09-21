@@ -8,18 +8,18 @@ import UserImage from "@/assets/svg/dashboard/user.svg"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type SideBarItem = {
-  title: string
-  url: string
-  icon: any
-}
+  title: string;
+  url: string;
+  icon: any;
+  roles: ("admin" | "user")[];
+};
 
 export const SideBarItems: SideBarItem[] = [
-  { title: "Orders", url: "orders", icon: OrderImage },
-  { title: "Products", url: "products", icon: ProductImage },
-  { title: "Appointments", url: "appointments", icon: AppointmentImage },
-  { title: "Services", url: "services", icon: ServiceImage },
-  { title: "Users", url: "users", icon: UserImage },
-  { title: "Comments", url: "comments", icon: CommentImage },
-  { title: "Profile", url: "profile", icon: ProfileImage },
+  { title: "Orders", url: "orders", icon: OrderImage, roles: ["admin", "user"] },
+  { title: "Products", url: "products", icon: ProductImage, roles: ["admin"] },
+  { title: "Appointments", url: "appointments", icon: AppointmentImage, roles: ["admin"] },
+  { title: "Services", url: "services", icon: ServiceImage, roles: ["admin"] },
+  { title: "Users", url: "users", icon: UserImage, roles: ["admin"] },
+  { title: "Comments", url: "comments", icon: CommentImage, roles: ["admin", "user"] },
+  { title: "Profile", url: "profile", icon: ProfileImage, roles: ["admin", "user"] },
 ];
-

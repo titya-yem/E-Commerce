@@ -46,7 +46,7 @@ const AdminComments = () => {
   );
 
   return (
-    <div className="px-6 lg:px-4 w-full">
+    <div className="px-6 lg:px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
       <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left py-5 font-medium">
         Comments
       </h2>

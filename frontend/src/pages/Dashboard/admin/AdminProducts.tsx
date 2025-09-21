@@ -64,7 +64,7 @@ const AdminProducts = () => {
   const currentProducts = sortedData.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   return (
-    <div className="px-6 lg:px-4 w-full">
+    <div className="px-6 lg:px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
       <Flex justify="between" align="center" className="gap-4 sm:gap-0">
         <h2 className="text-lg sm:text-xl md:text-2xl font-medium py-6">Products</h2>
         <Button 

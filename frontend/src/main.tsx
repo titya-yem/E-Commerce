@@ -36,7 +36,6 @@ import AdminDashboard from "./pages/Dashboard/admin/AdminDashboardPage.tsx";
 import AdminProfile from "./pages/Dashboard/admin/AdminProfile.tsx";
 import AppointmentsPage from "./pages/Dashboard/admin/AdminAppointment.tsx";
 import CommentsPage from "./pages/Dashboard/admin/AdminComments.tsx";
-import ContactsPage from "./pages/Dashboard/admin/AdminContacts.tsx";
 import OrdersPage from "./pages/Dashboard/admin/AdminOrders.tsx";
 import ProductsPage from "./pages/Dashboard/admin/AdminProducts.tsx";
 import ServicesPage from "./pages/Dashboard/admin/AdminServices.tsx";
@@ -98,7 +97,6 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="services" element={<ServicesPage />} />
                   <Route path="users" element={<UsersPage />} />
                   <Route path="comments" element={<CommentsPage />} />
-                  <Route path="contacts" element={<ContactsPage />} />
                   <Route path="profile" element={<AdminProfile />} />
                 </Route>
 
