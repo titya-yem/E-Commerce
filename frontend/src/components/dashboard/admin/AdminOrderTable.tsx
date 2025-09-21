@@ -37,7 +37,7 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
   });
 
   return (
-    <Box className="p-2 rounded-md bg-white flex-1 h-[590px] max-h-[600px]">
+    <Box className="p-2 rounded-md bg-white flex-1 h-[590px] xl:max-h-[600px]">
       {/* Table Header */}
       <div className="hidden xl:grid xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300 p-4 text-center">
         <Text as="p">Names</Text>
@@ -52,10 +52,17 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
       {currentOrders.map((order) => (
         <div
           key={order._id}
-          className="grid md:grid-cols-3 gap-2 p-4 border-b text-center xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] xl:gap-0 xl:border-none"
+          className="grid md:grid-cols-3 gap-2 p-4 border-b text-center xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] *:text-sm *:font-medium xl:gap-0 xl:border-none"
         >
-          <Text className="rounded-md text-blue-500">{user?.userName ?? "N/A"}</Text>
-          <Text className="rounded-md text-cyan-500">{order.user?.email ?? "N/A"}</Text>
+          <Text className="text-blue-500">
+            <Text as="span" className="lg:hidden">Name: </Text>{user?.userName ?? "N/A"}
+          </Text>
+          <Text className="underline text-cyan-500">
+            <Text as="span" className="lg:hidden">Email: </Text>
+            <a href={`mailto:{order.email}`}>
+              {order.user?.email ?? "N/A"}
+            </a>
+          </Text>
 
           {/* View Order Details */}
           <Box className="w-2/3 mx-auto">
@@ -63,12 +70,14 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
           </Box>
 
           <Text className="font-medium rounded-md text-purple-500">
+            <Text as="span" className="lg:hidden">Date: </Text>
             {order.createdAt
               ? new Date(order.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
               : "N/A"}
           </Text>
 
           <Text className="font-medium rounded-md text-amber-500">
+            <Text as="span" className="lg:hidden">Amount: </Text>
             ${order.totalAmount?.toFixed(2) ?? "0.00"}
           </Text>
 

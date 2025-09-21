@@ -90,7 +90,7 @@ const AdminProducts = () => {
 
           {/* ===== PRODUCT ROWS ===== */}
           {currentProducts.map((product: Product) => (
-            <div key={product._id} className="border-b border-gray-200 last:border-0">
+            <div key={product._id} className="border-b border-gray-100 last:border-0">
 
               {/* ===== XL: TABLE ROW ===== */}
               <div className="hidden xl:grid xl:grid-cols-[100px_230px_140px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] p-3 text-sm text-center gap-2 items-center">

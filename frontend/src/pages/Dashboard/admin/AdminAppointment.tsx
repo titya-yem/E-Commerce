@@ -83,11 +83,27 @@ const AdminAppointments = () => {
                     : "1fr",
                 }}
               >
-                <Text as="p" className="font-medium text-blue-500">{user?.userName}</Text>
-                <Text as="p" className="font-medium text-cyan-500">{appointment.email}</Text>
-                <Text as="p" className="font-medium text-teal-500">{appointment.type}</Text>
-                <Text as="p" className="font-medium text-rose-500">{formattedTime}</Text>
-                <Text as="p" className="font-medium text-violet-500">{appointment.date}</Text>
+                <Text as="p" className="font-medium text-blue-500">
+                  <Text as="span" className="lg:hidden">Name: </Text>{user?.userName}
+                </Text>
+
+                <Text as="p" className="font-medium underline text-cyan-500">
+                <Text as="span" className="lg:hidden">Email: </Text>
+                  <a href={`mailto:{appointment.email}`}>{appointment.email}</a>
+                </Text>
+
+                <Text as="p" className="font-medium text-teal-500">
+                  <Text as="span" className="lg:hidden">Type: </Text>{appointment.type}
+                </Text>
+
+                <Text as="p" className="font-medium text-rose-500">
+                  <Text as="span" className="lg:hidden">Time: </Text>{formattedTime}
+                </Text>
+
+                <Text as="p" className="font-medium text-violet-500">
+                  <Text as="span" className="lg:hidden">Date: </Text>{appointment.date}
+                </Text>
+                
                 <Flex className="mx-auto justify-center">
                   <Select.Root
                     size="2"

@@ -20,10 +20,10 @@ const AdminProfile = () => {
   const profile: getMe = data
 
   return (
-    <div className="pl-4 w-full">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Profile</h2>
+    <div className="px-4 md:pr-0 mx-auto md:mx-0 w-full">
+      <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left py-5 font-medium">Profile</h2>
 
-      <Box className="w-fit p-4 rounded-md bg-white overflow-x-auto">
+      <Box className="md:w-fit p-4 rounded-md bg-white overflow-x-auto">
         <DataList.Root>
           <DataList.Item align="center">
             <DataList.Label minWidth="88px">Role</DataList.Label>

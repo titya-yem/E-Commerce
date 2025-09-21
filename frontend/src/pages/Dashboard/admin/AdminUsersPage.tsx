@@ -31,34 +31,49 @@ const AdminUsersPage = () => {
   );
 
   return (
-    <div className="pl-4 w-full">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">
+    <div className="px-6 lg:px-4 w-full">
+      <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left py-5 font-medium">
         Users
       </h2>
 
-      <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto min-h-[580px]">
-        <Box className="overflow-x-auto">
-          {/* Header */}
-          <div className="p-4 text-center grid grid-cols-[200px_300px_200px_200px_200px] border-b border-gray-300">
-            <Text as="p">User Name</Text>
-            <Text as="p">Email</Text>
-            <Text as="p">Role</Text>
-            <Text as="p">Is Active</Text>
-            <Text as="p">Created Date</Text>
+      <Box className="p-2 rounded-md bg-white h-[590px] max-h-[600px]">
+        <Box>
+          {/* Header for large screens */}
+          <div className="hidden lg:grid grid-cols-5 gap-4 p-4 text-center border-b border-gray-300">
+            <Text>User Name</Text>
+            <Text>Email</Text>
+            <Text>Role</Text>
+            <Text>Is Active</Text>
+            <Text>Created Date</Text>
           </div>
 
           {/* Rows */}
           {currentUsers.map((user: User) => (
             <div
               key={user._id}
-              className="p-3 *:text-sm pl-4 text-center grid grid-cols-[200px_300px_200px_200px_200px]"
+              className="
+                grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5
+                md:grid-rows-3 lg:grid-rows-1
+                gap-4 p-3 text-sm border-b border-gray-200 md:border-gray-100 text-center
+              "
             >
-              <Text as="p" className="font-medium rounded-md text-blue-500">{user.userName || 'N/A'}</Text>
-              <Text as="p" className="font-medium rounded-md text-cyan-500">{user.email}</Text>
-              <Text as="p" className="font-medium rounded-md text-teal-500">{user.role || 'User'}</Text>
-              <Text as="p" className="font-medium rounded-md text-amber-500">{user.isActive ? 'Active' : 'Inactive'}</Text>
-              <Text as="p" className="font-medium rounded-md text-violet-500">
-                {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+              <Text className="font-medium text-blue-500">
+                <span className="lg:hidden">Name: </span>{user.userName || 'N/A'}
+              </Text>
+              <Text className="font-medium underline text-cyan-500">
+                  <a href={`mailto:{user.email}`}>
+                    <Text as="span" className="lg:hidden">Email: </Text>
+                    {user.email}
+                  </a>
+              </Text>
+              <Text className="font-medium text-teal-500">
+                <span className="lg:hidden">Role: </span>{user.role || 'User'}
+              </Text>
+              <Text className="font-medium text-amber-500">
+                <span className="lg:hidden">Status: </span>{user.isActive ? 'Active' : 'Inactive'}
+              </Text>
+              <Text className="font-medium text-violet-500">
+                <span className="lg:hidden">Created at: </span>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
               </Text>
             </div>
           ))}

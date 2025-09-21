@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Service } from "@/types/serviceTypes";
 import { Badge, Box, Button, Card, Dialog, Flex, Heading, Inset, Text, AlertDialog } from "@radix-ui/themes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -32,19 +33,19 @@ const AdminServices = () => {
       toast.success("Service updated successfully");
       setEditingService(null);
     },
-    onError: () => toast.error("Failed to update service"),
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || "Failed to update service");
+    },
   });
 
   const deleteService = useMutation({
     mutationFn: async (id: string) => {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/service/${id}`);
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/service/${id}`);
+      return res.data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["services"] });
-      toast.success("Service deleted successfully");
-      setDeleteServiceId(null);
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || "Failed to delete service");
     },
-    onError: () => toast.error("Failed to delete service"),
   });
 
   if (isLoading) return <Heading className="text-center py-10">Loading...</Heading>;
@@ -55,9 +56,7 @@ const AdminServices = () => {
     <div className="px-4 w-full">
       <Flex justify="between" align="center">
         <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Services</h2>
-        <Button mr="4" size="2" onClick={() => setAddingProduct(true)}>
-          + Add Service
-        </Button>
+        <Button mr="4" size="2" onClick={() => setAddingProduct(true)}>+ Add Service</Button>
       </Flex>
 
       <div className="flex flex-wrap gap-4 my-2 items-center justify-center 2xl:justify-start">
@@ -76,7 +75,7 @@ const AdminServices = () => {
 
               <Flex align="center" justify="center" gap="2" className="pb-2">
                 <Badge color="crimson" size="3">
-                  Duration: {`${service.duration === 1 ? `${service.duration} day` : `${service.duration} hours`}`}
+                  Duration: {service.duration === 1 ? `${service.duration} day` : `${service.duration} hours`}
                 </Badge>
                 <Badge color="cyan" size="3">Price: ${service.price}</Badge>
               </Flex>
@@ -134,18 +133,31 @@ const AdminServices = () => {
           <AlertDialog.Content maxWidth="400px">
             <AlertDialog.Title>Delete Service</AlertDialog.Title>
             <AlertDialog.Description size="2" mb="4">
-              Are you sure you want to delete this service? This action cannot be undone.
+              Are you sure you want to delete this service?{" "}
+              <Text as="span" color="red" weight="medium">It will be permanently deleted.</Text>
             </AlertDialog.Description>
 
             <Flex justify="end" gap="2">
               <AlertDialog.Cancel>
                 <Button variant="soft" color="gray" onClick={() => setDeleteServiceId(null)}>Cancel</Button>
               </AlertDialog.Cancel>
+
               <AlertDialog.Action>
                 <Button
                   color="red"
                   onClick={() => {
-                    if (deleteServiceId) deleteService.mutate(deleteServiceId);
+                    if (deleteServiceId) {
+                      deleteService.mutate(deleteServiceId, {
+                        onSuccess: () => {
+                          setDeleteServiceId(null);
+                          queryClient.invalidateQueries({ queryKey: ["services"] });
+                          toast.success("Service deleted successfully");
+                        },
+                        onError: (err: any) => {
+                          toast.error(err?.response?.data?.message || "Failed to delete service");
+                        },
+                      });
+                    }
                   }}
                 >
                   Delete
