@@ -39,7 +39,7 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
   return (
     <Box className="p-2 rounded-md bg-white flex-1 h-[590px] max-h-[600px]">
       {/* Table Header */}
-      <div className="hidden xl:grid xl:grid-cols-[100px_250px_150px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300 p-4 text-center">
+      <div className="hidden xl:grid xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] border-b border-gray-300 p-4 text-center">
         <Text as="p">Names</Text>
         <Text as="p">Emails</Text>
         <Text as="p">Products</Text>
@@ -52,7 +52,7 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
       {currentOrders.map((order) => (
         <div
           key={order._id}
-          className="grid md:grid-cols-3 gap-2 p-4 border-b text-center xl:grid-cols-[100px_250px_150px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] xl:gap-0 xl:border-none"
+          className="grid md:grid-cols-3 gap-2 p-4 border-b text-center xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] xl:gap-0 xl:border-none"
         >
           <Text className="rounded-md text-blue-500">{user?.userName ?? "N/A"}</Text>
           <Text className="rounded-md text-cyan-500">{order.user?.email ?? "N/A"}</Text>

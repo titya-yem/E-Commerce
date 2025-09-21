@@ -64,7 +64,7 @@ const AdminProducts = () => {
   const currentProducts = sortedData.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   return (
-    <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-4 w-full">
+    <div className="px-6 lg:px-4 w-full">
       <Flex justify="between" align="center" className="gap-4 sm:gap-0">
         <h2 className="text-lg sm:text-xl md:text-2xl font-medium py-6">Products</h2>
         <Button 
@@ -79,7 +79,7 @@ const AdminProducts = () => {
         <Box className="overflow-x-auto">
 
           {/* ===== TABLE HEADER (XL ONLY) ===== */}
-          <div className="hidden xl:grid xl:grid-cols-[130px_260px_150px_200px_130px_200px] p-4 text-center gap-2 border-b border-gray-300">
+          <div className="hidden xl:grid xl:grid-cols-[100px_230px_140px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] p-3 text-center gap-2 border-b border-gray-300">
             <Text>Images</Text>
             <Text>Name of Products</Text>
             <Text>Categories</Text>
@@ -93,7 +93,7 @@ const AdminProducts = () => {
             <div key={product._id} className="border-b border-gray-200 last:border-0">
 
               {/* ===== XL: TABLE ROW ===== */}
-              <div className="hidden xl:grid xl:grid-cols-[130px_260px_150px_200px_130px_200px] p-3 text-sm text-center gap-2 items-center">
+              <div className="hidden xl:grid xl:grid-cols-[100px_230px_140px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] p-3 text-sm text-center gap-2 items-center">
                 <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded-md mx-auto" />
                 <Text className="pt-1 font-medium text-gray-500">{product.name}</Text>
                 <Text className="pt-1 font-medium text-gray-500">{product.category}</Text>

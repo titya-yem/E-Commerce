@@ -40,7 +40,7 @@ const AdminOrders: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-screen px-2 xl:px-4">
+    <div className="flex flex-col min-h-screen px-2 xl:px-4 w-full">
       <h2 className="text-xl lg:text-2xl text-center lg:text-left py-5 font-medium">Orders</h2>
 
       <AdminOrderTable currentOrders={currentOrders} />

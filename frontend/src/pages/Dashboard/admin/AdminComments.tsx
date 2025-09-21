@@ -47,7 +47,7 @@ const AdminComments = () => {
     <div className="pl-4 w-full">
       <h2 className="text-xl lg:text-2xl xl:w-3xl py-5 font-medium">Comments</h2>
 
-      <Box className="w-[99%] p-2 rounded-md bg-white overflow-x-auto min-h-[580px]">
+    <Box className="p-2 rounded-md bg-white overflow-x-auto h-[590px] max-h-[600px]">
         <Box className="overflow-x-auto">
           {/* Header */}
           <div className="p-4 text-center grid grid-cols-[150px_300px_150px_250px_150px_200px] border-b border-gray-300">
