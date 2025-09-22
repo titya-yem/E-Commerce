@@ -41,7 +41,7 @@ const AppointmentForm = () => {
 
     try {
       const payload = {
-        name: userId,
+        user: userId,
         email: data.email,
         time: data.time,
         message: data.message?.length ? data.message : undefined,

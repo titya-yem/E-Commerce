@@ -4,7 +4,8 @@ import {
     deleteAppointment,
     getAllAppointments,
     getAppointmentsByMonthly,
-    updateAppointment
+    updateAppointment,
+    getMyAppointments
 } from "../controllers/appointment.controller";
 import auth from "../middlewares/auth.middleware";
 import admin from "../middlewares/admin.middleware";
@@ -13,6 +14,7 @@ const router = Router();
 
 // user route
 router.post("/create", auth, createAppointment)
+router.get("/my-appointments", auth, getMyAppointments);
 
 // admin routes
 router.get("/", auth, admin, getAllAppointments)

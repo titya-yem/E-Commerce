@@ -1,8 +1,6 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
-const petTypes = ["Dogs Lover", "Cats Lover", "Rabbit Lover", "Birds Lover", "Fishes Lover"];
-
 const isObjectId = (value: string, helpers: any) => {
   if (!mongoose.Types.ObjectId.isValid(value)) {
     return helpers.error("any.invalid");
@@ -10,12 +8,16 @@ const isObjectId = (value: string, helpers: any) => {
   return value;
 };
 
-const commentValidation = Joi.object({
-  title: Joi.string().min(2).max(100).required(),
-  text: Joi.string().min(5).max(500).required(),
-  userName: Joi.string().custom(isObjectId).required(),
-  type: Joi.string().valid(...petTypes).required(),
-  status: Joi.string().valid("Cancelled", "Approved").optional(),
+const appointmentTypes = ["Vacation", "Bathing", "Cut & Trim hair", "Food & Supplies", "Party"];
+
+const appointmentValidation = Joi.object({
+  type: Joi.string().valid(...appointmentTypes).required(),
+  user: Joi.string().custom(isObjectId).optional(),
+  email: Joi.string().email().required(),
+  time: Joi.string().required(),
+  date: Joi.string().required(),
+  message: Joi.string().optional(),
+  status: Joi.string().valid("Incomplete", "Completed", "Cancelled").optional(),
 });
 
-export default commentValidation;
+export default appointmentValidation;

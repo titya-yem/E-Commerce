@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Service from "../models/service.model";
 import serviceValidation from "../validations/service.validation";
+import { AuthRequest } from "../middlewares/auth.middleware";
+import Order from "../models/order.model";
 
 // Get all services
 export const getAllServices = async (req: Request, res: Response): Promise<void | any> => {
@@ -77,5 +79,27 @@ export const deleteService = async (req: Request, res: Response): Promise<void |
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to delete service" });
+    }
+}
+
+// Get services for users
+export const getUsersService = async (req: AuthRequest, res: Response): Promise<void | any> => {
+    try {
+        let orders;
+
+        if (req.user?.role === "user") {
+            orders = await Service.find({}).select("-__v");
+        } else {
+            orders = await Service.find({ user: req.user?.id }).select("-__v");
+        }
+
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: "No orders found for this user" });
+        }
+
+        res.status(200).json(orders);        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to create service" });
     }
 }

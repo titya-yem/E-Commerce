@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import Order from "../models/order.model";
-import orderValidation from "../validations/order.validation";
 
 // Get all orders
 export const getOrders = async (req: AuthRequest, res: Response): Promise<void | any> => {

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Appointment from '../models/appointment.model';
 import AppointmentValidation from "../validations/appointment.validation";
+import { AuthRequest } from '../middlewares/auth.middleware';
 
 // Get all appointments
 export const getAllAppointments = async (req: Request, res: Response): Promise<void | any> => {
@@ -18,23 +19,20 @@ export const getAllAppointments = async (req: Request, res: Response): Promise<v
 }
 
 // Create a new appointment
-export const createAppointment = async (req: Request, res: Response): Promise<void | any> => {
+export const createAppointment = async (req: AuthRequest, res: Response) => {
     try {
         const { error, value } = AppointmentValidation.validate(req.body, { abortEarly: false });
-        if (error) {
-        console.log("Validation Error:", error.details);
-        return res.status(400).json({ message: error.details[0].message });
-        }
+        if (error) return res.status(400).json({ message: error.details[0].message });
 
-        const newAppointment = new Appointment(value)
-        await newAppointment.save()
+        const newAppointment = new Appointment({ ...value, user: req.user?.id });
+        await newAppointment.save();
 
         res.status(201).json(newAppointment);
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Failed to create appointment" });
     }
-}
+};
 
 // Update an appointment (status)
 export const updateAppointment = async (req: Request, res: Response): Promise<void | any> => {
@@ -124,4 +122,18 @@ export const getAppointmentsByMonthly = async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({ message: "Failed to get appointments" });
     }
+};
+
+export const getMyAppointments = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+    const appointments = await Appointment.find({ user: userId }).populate("user", "userName email");
+
+    res.status(200).json(appointments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch appointments" });
+  }
 };
