@@ -38,7 +38,10 @@ const UserDashboard = () => {
         {/* Right Panel */}
         <Box className="py-4 sm:py-0 mb-4 xl:pb-0 xl:w-2/3">
           <div className="space-y-8 p-4 shadow-md rounded-lg bg-white">
-            <div className="p-4 border rounded-lg bg-white h-[404px] overflow-y-auto">
+            <Text as="p" className="pb-4 text-center lg:text-left text-lg font-medium">
+              Appointment
+            </Text>
+            <div className="p-4 border rounded-lg bg-white h-[360px] overflow-y-auto">
               <div className="hidden lg:grid lg:grid-cols-[110px_160px_150px_80px_80px] gap-2 *:text-center font-medium border-b pb-2 mb-2">
                 <h5>Name</h5>
                 <h5>Email</h5>
