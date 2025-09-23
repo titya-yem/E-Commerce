@@ -10,9 +10,14 @@ import auth from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.get("/", auth, getOrders)
-router.get("/:id", auth, getOrderById)
+// User's own orders
+router.get("/me", auth, getOrders);
+
+// Get a specific order by ID
+router.get("/:id", auth, getOrderById);
+
+// Admin Routes
 router.patch("/:id/status", auth, admin, updateOrderStatus);
-router.delete("/:id", auth, admin, deleteOrder)
+router.delete("/:id", auth, admin, deleteOrder);
 
 export default router;

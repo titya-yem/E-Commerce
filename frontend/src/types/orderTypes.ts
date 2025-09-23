@@ -2,7 +2,7 @@ export interface Order {
   _id: string;
   user?: {
     email?: string;
-    // other user fields
+    userName?: string
   };
   items?: Array<{
     id: string;

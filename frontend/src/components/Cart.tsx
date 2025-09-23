@@ -35,6 +35,9 @@ const Cart = () => {
       if (res.data.sessionUrl) {
         toast.success("Redirecting to checkout...");
         dispatch(clearCart());
+        
+        // Redirect to Stripe checkout
+        window.location.href = res.data.sessionUrl;
       }
 
     } catch (error: any) {
