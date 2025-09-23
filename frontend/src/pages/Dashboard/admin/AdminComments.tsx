@@ -12,9 +12,7 @@ const AdminComments = () => {
   const { data, isError, error, isLoading } = useQuery<Comment[]>({
     queryKey: ["Comments"],
     queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/comment`
-      );
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/comment/admin/all`);
       return res.data;
     },
   });
