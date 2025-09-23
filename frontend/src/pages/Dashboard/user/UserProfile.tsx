@@ -15,19 +15,14 @@ interface UpdateProfileInput {
 const UserProfile = () => {
   const queryClient = useQueryClient()
 
-  // Fetch profile
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["Profile"],
     queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/auth/me`,
-        { withCredentials: true }
-      )
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`,{ withCredentials: true })
       return res.data.user
     }
   })
 
-  // Setup react-hook-form
   const { register, handleSubmit, reset } = useForm<UpdateProfileInput>({
     defaultValues: {
       userName: "",
@@ -36,7 +31,6 @@ const UserProfile = () => {
     }
   })
 
-  // Mutation with toast feedback
   const mutation = useMutation({
     mutationFn: async (updatedData: UpdateProfileInput) => {
       const res = await axios.put(
@@ -56,7 +50,6 @@ const UserProfile = () => {
     }
   })
 
-  // Reset form when profile data loads
   useEffect(() => {
     if (data) {
       reset({
