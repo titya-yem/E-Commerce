@@ -4,6 +4,7 @@ import { Box, Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "react-router";
+import UserProfile from "./UserProfile";
 
 const UserDashboard = () => {
   const { appointmentId } = useParams<{ appointmentId: string }>();
@@ -24,19 +25,20 @@ const UserDashboard = () => {
     return <Text as="p" className="text-xl mt-10 text-center">No Appointments Available</Text>;
 
   return (
-    <div className="sm:px-4 mx-auto 2xl:w-[1600px] 2xl:mx-auto">
+    <div className="sm:px-4 2xl:w-[1600px] mx-auto">
       <h2 className="text-xl md:text-2xl text-center lg:text-left py-5 font-medium">Dashboard</h2>
 
       <div className="flex flex-col xl:flex-row md:gap-4">
         {/* Left Panel */}
-        <Flex align="center" className="pb-4 py-0">
+        <Flex direction="column" className="gap-4 xl:w-1/2">
           <WelcomeDashboard />
+          <UserProfile />
         </Flex>
 
         {/* Right Panel */}
-        <Box className="pb-6 xl:pb-0">
+        <Box className="py-4 sm:py-0 mb-4 xl:pb-0 xl:w-2/3">
           <div className="space-y-8 p-4 shadow-md rounded-lg bg-white">
-            <div className="p-4 border rounded-lg bg-white h-[500px] overflow-y-auto">
+            <div className="p-4 border rounded-lg bg-white h-[404px] overflow-y-auto">
               <div className="hidden lg:grid lg:grid-cols-[110px_160px_150px_80px_80px] gap-2 *:text-center font-medium border-b pb-2 mb-2">
                 <h5>Name</h5>
                 <h5>Email</h5>
@@ -63,7 +65,7 @@ const UserDashboard = () => {
                     <Text as="p" color="crimson" size="2" className="flex items-center justify-center underline">
                       <a href={`mailto:${appointment.user?.email || appointment.email || "—"}`}>
                         <Text className="lg:hidden">Email: </Text>
-                        {appointment.user?.email || appointment.email || "—"}
+                        {appointment.email || "—"}
                       </a>
                     </Text>
 

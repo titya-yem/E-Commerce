@@ -1,4 +1,4 @@
-import { compare } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
@@ -16,7 +16,7 @@ export const signIn = async (req: Request, res: Response): Promise<void | any> =
             return res.status(404).json({ message: 'User not found' })
         }
 
-        const isMatchPassword = await compare(password, user.password)
+        const isMatchPassword = await bcrypt.compare(password, user.password)
         if (!isMatchPassword) {
             return res.status(401).json({ message: 'Invalid email or password' })
         }
@@ -48,7 +48,7 @@ export const signIn = async (req: Request, res: Response): Promise<void | any> =
                 email: user.email,
                 role: user.role
             }
-         })
+            })
     } catch (error) {
         console.error(error)
         res.status(500).json({
@@ -78,11 +78,11 @@ export const signOut = async (req: Request, res: Response): Promise<void | any> 
 
 // Get current user
 export const getMe = async (req: Request, res: Response): Promise<void | any> => {
-  try {
+    try {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ isAuthenticated: false });
+        return res.status(401).json({ isAuthenticated: false });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
@@ -93,21 +93,62 @@ export const getMe = async (req: Request, res: Response): Promise<void | any> =>
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "User not found" });
     }
 
     return res.json({
-      isAuthenticated: true,
-      user: {
+        isAuthenticated: true,
+        user: {
         id: user._id,
         userName: user.userName,
         email: user.email,
         isActive: user.isActive,
         role: user.role
+        },
+    });
+    } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(401).json({ isAuthenticated: false });
+    }
+};
+
+// Update login user
+export const updateMe = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const tokenUserId = (req as any).user?.id;
+    if (!tokenUserId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const { userName, email, password } = req.body;
+
+    const updateData: any = {};
+    if (userName) updateData.userName = userName;
+    if (email) updateData.email = email;
+    if (password) {
+      const hashed = await bcrypt.hash(password, 10);
+      updateData.password = hashed;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      tokenUserId,
+      updateData,
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser?._id,
+        userName: updatedUser?.userName,
+        email: updatedUser?.email,
+        role: updatedUser?.role,
+        isActive: updatedUser?.isActive,
       },
     });
   } catch (error) {
-    console.error("Error fetching user:", error);
-    return res.status(401).json({ isAuthenticated: false });
+    console.error("Update error:", error);
+    res.status(500).json({ message: "Failed to update profile" });
   }
 };

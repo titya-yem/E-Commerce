@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
     getMe,
     signIn,
-    signOut
+    signOut,
+    updateMe
 } from "../controllers/auth.controller";
 import auth from "../middlewares/auth.middleware"
 
@@ -13,5 +14,6 @@ router.post("/signout", signOut)
 
 // Protected route
 router.get("/me", auth, getMe)
+router.put("/me", auth, updateMe)
 
 export default router;

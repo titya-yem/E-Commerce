@@ -14,10 +14,10 @@ export interface UserListResponse {
 }
 
 export interface getMe {
-  _id: string;
+  id?: string;
+  _id?: string;
   userName: string;
   email: string;
-  password: string;
   isActive: boolean;
   role: string;
 }
