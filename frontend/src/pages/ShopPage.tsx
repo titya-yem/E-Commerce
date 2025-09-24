@@ -1,8 +1,10 @@
 import dogContact from "@/assets/image/shop-contact.png";
 import shopImage from "@/assets/image/shop-image.png";
 import catAppointment from "@/assets/image/shop-party.png";
+import OurBrands from "@/components/OurBrands";
 import LinkButton from "@/components/shared/LinkButton";
 import { Box, Container, Text } from "@radix-ui/themes";
+import Products from "@/components/Products"
 
 const ShopPage = () => {
   return (
@@ -79,6 +81,9 @@ const ShopPage = () => {
           </div>
         </div>
       </Container>
+
+      <Products />
+      <OurBrands />
     </Box>
   );
 };

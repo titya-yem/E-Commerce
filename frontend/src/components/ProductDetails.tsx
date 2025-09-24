@@ -1,7 +1,7 @@
 import star from "@/assets/svg/Star.svg";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { Product } from "@/types/productTypes";
-import { Box, Container, Text } from "@radix-ui/themes";
+import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import LinkButton from "./shared/LinkButton";
 import { Button } from "./ui/button";
+import ProductDetailsComment from "./ProductDetailsComment";
 
 const ProductDetailPage = () => {
   const [mainImage, setMainImage] = useState("");
@@ -66,7 +67,7 @@ const ProductDetailPage = () => {
           </Box>
 
           {/* Main Image and Details */}
-          <div className="h-auto md:h-[500px] flex flex-col md:flex-row justify-between items-center gap-4 lg:gap-20">
+          <div className="h-auto md:h-[600px] flex flex-col md:flex-row justify-between items-center gap-4 lg:gap-20">
             <Box className="rounded-lg mx-auto md:w-[300px]">
               <img
                 src={mainImage}
@@ -82,7 +83,7 @@ const ProductDetailPage = () => {
               </h1>
               <div className="flex items-center gap-2 pt-4">
                 <img src={star} alt="star" className="lg:w-5 lg:h-5" />
-                <Text as="p" className="text-sm lg:text-base text-gray-500">
+                <Text as="p" className="text-sm text-gray-500">
                   {product.rating}{" "}
                   {product.reviews && `(${product.reviews} reviews)`}
                 </Text>
@@ -91,17 +92,29 @@ const ProductDetailPage = () => {
                 ${product.price.toFixed(2)}
               </Text>
               {product.description && (
-                <Text as="p" className="pt-2 mx-auto text-center md:text-start text-sm lg:text-base text-gray-700">
+                <Text as="p" className="pt-2 mx-auto text-center md:text-start text-sm text-gray-700">
                   {product.description}
                 </Text>
               )}
-              <Button
-                onClick={handleAddToCart}
-                className="w-full py-6 mt-6 cursor-pointer bg-[#FF6135] text-white hover:bg-[#e55831]"
-              >
-                Add to Cart
-              </Button>
-              <LinkButton name="Back To Shop" link="shop" className="mt-4 w-full" />
+
+              <Flex justify="center" className="mt-6">
+                <Button
+                  onClick={handleAddToCart}
+                  className="w-5/6 py-6 font-semibold cursor-pointer bg-[#FF6135] text-white hover:bg-[#e55831]"
+                >
+                  Add to Cart
+                </Button>
+              </Flex>
+
+              <Flex justify="center" gap="4" className="mt-4 flex-wrap">
+                <LinkButton
+                  name="Back To Shop"
+                  link="shop"
+                  className="w-full sm:w-auto"
+                />
+
+                <ProductDetailsComment />
+              </Flex>
             </Box>
           </div>
         </div>
