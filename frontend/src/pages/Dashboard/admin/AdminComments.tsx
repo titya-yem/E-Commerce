@@ -106,7 +106,8 @@ const AdminComments = () => {
                 >
                   <Select.Trigger color="orange" variant="soft" />
                   <Select.Content color="orange" position="popper">
-                    <Select.Item value="Cancelled">Not Approved</Select.Item>
+                    <Select.Item value="Pending">Pending</Select.Item>
+                    <Select.Item value="Cancelled">Cancelled</Select.Item>
                     <Select.Item value="Approved">Approved</Select.Item>
                   </Select.Content>
                 </Select.Root>

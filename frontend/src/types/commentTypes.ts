@@ -9,6 +9,7 @@ export const petType = {
 export type PetType = typeof petType[keyof typeof petType];
 
 export const commentStatus = {
+  Pending: "Pending",
   Cancelled: "Cancelled",
   Approved: "Approved",
 } as const;

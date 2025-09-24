@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Order } from "@/types/orderTypes";
 import { Button, Flex } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
@@ -13,13 +12,8 @@ const AdminOrders: React.FC = () => {
   const { isLoading, isError, data, error } = useQuery<Order[], Error>({
     queryKey: ["orders"],
     queryFn: async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/order`);
-        return res.data as Order[];
-      } catch (err: any) {
-        if (err.response?.status === 404) return [];
-        throw new Error(err.response?.data?.message || "Failed to fetch orders");
-      }
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/order/me`);
+      return res.data;
     },
   });
 

@@ -90,10 +90,10 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
             >
               <Select.Trigger color="orange" variant="soft" />
               <Select.Content color="orange" position="popper">
-                <Select.Item value="Paid">Paid</Select.Item>
+                <Select.Item value="Shipped">Shipped</Select.Item>
                 <Select.Item value="Cancelled">Cancelled</Select.Item>
                 <Select.Item value="Pending">Pending</Select.Item>
-                <Select.Item value="Shipped">Shipped</Select.Item>
+                <Select.Item value="Paid">Paid</Select.Item>
               </Select.Content>
             </Select.Root>
           </Flex>

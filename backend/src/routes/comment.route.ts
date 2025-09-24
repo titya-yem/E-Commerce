@@ -6,6 +6,7 @@ import {
   updateComment,
   updateCommentStatus,
   getAllCommentsAdmin,
+  getMyComments
 } from "../controllers/comment.controller";
 import auth from "../middlewares/auth.middleware";
 import admin from "../middlewares/admin.middleware";
@@ -16,13 +17,14 @@ const router = Router();
 router.get("/", getAllComments);
 
 // User Routes
+router.get("/me", auth, getMyComments);
 router.post("/create", auth, createComment);
 router.put("/:id", auth, updateComment);
 router.delete("/:id", auth, deleteComment);
 
 // Admin Routes
-router.get("/admin/all", auth, admin, getAllCommentsAdmin); // new admin route
+router.get("/admin/all", auth, admin, getAllCommentsAdmin);
 router.patch("/:id/status", auth, admin, updateCommentStatus);
-router.delete("/:id/admin", auth, admin, deleteComment); // admin delete route
+router.delete("/:id/admin", auth, admin, deleteComment);
 
 export default router;
