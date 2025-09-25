@@ -7,17 +7,22 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void |
   try {
     let orders;
 
+    // If role is admin
     if (req.user?.role === "admin") {
       orders = await Order.find({})
+        .sort({ createdAt: -1 })
         .select("-__v")
         .populate("user", "email");
     } else {
+
       const userId = req.user?.id;
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
+      // Fetch order for user by ID
       orders = await Order.find({ user: userId })
+        .sort({ createdAt: -1 })
         .select("-__v")
         .populate("user", "email");
     }
@@ -33,7 +38,7 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void |
   }
 };
 
-// Get Order by ID
+// Get Order for user
 export const getOrderById = async (req: AuthRequest, res: Response): Promise<void | any> => {
   const { id } = req.params;
   const userId = req.user?.id;
@@ -44,8 +49,9 @@ export const getOrderById = async (req: AuthRequest, res: Response): Promise<voi
 
   try {
     const order = await Order.findById(id)
-      .select("-__v")
-      .populate("user", "email");
+    .sort({ createdAt: -1 })
+    .select("-__v")
+    .populate("user", "email");
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });

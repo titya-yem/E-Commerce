@@ -115,7 +115,6 @@ export const getAppointmentsByMonthly = async (req: Request, res: Response) => {
             }
         });
 
-
         // Return array, even if empty
         res.status(200).json(appointments);
     } catch (error) {
@@ -124,12 +123,13 @@ export const getAppointmentsByMonthly = async (req: Request, res: Response) => {
     }
 };
 
+// Get all appointment for user
 export const getMyAppointments = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
-    const appointments = await Appointment.find({ user: userId }).populate("user", "userName email");
+    const appointments = await Appointment.find({ user: userId }).sort({ createdAt: -1 }).populate("user", "userName email");
 
     res.status(200).json(appointments);
   } catch (err) {

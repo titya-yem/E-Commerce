@@ -142,7 +142,7 @@ export const getMyComments = async (req: AuthRequest, res: Response): Promise < 
   try {
     const userId = req.user?.id
 
-    const comments = await Comment.find({ userName: userId })
+    const comments = await Comment.find({ userName: userId }).sort({ createdAt: -1 })
     .populate("userName", "userName email");
     
     if (!comments || comments.length === 0) return res.status(404).json({ message: "No Comments Found" })
