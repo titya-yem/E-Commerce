@@ -48,7 +48,7 @@ export const createComment = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Update comment (user can update own and admin)
+// Update comment (user can update own)
 export const updateComment = async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
   if (!id)
@@ -111,7 +111,7 @@ export const updateCommentStatus = async (req: AuthRequest, res: Response) => {
   try {
     const updatedComment = await Comment.findByIdAndUpdate(
       id, 
-      { status },
+      { status }, 
       { new: true })
       .populate("userName", "userName email");
 
@@ -128,7 +128,7 @@ export const updateCommentStatus = async (req: AuthRequest, res: Response) => {
 // Admin: Get all comments including pending
 export const getAllCommentsAdmin = async (req: AuthRequest, res: Response) => {
   try {
-    const comments = await Comment.find().populate("userName", "userName email");
+    const comments = await Comment.find().sort({ createdAt: -1 }).populate("userName", "userName email");
     res.status(200).json(comments);
 
   } catch (error) {

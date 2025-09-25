@@ -23,7 +23,10 @@ const AdminAddServices = ({ onSuccess }: AdminAddServicesProps) => {
 
   const onSubmit = async (data: ServiceFormData) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/service/create`, data);
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/service/create`,
+        data
+      );
       toast.success("Service added successfully!");
       reset();
       if (onSuccess) onSuccess();
@@ -45,52 +48,90 @@ const AdminAddServices = ({ onSuccess }: AdminAddServicesProps) => {
         className="sm:grid-cols-2"
       >
         {/* Left Column */}
-        <Flex gap="4" mt="2" align="center" justify="between" className="flex-col sm:flex-row">
+        <Flex
+          gap="4"
+          mt="2"
+          align="center"
+          justify="between"
+          className="flex-col sm:flex-row"
+        >
           <label className="flex-1">
-            <Text as="p" size="2" mb="1" weight="bold">Title</Text>
+            <Text as="p" size="2" mb="1" weight="bold">
+              Title
+            </Text>
             <Controller
               name="title"
               control={control}
-              render={({ field }) => <TextField.Root {...field} placeholder="Enter service title" />}
+              render={({ field }) => (
+                <TextField.Root {...field} placeholder="Enter service title" />
+              )}
             />
           </label>
 
           <label className="flex-1">
-            <Text as="p" size="2" mb="1" weight="bold">Picture name</Text>
+            <Text as="p" size="2" mb="1" weight="bold">
+              Picture name
+            </Text>
             <Controller
               name="alt"
               control={control}
-              render={({ field }) => <TextField.Root {...field} placeholder="Enter alt text (for accessibility)" />}
+              render={({ field }) => (
+                <TextField.Root
+                  {...field}
+                  placeholder="Enter alt text (for accessibility)"
+                />
+              )}
             />
           </label>
         </Flex>
 
-          <Flex gap="4" mt="2" align="center" justify="between" className="flex-col sm:flex-row">
-            <label className="flex-1">
-              <Text as="p" size="2" mb="1" weight="bold">Price</Text>
-              <Controller
-                name="price"
-                control={control}
-                render={({ field }) => <TextField.Root {...field} type="number" placeholder="Enter price" />}
-              />
-            </label>
+        <Flex
+          gap="4"
+          mt="2"
+          align="center"
+          justify="between"
+          className="flex-col sm:flex-row"
+        >
+          <label className="flex-1">
+            <Text as="p" size="2" mb="1" weight="bold">
+              Price
+            </Text>
+            <Controller
+              name="price"
+              control={control}
+              render={({ field }) => (
+                <TextField.Root
+                  {...field}
+                  type="number"
+                  placeholder="Enter price"
+                />
+              )}
+            />
+          </label>
 
-            <label className="flex-1 mt-2 sm:mt-0">
-              <Text as="p" size="2" mb="1" weight="bold">Duration</Text>
-              <Controller
-                name="duration"
-                control={control}
-                render={({ field }) => (
-                  <TextField.Root {...field} placeholder="Duration (e.g. 2 or 2-3 hours)" />
-                )}
-              />
-            </label>
-          </Flex>
+          <label className="flex-1 mt-2 sm:mt-0">
+            <Text as="p" size="2" mb="1" weight="bold">
+              Duration
+            </Text>
+            <Controller
+              name="duration"
+              control={control}
+              render={({ field }) => (
+                <TextField.Root
+                  {...field}
+                  placeholder="Duration (e.g. 2 or 2-3 hours)"
+                />
+              )}
+            />
+          </label>
+        </Flex>
 
         {/* Right Column */}
         <div className="flex flex-col gap-4">
           <label>
-            <Text as="p" size="2" mb="1" weight="bold">Description</Text>
+            <Text as="p" size="2" mb="1" weight="bold">
+              Description
+            </Text>
             <Controller
               name="description"
               control={control}
@@ -114,7 +155,9 @@ const AdminAddServices = ({ onSuccess }: AdminAddServicesProps) => {
           </label>
 
           <label>
-            <Text as="p" size="2" mb="1" weight="bold">Image (Link)</Text>
+            <Text as="p" size="2" mb="1" weight="bold">
+              Image (Link)
+            </Text>
             <Controller
               name="image"
               control={control}

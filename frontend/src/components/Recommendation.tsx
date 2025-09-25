@@ -3,8 +3,8 @@ import whiteDog from "@/assets/image/client-image.png";
 import leftArrow from "@/assets/svg/BackwardArrow.svg";
 import rightArrow from "@/assets/svg/ForwardArrow.svg";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 import type { Comment } from "../types/commentTypes";
 import { Button } from "./ui/button";
@@ -15,7 +15,9 @@ const Recommendation: React.FC = () => {
   const { isLoading, isError, data, error } = useQuery<Comment[]>({
     queryKey: ["comments"],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/comment`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/comment`
+      );
       return res.data;
     },
   });
@@ -48,7 +50,6 @@ const Recommendation: React.FC = () => {
             </h1>
           </Box>
           <Box>
-            
             {/* Display the current comment */}
             <Flex
               align="center"
@@ -60,7 +61,11 @@ const Recommendation: React.FC = () => {
                 className="p-0 cursor-pointer hover:bg-[#E3462C] bg-[#E3462C]"
                 onClick={handlePrevious}
               >
-                <img src={leftArrow} alt="backward Arrow" className="invert w-10" />
+                <img
+                  src={leftArrow}
+                  alt="backward Arrow"
+                  className="invert w-10"
+                />
               </Button>
 
               <Box className="!hidden lg:!inline-block">
@@ -69,24 +74,28 @@ const Recommendation: React.FC = () => {
 
               {/* Comment Content */}
               <Box className="w-2/3 lg:w-1/2 space-y-4">
-                <h1 className="text-xl lg:text-3xl text-center font-semibold uppercase">
+                <h1 className="text-xl lg:text-2xl text-center font-semibold uppercase">
                   "{data[currentIndex]?.title}"
                 </h1>
-                <Text as="p" className="text-sm md:text-base lg:text-lg">
+                <Text as="p" className="text-sm md:text-base">
                   {data[currentIndex]?.text}
                 </Text>
                 <Box>
-                  <Text as="p" className="font-medium">
-                    {data[currentIndex]?.userName?.userName || 'Anonymous'}
+                  <Text as="p" className="font-medium text-sm pt-2">
+                    {data[currentIndex]?.userName?.userName || "Anonymous"}
                   </Text>
-                  <Text as="p" className="text-sm lg:text-base">
+                  <Text as="p" className="text-sm">
                     {data[currentIndex]?.type}
                   </Text>
                 </Box>
               </Box>
 
               <Box className="!hidden lg:!inline-block">
-                <img src={sittingDog} alt="Cute innocent sitting dog" width="220px" />
+                <img
+                  src={sittingDog}
+                  alt="Cute innocent sitting dog"
+                  width="220px"
+                />
               </Box>
 
               {/* Right Arrow Button */}
@@ -94,7 +103,11 @@ const Recommendation: React.FC = () => {
                 className="p-0 cursor-pointer hover:bg-[#E3462C] bg-[#E3462C]"
                 onClick={handleNext}
               >
-                <img src={rightArrow} alt="forward Arrow" className="invert w-10" />
+                <img
+                  src={rightArrow}
+                  alt="forward Arrow"
+                  className="invert w-10"
+                />
               </Button>
             </Flex>
           </Box>
