@@ -137,6 +137,7 @@ export const getAllCommentsAdmin = async (req: AuthRequest, res: Response) => {
   }
 };
 
+// Get user's comments
 export const getMyComments = async (req: AuthRequest, res: Response): Promise < void | any> => {
   try {
     const userId = req.user?.id

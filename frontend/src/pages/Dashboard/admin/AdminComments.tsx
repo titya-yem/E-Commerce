@@ -1,8 +1,18 @@
 import { useState } from "react";
-import { Box, Button, Dialog, Flex, Heading, Text, Select, AlertDialog } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Dialog,
+  Flex,
+  Heading,
+  Text,
+  Select,
+  AlertDialog,
+} from "@radix-ui/themes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import type { Comment } from "@/types/commentTypes";
+import HoverText from "@/components/dashboard/admin/HoverText";
 
 const AdminComments = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,14 +22,19 @@ const AdminComments = () => {
   const { data, isError, error, isLoading } = useQuery<Comment[]>({
     queryKey: ["Comments"],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/comment/admin/all`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/comment/admin/all`
+      );
       return res.data;
     },
   });
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/api/comment/${id}/status`,{ status });
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/comment/${id}/status`,
+        { status }
+      );
       return res.data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Comments"] }),
@@ -27,21 +42,34 @@ const AdminComments = () => {
 
   const deleteComment = useMutation({
     mutationFn: async (id: string) => {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/comment/${id}`);
+      const res = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/comment/${id}`
+      );
       return res.data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Comments"] }),
   });
 
-  if (isLoading) return <Heading className="text-center py-10">Loading...</Heading>;
-  if (isError) return <Heading className="text-center py-10">Error: {(error as Error).message}</Heading>
-  if (!data || data.length === 0) return <Heading className="text-center py-10">No comments available</Heading> 
+  if (isLoading)
+    return <Heading className="text-center py-10">Loading...</Heading>;
+  if (isError)
+    return (
+      <Heading className="text-center py-10">
+        Error: {(error as Error).message}
+      </Heading>
+    );
+  if (!data || data.length === 0)
+    return (
+      <Heading className="text-center py-10">No comments available</Heading>
+    );
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const paginatedData = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  console.log(data);
 
   return (
     <div className="px-6 lg:px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
@@ -71,13 +99,17 @@ const AdminComments = () => {
                 gap-3 md:gap-4 p-3 text-sm border-b border-gray-200 lg:border-gray-100 text-center
               "
             >
-
-              <Text className="font-medium text-blue-500">
-                <Text as="span" className="lg:hidden">Name: </Text>{comment.userName?.userName || "N/A"}
-              </Text>
+              <HoverText
+                username={comment.userName?.userName}
+                email={comment.userName.email}
+                comment={comment.text}
+              />
 
               <Text className="font-medium text-cyan-500">
-                <Text as="span" className="lg:hidden">Title: </Text>{comment.title}
+                <Text as="span" className="lg:hidden">
+                  Title:{" "}
+                </Text>
+                {comment.title}
               </Text>
 
               <Dialog.Root>
@@ -92,7 +124,10 @@ const AdminComments = () => {
               </Dialog.Root>
 
               <Text className="font-medium text-amber-500">
-                <Text as="span" className="lg:hidden">Type: </Text>{comment.type}
+                <Text as="span" className="lg:hidden">
+                  Type:{" "}
+                </Text>
+                {comment.type}
               </Text>
 
               {/* Approval */}
@@ -124,8 +159,10 @@ const AdminComments = () => {
                   <AlertDialog.Content maxWidth="400px">
                     <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
                     <AlertDialog.Description>
-                      Are you sure you want to delete this comment? 
-                      <Text as="span" color="red" weight="medium">it will permenantly deleted</Text>
+                      Are you sure you want to delete this comment?
+                      <Text as="span" color="red" weight="medium">
+                        it will permenantly deleted
+                      </Text>
                     </AlertDialog.Description>
                     <Flex justify="end" gap="3" mt="4">
                       <AlertDialog.Cancel>

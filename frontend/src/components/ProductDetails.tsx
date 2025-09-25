@@ -1,7 +1,7 @@
 import star from "@/assets/svg/Star.svg";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { Product } from "@/types/productTypes";
-import { Box, Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Container, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
@@ -9,19 +9,25 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import LinkButton from "./shared/LinkButton";
 import { Button } from "./ui/button";
-import ProductDetailsComment from "./ProductDetailsComment";
 
 const ProductDetailPage = () => {
   const [mainImage, setMainImage] = useState("");
-  const { slug } = useParams(); 
+  const { slug } = useParams();
   const dispatch = useDispatch();
 
   const id = slug?.split("-").pop();
 
-  const { data: product, isLoading, isError, error } = useQuery<Product>({
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Product>({
     queryKey: ["product", id],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/product/${id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/product/${id}`
+      );
       return res.data;
     },
     enabled: !!id,
@@ -67,7 +73,7 @@ const ProductDetailPage = () => {
           </Box>
 
           {/* Main Image and Details */}
-          <div className="h-auto md:h-[600px] flex flex-col md:flex-row justify-between items-center gap-4 lg:gap-20">
+          <div className="h-auto md:h-[500px] flex flex-col md:flex-row justify-between items-center gap-4 lg:gap-20">
             <Box className="rounded-lg mx-auto md:w-[300px]">
               <img
                 src={mainImage}
@@ -92,29 +98,26 @@ const ProductDetailPage = () => {
                 ${product.price.toFixed(2)}
               </Text>
               {product.description && (
-                <Text as="p" className="pt-2 mx-auto text-center md:text-start text-sm text-gray-700">
+                <Text
+                  as="p"
+                  className="pt-2 mx-auto text-center md:text-start text-sm text-gray-700"
+                >
                   {product.description}
                 </Text>
               )}
 
-              <Flex justify="center" className="mt-6">
-                <Button
-                  onClick={handleAddToCart}
-                  className="w-5/6 py-6 font-semibold cursor-pointer bg-[#FF6135] text-white hover:bg-[#e55831]"
-                >
-                  Add to Cart
-                </Button>
-              </Flex>
+              <Button
+                onClick={handleAddToCart}
+                className="w-full py-6 mt-4 font-semibold cursor-pointer bg-[#FF6135] text-white hover:bg-[#e55831]"
+              >
+                Add to Cart
+              </Button>
 
-              <Flex justify="center" gap="4" className="mt-4 flex-wrap">
-                <LinkButton
-                  name="Back To Shop"
-                  link="shop"
-                  className="w-full sm:w-auto"
-                />
-
-                <ProductDetailsComment />
-              </Flex>
+              <LinkButton
+                name="Back To Shop"
+                link="shop"
+                className="w-full mt-4"
+              />
             </Box>
           </div>
         </div>

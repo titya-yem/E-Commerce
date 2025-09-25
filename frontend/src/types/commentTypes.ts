@@ -20,9 +20,16 @@ export interface Comment {
   _id: string;
   title: string;
   text: string;
-  userName: { userName: string };
+  userName: { userName: string, email: string };
   type: PetType;
   status: CommentStatus;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface CommentForms {
+  title: string;
+  text: string;
+  type: PetType;
+  userName?: string;
 }
