@@ -11,12 +11,15 @@ const ContactForm: React.FC = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/contact/create`, data);
-      console.log({...data,});
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/contact/create`,
+        data
+      );
+      console.log({ ...data });
       toast.success("Message sent", {
         position: "top-center",
       });
-      reset(); // reset form as new afte subbmited
+      reset();
     } catch (error) {
       console.log(error);
       toast.error("Error to book an appointment please contact us");
@@ -69,7 +72,7 @@ const ContactForm: React.FC = () => {
           <FaPhoneAlt className="absolute left-3 top-4 text-gray-400" />
           <input
             {...register("phoneNumber")}
-            type="number"
+            type="string"
             placeholder="Phone Number"
             className="w-full pl-10 p-3 text-sm md:text-base border rounded-lg"
             required
@@ -78,13 +81,13 @@ const ContactForm: React.FC = () => {
 
         <textarea
           {...register("message")}
-          placeholder="Additional message"
-          className="w-full max-h-[200px] p-3 text-sm md:text-base border rounded-lg"
+          placeholder="Message"
+          className="w-full h-[150px] max-h-[200px] p-3 text-sm border rounded-lg"
         />
 
         <Button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg w-full"
+          className="py-5 rounded-lg w-full cursor-pointer bg-blue-500 hover:bg-blue-600 text-white"
         >
           Send
         </Button>
