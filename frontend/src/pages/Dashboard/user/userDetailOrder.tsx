@@ -1,5 +1,6 @@
-import { Button, Dialog, Flex, Table, Text } from "@radix-ui/themes";
+import { Button, Callout, Dialog, Flex, Table, Text } from "@radix-ui/themes";
 import type { Order } from "@/types/orderTypes";
+import InforCircle from "@/assets/svg/DashBoard/InforCircle.svg";
 
 interface UserOrderDetailsProps {
   order: Order;
@@ -13,8 +14,10 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
       </Dialog.Trigger>
 
       <Dialog.Content className="w-full max-w-4xl p-4">
-        <Dialog.Title className="text-xl font-semibold mb-2">Order Details</Dialog.Title>
-        <Dialog.Description mb="4" className="text-sm text-gray-600">
+        <Dialog.Title className="text-xl font-semibold mb-2">
+          Order Details
+        </Dialog.Title>
+        <Dialog.Description mb="4" size="2" className="text-gray-600">
           Products in this order.
         </Dialog.Description>
 
@@ -23,8 +26,15 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
           <div className="md:hidden p-2 space-y-4">
             {order.items?.length ? (
               order.items.map((item) => (
-                <div key={item.id} className="p-2 border rounded-md flex flex-col gap-1">
-                  <img src={item.image} alt={item.name} className="h-20 w-full object-contain rounded-md mb-2" />
+                <div
+                  key={item.id}
+                  className="p-2 border rounded-md flex flex-col gap-1"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-20 w-full object-contain rounded-md mb-2"
+                  />
                   <Text className="font-medium">{item.name}</Text>
                   <Text className="text-gray-500">{item.category}</Text>
                   <Text>Quantity: {item.quantity}</Text>
@@ -53,12 +63,24 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
                   order.items.map((item) => (
                     <Table.Row key={item.id}>
                       <Table.RowHeaderCell>
-                        <img src={item.image} alt={item.name} className="h-12 object-cover mx-auto rounded-md" />
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="h-12 object-cover mx-auto rounded-md"
+                        />
                       </Table.RowHeaderCell>
-                      <Table.Cell className="text-center">{item.name ?? "N/A"}</Table.Cell>
-                      <Table.Cell className="text-center">{item.category ?? "N/A"}</Table.Cell>
-                      <Table.Cell className="text-center">{item.quantity ?? 0}</Table.Cell>
-                      <Table.Cell className="text-center">${item.price?.toFixed(2) ?? "0.00"}</Table.Cell>
+                      <Table.Cell className="text-center">
+                        {item.name ?? "N/A"}
+                      </Table.Cell>
+                      <Table.Cell className="text-center">
+                        {item.category ?? "N/A"}
+                      </Table.Cell>
+                      <Table.Cell className="text-center">
+                        {item.quantity ?? 0}
+                      </Table.Cell>
+                      <Table.Cell className="text-center">
+                        ${item.price?.toFixed(2) ?? "0.00"}
+                      </Table.Cell>
                     </Table.Row>
                   ))
                 ) : (
@@ -73,9 +95,28 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
           </div>
         </div>
 
-        <Flex justify="end" className="pt-4">
+        <Flex justify="between" align="center" className="pt-4">
+          <Callout.Root>
+            <Callout.Icon>
+              <img
+                src={InforCircle}
+                alt="InforCircle icon"
+                className="fill-blue-400"
+              />
+            </Callout.Icon>
+            <Callout.Text>
+              If you have any{" "}
+              <Text as="span" weight="medium">
+                issues
+              </Text>{" "}
+              with this order, please contact support.
+            </Callout.Text>
+          </Callout.Root>
+
           <Dialog.Close>
-            <Button variant="soft" color="gray">Close</Button>
+            <Button variant="soft" color="gray">
+              Close
+            </Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>
