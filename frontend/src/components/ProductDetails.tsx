@@ -52,6 +52,7 @@ const ProductDetailPage = () => {
       })
     );
   };
+  console.log(product);
 
   return (
     <Box className="h-auto bg-[#FFFAF5]">
@@ -84,7 +85,7 @@ const ProductDetailPage = () => {
 
             {/* Product Details */}
             <Box className="w-full md:w-2/3 lg:w-[45%] lg:mr-8">
-              <h1 className="text-2xl lg:text-4xl text-center md:text-start font-bold text-[#1F276C]">
+              <h1 className="text-2xl lg:text-3xl text-center md:text-start font-bold text-[#1F276C]">
                 {product.name}
               </h1>
               <div className="flex items-center gap-2 pt-4">
@@ -94,6 +95,12 @@ const ProductDetailPage = () => {
                   {product.reviews && `(${product.reviews} reviews)`}
                 </Text>
               </div>
+              <Text as="p" className="text-sm text-gray-500">
+                Category:{" "}
+                <Text as="span" weight="medium">
+                  {product.category}
+                </Text>
+              </Text>
               <Text as="p" className="text-2xl text-[#FF6135] font-semibold">
                 ${product.price.toFixed(2)}
               </Text>

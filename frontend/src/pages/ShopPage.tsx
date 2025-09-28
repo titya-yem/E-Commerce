@@ -4,11 +4,11 @@ import catAppointment from "@/assets/image/shop-party.png";
 import OurBrands from "@/components/OurBrands";
 import LinkButton from "@/components/shared/LinkButton";
 import { Box, Container, Text } from "@radix-ui/themes";
-import Products from "@/components/Products"
+import Products from "@/components/Products";
 
 const ShopPage = () => {
   return (
-    <Box>
+    <Box className="px-2 md:px-4 xl:px-0">
       <Container>
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-10">
           {/* main box */}

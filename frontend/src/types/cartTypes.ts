@@ -1,9 +1,10 @@
   export interface CartItem {
-    id: number;
+    id: string;
     name: string;
     price: number;
     quantity: number;
     image: string;
+    category?: string;
   }
 
   interface CartState {
