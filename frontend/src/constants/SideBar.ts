@@ -5,6 +5,7 @@ import ProductImage from "@/assets/svg/dashboard/product.svg"
 import ProfileImage from "@/assets/svg/dashboard/profile.svg"
 import ServiceImage from "@/assets/svg/dashboard/service.svg"
 import UserImage from "@/assets/svg/dashboard/user.svg"
+import ContactImage from "@/assets/svg/DashBoard/contact.svg"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type SideBarItem = {
@@ -21,5 +22,6 @@ export const SideBarItems: SideBarItem[] = [
   { title: "Services", url: "services", icon: ServiceImage, roles: ["admin"] },
   { title: "Users", url: "users", icon: UserImage, roles: ["admin"] },
   { title: "Comments", url: "comments", icon: CommentImage, roles: ["admin", "user"] },
+  { title: "Contact", url: "contact", icon: ContactImage, roles: ["admin", "user"] },
   { title: "Profile", url: "profile", icon: ProfileImage, roles: ["admin"] },
 ];

@@ -34,17 +34,19 @@ import SuccessPage from "./pages/SuccessPage.tsx";
 // Admin Pages
 import AdminDashboard from "./pages/Dashboard/admin/AdminDashboardPage.tsx";
 import AdminProfile from "./pages/Dashboard/admin/AdminProfile.tsx";
-import AppointmentsPage from "./pages/Dashboard/admin/AdminAppointment.tsx";
-import CommentsPage from "./pages/Dashboard/admin/AdminComments.tsx";
-import OrdersPage from "./pages/Dashboard/admin/AdminOrders.tsx";
-import ProductsPage from "./pages/Dashboard/admin/AdminProducts.tsx";
-import ServicesPage from "./pages/Dashboard/admin/AdminServices.tsx";
-import UsersPage from "./pages/Dashboard/admin/AdminUsersPage.tsx";
+import AdminAppointmentsPage from "./pages/Dashboard/admin/AdminAppointment.tsx";
+import AdminCommentsPage from "./pages/Dashboard/admin/AdminComments.tsx";
+import AdminOrdersPage from "./pages/Dashboard/admin/AdminOrders.tsx";
+import AdminProductsPage from "./pages/Dashboard/admin/AdminProducts.tsx";
+import AdminServicesPage from "./pages/Dashboard/admin/AdminServices.tsx";
+import AdminUsersPage from "./pages/Dashboard/admin/AdminUsersPage.tsx";
+import AdminContactPage from "./pages/Dashboard/admin/AdminContact.tsx";
 
 // User Pages
 import UserComments from "./pages/Dashboard/user/UserComments.tsx";
 import UserDashboard from "./pages/Dashboard/user/UserDashboard.tsx";
 import UserOrders from "./pages/Dashboard/user/UserOrders.tsx";
+import UserContact from "./pages/Dashboard/user/UserContact.tsx";
 
 // Components
 import Cart from "./components/Cart.tsx";
@@ -90,12 +92,16 @@ createRoot(document.getElementById("root")!).render(
                 {/* Admin Routes */}
                 <Route path="/admin/dashboard" element={<AdminLayout />}>
                   <Route index element={<AdminDashboard />} />
-                  <Route path="orders" element={<OrdersPage />} />
-                  <Route path="products" element={<ProductsPage />} />
-                  <Route path="appointments" element={<AppointmentsPage />} />
-                  <Route path="services" element={<ServicesPage />} />
-                  <Route path="users" element={<UsersPage />} />
-                  <Route path="comments" element={<CommentsPage />} />
+                  <Route path="orders" element={<AdminOrdersPage />} />
+                  <Route path="products" element={<AdminProductsPage />} />
+                  <Route
+                    path="appointments"
+                    element={<AdminAppointmentsPage />}
+                  />
+                  <Route path="services" element={<AdminServicesPage />} />
+                  <Route path="users" element={<AdminUsersPage />} />
+                  <Route path="comments" element={<AdminCommentsPage />} />
+                  <Route path="contact" element={<AdminContactPage />} />
                   <Route path="profile" element={<AdminProfile />} />
                 </Route>
 
@@ -104,6 +110,7 @@ createRoot(document.getElementById("root")!).render(
                   <Route index element={<UserDashboard />} />
                   <Route path="orders" element={<UserOrders />} />
                   <Route path="comments" element={<UserComments />} />
+                  <Route path="contact" element={<UserContact />} />
                 </Route>
               </Routes>
             </AuthWrapper>
