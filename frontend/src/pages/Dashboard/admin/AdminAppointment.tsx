@@ -78,7 +78,7 @@ const AdminAppointments = () => {
   return (
     <div className="px-6 lg:px-4 pb-6 lg:pb-0 w-full">
       {/* Search bar */}
-      <Flex justify="between" align="center" className="py-5">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mt-4 gap-4">
         <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left font-medium">
           Appointments
         </h2>
@@ -91,9 +91,9 @@ const AdminAppointments = () => {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-[200px]"
+          className="w-[200px] mb-4"
         />
-      </Flex>
+      </div>
 
       <Box className="p-2 rounded-md bg-white overflow-x-auto h-[590px] max-h-[600px]">
         <Box className="overflow-x-auto">

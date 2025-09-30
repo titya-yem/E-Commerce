@@ -8,7 +8,7 @@ import UserImage from "@/assets/svg/dashboard/user.svg"
 import ContactImage from "@/assets/svg/DashBoard/contact.svg"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type SideBarItem = {
+export type SideBarItem = {
   title: string;
   url: string;
   icon: any;

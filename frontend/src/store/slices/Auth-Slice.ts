@@ -7,7 +7,7 @@ interface User {
   id: string;
   email: string;
   userName: string;
-  role: string;
+  role: "user" | "admin";
 }
 
 interface AuthState {
