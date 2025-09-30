@@ -1,11 +1,12 @@
 import type { Product } from "@/types/productTypes";
 import { Box, Button, Dialog, Flex, Heading, Text } from "@radix-ui/themes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import AdminProductForm from "@/components/dashboard/admin/AdminProductForm";
 import AdminAddProduct from "@/components/dashboard/admin/AdminAddProduct";
+import { useFetch } from "@/hooks/useFetch";
 
 const AdminProducts = () => {
   const queryClient = useQueryClient();
@@ -14,14 +15,9 @@ const AdminProducts = () => {
   const [addingProduct, setAddingProduct] = useState(false);
   const productsPerPage = 7;
 
-  const { data, isLoading, isError, error } = useQuery<Product[]>({
+  const { data, isLoading, isError, error } = useFetch<Product[]>({
+    url: "api/product",
     queryKey: ["products"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/product`
-      );
-      return res.data;
-    },
   });
 
   const updateProduct = useMutation({

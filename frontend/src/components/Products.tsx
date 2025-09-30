@@ -1,11 +1,10 @@
 import star from "@/assets/svg/Star.svg";
 import { Button } from "@/components/ui/button";
+import { useFetch } from "@/hooks/useFetch";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { AppDispatch } from "@/store/store";
 import type { Product } from "@/types/productTypes";
 import { Box, Container, Flex, Select } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -23,14 +22,9 @@ const ProductsComponent: React.FC = () => {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [visibleCount, setVisibleCount] = useState<number>(10);
 
-  const { isLoading, isError, data, error } = useQuery<Product[]>({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/product`
-      );
-      return res.data;
-    },
+  const { isLoading, isError, data, error } = useFetch<Product[]>({
+    url: "api/product",
+    queryKey: ["Products"],
   });
 
   if (isLoading) return <h1>Loading...</h1>;

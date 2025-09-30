@@ -9,11 +9,12 @@ import {
   Button,
   TextField,
 } from "@radix-ui/themes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 
 const AdminAppointments = () => {
   const queryClient = useQueryClient();
@@ -21,14 +22,9 @@ const AdminAppointments = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const appointmentsPerPage = 7;
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, error } = useFetch<AppointmentTypes[]>({
+    url: "api/appointment",
     queryKey: ["appointments"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/appointment`
-      );
-      return res.data;
-    },
   });
 
   const updateStatus = useMutation({

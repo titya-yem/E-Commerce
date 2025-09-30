@@ -9,24 +9,20 @@ import {
   Select,
   AlertDialog,
 } from "@radix-ui/themes";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import type { Comment } from "@/types/commentTypes";
 import HoverText from "@/components/dashboard/admin/HoverText";
+import { useFetch } from "@/hooks/useFetch";
 
 const AdminComments = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const queryClient = useQueryClient();
 
-  const { data, isError, error, isLoading } = useQuery<Comment[]>({
+  const { data, isError, error, isLoading } = useFetch<Comment[]>({
+    url: "api/comment/admin/all",
     queryKey: ["Comments"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/comment/admin/all`
-      );
-      return res.data;
-    },
   });
 
   const updateStatus = useMutation({

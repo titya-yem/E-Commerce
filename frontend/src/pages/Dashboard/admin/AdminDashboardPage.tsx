@@ -2,27 +2,32 @@ import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import LineGraph from "@/components/dashboard/admin/LineGraph";
 import Total from "@/components/dashboard/admin/Total";
 import TotalAppointments from "@/components/dashboard/admin/TotalAppointments";
+import { useFetchWithCredentail } from "@/hooks/useFetchWithCredentail";
+import {
+  type Revenue,
+  type Orders,
+  type Sales,
+  type Users,
+} from "@/types/AdminDashboardTypes";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 const AdminDashboard = () => {
   // Fetch all analytics using TanStack Query
-  const { data: salesData = [] } = useQuery({
+  const { data: salesData = [] } = useFetchWithCredentail<Sales[]>({
+    url: "api/adminAnalytics/sales/month",
     queryKey: ["sales"],
-    queryFn: () => fetchAnalytics("/api/adminAnalytics/sales/month"),
   });
-  const { data: ordersData = [] } = useQuery({
+  const { data: ordersData = [] } = useFetchWithCredentail<Orders[]>({
+    url: "api/adminAnalytics/orders/month",
     queryKey: ["orders"],
-    queryFn: () => fetchAnalytics("/api/adminAnalytics/orders/month"),
   });
-  const { data: revenueData = [] } = useQuery({
+  const { data: revenueData = [] } = useFetchWithCredentail<Revenue[]>({
+    url: "api/adminAnalytics/revenue/five-months",
     queryKey: ["revenue"],
-    queryFn: () => fetchAnalytics("/api/adminAnalytics/revenue/five-months"),
   });
-  const { data: userData = [] } = useQuery({
+  const { data: userData = [] } = useFetchWithCredentail<Users[]>({
+    url: "api/adminAnalytics/total/users",
     queryKey: ["users"],
-    queryFn: () => fetchAnalytics("/api/adminAnalytics/total/users"),
   });
 
   // Calculate totals & percentages
@@ -101,13 +106,6 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
-};
-
-const fetchAnalytics = async (url: string) => {
-  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}${url}`, {
-    withCredentials: true,
-  });
-  return data;
 };
 
 export default AdminDashboard;

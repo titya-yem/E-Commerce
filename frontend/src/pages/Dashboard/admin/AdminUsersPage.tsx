@@ -1,8 +1,7 @@
 import SearchText from "@/components/shared/SearchText";
+import { useFetch } from "@/hooks/useFetch";
 import type { User } from "@/types/userTypes";
 import { Box, Heading, Text, Flex, Button } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 
 const AdminUsersPage = () => {
@@ -10,12 +9,9 @@ const AdminUsersPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 8;
 
-  const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["Users"],
-    queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/user`);
-      return res.data as User[];
-    },
+  const { data, isError, error, isLoading } = useFetch<User[]>({
+    url: "api/user",
+    queryKey: ["users"],
   });
 
   if (isLoading)

@@ -14,7 +14,7 @@ const AppointmentPage = () => {
           <Box className="px-4 md:w-[56%]">
             <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl lg:mb-20 text-white font-bold uppercase text-center md:text-left">
               Book an Appointment with us today for your pets
-            </h1> 
+            </h1>
           </Box>
           <Box>
             <img

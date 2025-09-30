@@ -7,26 +7,22 @@ import fishImage from "@/assets/svg/CircleFish.svg";
 import rabbitImage from "@/assets/svg/CircleRabbit.svg";
 import rightArrow from "@/assets/svg/ForwardArrow.svg";
 import type { Product } from "@/types/productTypes";
-import { Box, Container } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { Box, Container, Heading } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import LinkButton from "../shared/LinkButton";
 import { Button } from "../ui/button";
 import CategoryFood from "./CategoryFood";
 import PetFoodCategories from "./PetFoodCategory";
+import { useFetch } from "@/hooks/useFetch";
 
 const TopCategories: React.FC = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3);
 
-  const { isLoading, isError, data, error } = useQuery<Product[]>({
+  const { isLoading, isError, data, error } = useFetch<Product[]>({
+    url: "api/product",
     queryKey: ["products"],
-    queryFn: async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/product`);
-      return res.data;
-    },
-  })
+  });
 
   const handleForward = () => {
     setStartIndex((prevIndex) =>
@@ -52,9 +48,9 @@ const TopCategories: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error: {(error as Error).message}</h1>;
-  if (!data) return <h1>No Products Available</h1>;
+  if (isLoading) <Heading>Loading...</Heading>;
+  if (isError) <Heading>Error: {(error as Error).message}</Heading>;
+  if (!data) return <Heading>No Products Available</Heading>;
 
   return (
     <Container className="py-10 bg-[#FAD046]">

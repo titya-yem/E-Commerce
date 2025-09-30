@@ -1,78 +1,112 @@
-import type { getMe } from "@/types/userTypes"
-import { Badge, Box, Button, DataList, Dialog, Flex, Heading, Link, Text, TextField } from "@radix-ui/themes"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
-import { useEffect } from "react"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
+import type { getMe } from "@/types/userTypes";
+import {
+  Badge,
+  Box,
+  Button,
+  DataList,
+  Dialog,
+  Flex,
+  Heading,
+  Link,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 interface UpdateProfileInput {
-  userName: string
-  email: string
-  password?: string
+  userName: string;
+  email: string;
+  password?: string;
 }
 
 const AdminProfile = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["Profile"],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`,{ withCredentials: true })
-      return res.data.user
-    }
-  })
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/auth/me`,
+        { withCredentials: true }
+      );
+      return res.data.user;
+    },
+  });
 
   const { register, handleSubmit, reset } = useForm<UpdateProfileInput>({
     defaultValues: {
       userName: "",
       email: "",
-      password: ""
-    }
-  })
+      password: "",
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: async (updatedData: UpdateProfileInput) => {
-      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/auth/me`,
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/auth/me`,
         updatedData,
         { withCredentials: true }
-      )
-      return res.data
+      );
+      return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Profile"] })
-      toast.success("Profile updated successfully 🎉")
+      queryClient.invalidateQueries({ queryKey: ["Profile"] });
+      toast.success("Profile updated successfully 🎉");
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
-      toast.error(err?.response?.data?.message || "Failed to update profile ❌")
-    }
-  })
+      toast.error(
+        err?.response?.data?.message || "Failed to update profile ❌"
+      );
+    },
+  });
 
   useEffect(() => {
     if (data) {
       reset({
         userName: data.userName,
         email: data.email,
-        password: ""
-      })
+        password: "",
+      });
     }
-  }, [data, reset])
+  }, [data, reset]);
 
   const onSubmit = (formData: UpdateProfileInput) => {
-    mutation.mutate(formData)
-    reset({ ...formData, password: "" })
-  }
+    mutation.mutate(formData);
+    reset({ ...formData, password: "" });
+  };
 
-  if (isLoading) return <Heading as="h1" className="text-center">Loading...</Heading>
-  if (isError) return <Heading as="h1" className="text-center">Error: {(error as Error).message}</Heading>
-  if (!data) return <Heading as="h1" className="text-center">No profile available.</Heading>
+  if (isLoading)
+    return (
+      <Heading as="h1" className="text-center">
+        Loading...
+      </Heading>
+    );
+  if (isError)
+    return (
+      <Heading as="h1" className="text-center">
+        Error: {(error as Error).message}
+      </Heading>
+    );
+  if (!data)
+    return (
+      <Heading as="h1" className="text-center">
+        No profile available.
+      </Heading>
+    );
 
-  const profile: getMe = data
+  const profile: getMe = data;
 
   return (
     <div className="px-4 md:pr-0 mx-auto md:mx-0 w-fit">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left py-5 font-medium">Profile</h2>
+      <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left py-5 font-medium">
+        Profile
+      </h2>
 
       <Box className="p-4 rounded-md bg-white overflow-x-auto shadow-md">
         <DataList.Root>
@@ -87,12 +121,18 @@ const AdminProfile = () => {
 
           <DataList.Item>
             <DataList.Label minWidth="88px">ID</DataList.Label>
-            <DataList.Value><Badge size="2">{profile.id}</Badge></DataList.Value>
+            <DataList.Value>
+              <Badge size="2">{profile.id}</Badge>
+            </DataList.Value>
           </DataList.Item>
 
           <DataList.Item>
             <DataList.Label minWidth="88px">Name</DataList.Label>
-            <DataList.Value><Badge size="2" color="crimson">{profile.userName}</Badge></DataList.Value>
+            <DataList.Value>
+              <Badge size="2" color="crimson">
+                {profile.userName}
+              </Badge>
+            </DataList.Value>
           </DataList.Item>
 
           <DataList.Item>
@@ -173,7 +213,7 @@ const AdminProfile = () => {
         </Box>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default AdminProfile
+export default AdminProfile;

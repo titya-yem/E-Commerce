@@ -2,29 +2,23 @@ import sittingDog from "@/assets/image/client-dog.png";
 import whiteDog from "@/assets/image/client-image.png";
 import leftArrow from "@/assets/svg/BackwardArrow.svg";
 import rightArrow from "@/assets/svg/ForwardArrow.svg";
-import { Box, Container, Flex, Text } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import type { Comment } from "../types/commentTypes";
 import { Button } from "./ui/button";
+import { useFetch } from "@/hooks/useFetch";
 
 const Recommendation: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { isLoading, isError, data, error } = useQuery<Comment[]>({
+  const { isLoading, isError, data, error } = useFetch<Comment[]>({
+    url: "api/comment",
     queryKey: ["comments"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/comment`
-      );
-      return res.data;
-    },
   });
 
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error: {(error as Error).message}</h1>;
-  if (!data || data.length === 0) return <h1>No comments found</h1>;
+  if (isLoading) <Heading>Loading...</Heading>;
+  if (isError) <Heading>Error: {(error as Error).message}</Heading>;
+  if (!data || data.length === 0) return <Heading>No comments found</Heading>;
 
   const totalComments = data.length;
 

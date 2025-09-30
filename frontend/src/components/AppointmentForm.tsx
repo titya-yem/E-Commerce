@@ -14,18 +14,18 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaCalendarAlt, FaEnvelope, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { AppointmentDirection } from "./AppointmentDirection";
 
 const AppointmentForm = () => {
   const { register, handleSubmit, reset } = useForm();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [appointmentType, setAppointmentType] = useState("Vacation");
   const currentUser = useSelector((state: RootState) => state.auth.user);
-  const userId = currentUser?.id
+  const userId = currentUser?.id;
 
-  if (!userId) {
-    toast.error("You must be logged in to book an appointment.");
-    return;
-  }
+  // If not logged in → show login/signup prompt
+  if (!userId) return <AppointmentDirection />;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (data: any) => {
     if (!selectedDate) {
@@ -33,9 +33,9 @@ const AppointmentForm = () => {
       return;
     }
 
-    const [hours, minutes] = data.time.split(":").map(Number)
+    const [hours, minutes] = data.time.split(":").map(Number);
     if (hours < 9 || hours > 21 || (hours === 21 && minutes > 0)) {
-      toast.error("Please select a time between 09:00 and 9:00.");
+      toast.error("Please select a time between 09:00 and 21:00.");
       return;
     }
 
@@ -48,10 +48,16 @@ const AppointmentForm = () => {
         type: appointmentType,
         date: selectedDate?.toISOString().split("T")[0],
       };
-      
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/appointment/create`, payload);
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/appointment/create`,
+        payload
+      );
+
       toast.success("Appointment booked successfully!");
       reset();
+      setSelectedDate(new Date()); // reset date
+      setAppointmentType("Vacation"); // reset type
     } catch (error) {
       console.error("Error booking appointment:", error);
       toast.error("Failed to book appointment.");
@@ -66,10 +72,9 @@ const AppointmentForm = () => {
     "Party",
   ];
 
-  // Generate 24-hour time slots from 09:00 to 21:00
   const timeSlots: string[] = [];
   for (let hour = 9; hour <= 21; hour++) {
-    const h = hour.toString().padStart(2, "0"); // pad single digits with 0
+    const h = hour.toString().padStart(2, "0");
     timeSlots.push(`${h}:00`);
   }
 
@@ -84,6 +89,7 @@ const AppointmentForm = () => {
         {serviceCategories.map((type) => (
           <button
             key={type}
+            type="button"
             className={`px-4 py-2 border rounded-lg text-sm transition-all cursor-pointer ${
               appointmentType === type
                 ? "bg-blue-500 text-white"
@@ -125,22 +131,22 @@ const AppointmentForm = () => {
         {/* Time Selection */}
         <div className="flex justify-center items-center gap-4">
           <Box className="relative">
-          <select
-            {...register("time")}
-            className="w-[145px] md:w-[190px] pl-3 p-3 text-sm md:text-base border rounded-lg"
-            required
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select Time
-            </option>
-            {timeSlots.map((slot) => (
-              <option key={slot} value={slot}>
-                {slot}
+            <select
+              {...register("time")}
+              className="w-[145px] md:w-[190px] pl-3 p-3 text-sm md:text-base border rounded-lg"
+              required
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Select Time
               </option>
-            ))}
-          </select>
-        </Box>
+              {timeSlots.map((slot) => (
+                <option key={slot} value={slot}>
+                  {slot}
+                </option>
+              ))}
+            </select>
+          </Box>
 
           {/* Date Picker */}
           <Popover>
@@ -151,7 +157,7 @@ const AppointmentForm = () => {
                   type="text"
                   readOnly
                   value={selectedDate ? selectedDate.toLocaleDateString() : ""}
-                  className="w-full pl-10 last: p-3 text-sm md:text-base border rounded-lg cursor-pointer"
+                  className="w-full pl-10 p-3 text-sm md:text-base border rounded-lg cursor-pointer"
                 />
               </Box>
             </PopoverTrigger>

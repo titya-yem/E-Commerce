@@ -1,24 +1,18 @@
 import type { Order } from "@/types/orderTypes";
 import { Button, Flex } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import AdminOrderTable from "@/components/dashboard/admin/AdminOrderTable";
 import SearchText from "@/components/shared/SearchText";
+import { useFetch } from "@/hooks/useFetch";
 
 const AdminOrders: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 8;
 
-  const { isLoading, isError, data, error } = useQuery<Order[], Error>({
+  const { isLoading, isError, data, error } = useFetch<Order[]>({
+    url: "api/order/me",
     queryKey: ["orders"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/order/me`
-      );
-      return res.data;
-    },
   });
 
   if (isLoading)

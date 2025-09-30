@@ -12,12 +12,13 @@ import {
   Text,
   AlertDialog,
 } from "@radix-ui/themes";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import ServiceEditForm from "@/components/dashboard/admin/AdminServiceUpdate";
 import AdminAddServices from "@/components/dashboard/admin/AdminAddServices";
+import { useFetch } from "@/hooks/useFetch";
 
 const AdminServices = () => {
   const queryClient = useQueryClient();
@@ -25,14 +26,9 @@ const AdminServices = () => {
   const [addingProduct, setAddingProduct] = useState(false);
   const [deleteServiceId, setDeleteServiceId] = useState<string | null>(null);
 
-  const { data, error, isError, isLoading } = useQuery<Service[]>({
+  const { data, error, isError, isLoading } = useFetch<Service[]>({
+    url: "api/service",
     queryKey: ["services"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/service`
-      );
-      return res.data.map((s: Service) => ({ ...s, id: s._id }));
-    },
   });
 
   const updateService = useMutation({
