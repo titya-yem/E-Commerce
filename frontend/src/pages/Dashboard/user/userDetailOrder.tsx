@@ -36,7 +36,9 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
                     className="h-20 w-full object-contain rounded-md mb-2"
                   />
                   <Text className="font-medium">{item.name}</Text>
-                  <Text className="text-gray-500">{item.category}</Text>
+                  <Text className="text-gray-500">
+                    Category: {item.category}
+                  </Text>
                   <Text>Quantity: {item.quantity}</Text>
                   <Text>Price: ${item.price?.toFixed(2) ?? "0.00"}</Text>
                 </div>
@@ -95,7 +97,7 @@ const UserOrderDetails: React.FC<UserOrderDetailsProps> = ({ order }) => {
           </div>
         </div>
 
-        <Flex justify="between" align="center" className="pt-4">
+        <Flex justify="between" align="center" gap="2" className="pt-4">
           <Callout.Root>
             <Callout.Icon>
               <img

@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
               </span>
             )}
           </Link>
-          <MobileNavbar location={location} />
+          <MobileNavbar />
         </Flex>
       </Flex>
     </Container>

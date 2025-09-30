@@ -22,6 +22,6 @@ export const SideBarItems: SideBarItem[] = [
   { title: "Services", url: "services", icon: ServiceImage, roles: ["admin"] },
   { title: "Users", url: "users", icon: UserImage, roles: ["admin"] },
   { title: "Comments", url: "comments", icon: CommentImage, roles: ["admin", "user"] },
-  { title: "Contact", url: "contact", icon: ContactImage, roles: ["admin", "user"] },
+  { title: "Contact", url: "contact", icon: ContactImage, roles: ["admin"] },
   { title: "Profile", url: "profile", icon: ProfileImage, roles: ["admin"] },
 ];
