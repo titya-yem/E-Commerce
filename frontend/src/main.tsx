@@ -46,7 +46,6 @@ import AdminContactPage from "./pages/Dashboard/admin/AdminContact.tsx";
 import UserComments from "./pages/Dashboard/user/UserComments.tsx";
 import UserDashboard from "./pages/Dashboard/user/UserDashboard.tsx";
 import UserOrders from "./pages/Dashboard/user/UserOrders.tsx";
-import UserContact from "./pages/Dashboard/user/UserContact.tsx";
 
 // Components
 import Cart from "./components/Cart.tsx";
@@ -110,7 +109,6 @@ createRoot(document.getElementById("root")!).render(
                   <Route index element={<UserDashboard />} />
                   <Route path="orders" element={<UserOrders />} />
                   <Route path="comments" element={<UserComments />} />
-                  <Route path="contact" element={<UserContact />} />
                 </Route>
               </Routes>
             </AuthWrapper>
