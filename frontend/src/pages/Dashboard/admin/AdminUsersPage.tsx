@@ -1,3 +1,4 @@
+import SearchText from "@/components/shared/SearchText";
 import type { User } from "@/types/userTypes";
 import { Box, Heading, Text, Flex, Button } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
@@ -5,6 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const AdminUsersPage = () => {
+  const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 8;
 
@@ -16,25 +18,51 @@ const AdminUsersPage = () => {
     },
   });
 
-  if (isLoading) return <Heading className="text-center py-10">Loading...</Heading>;
-  if (isError) return <Heading className="text-center py-10">Error: {(error as Error).message}</Heading>;
-  if (!data || data.length === 0) return <Heading className="text-center py-10">No users available</Heading>;
+  if (isLoading)
+    return <Heading className="text-center py-10">Loading...</Heading>;
+  if (isError)
+    return (
+      <Heading className="text-center py-10">
+        Error: {(error as Error).message}
+      </Heading>
+    );
+  if (!data || data.length === 0)
+    return <Heading className="text-center py-10">No users available</Heading>;
 
-  const sortedData = data.slice().sort(
-    (a, b) => new Date(b.createdAt ?? "").getTime() - new Date(a.createdAt ?? "").getTime()
+  const sortedData = data
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt ?? "").getTime() -
+        new Date(a.createdAt ?? "").getTime()
+    );
+
+  const filteredData = sortedData.filter((user) =>
+    user.userName?.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.max(1, Math.ceil(sortedData.length / usersPerPage));
-  const currentUsers = sortedData.slice(
+  const currentUsers = filteredData.slice(
     (currentPage - 1) * usersPerPage,
     currentPage * usersPerPage
   );
 
   return (
     <div className="px-6 lg:px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
-      <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left py-5 font-medium">
-        Users
-      </h2>
+      <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center">
+        <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left pt-5 font-medium">
+          Users
+        </h2>
+
+        <SearchText
+          value={search}
+          onChange={(value) => {
+            setSearch(value);
+            setCurrentPage(1);
+          }}
+          placeholder="Search Name"
+        />
+      </div>
 
       <Box className="p-2 rounded-md bg-white h-[590px] max-h-[600px]">
         <Box>
@@ -58,22 +86,30 @@ const AdminUsersPage = () => {
               "
             >
               <Text className="font-medium text-blue-500">
-                <span className="lg:hidden">Name: </span>{user.userName || 'N/A'}
+                <span className="lg:hidden">Name: </span>
+                {user.userName || "N/A"}
               </Text>
               <Text className="font-medium underline text-cyan-500">
-                  <a href={`mailto:{user.email}`}>
-                    <Text as="span" className="lg:hidden">Email: </Text>
-                    {user.email}
-                  </a>
+                <a href={`mailto:{user.email}`}>
+                  <Text as="span" className="lg:hidden">
+                    Email:{" "}
+                  </Text>
+                  {user.email}
+                </a>
               </Text>
               <Text className="font-medium text-teal-500">
-                <span className="lg:hidden">Role: </span>{user.role || 'User'}
+                <span className="lg:hidden">Role: </span>
+                {user.role || "User"}
               </Text>
               <Text className="font-medium text-amber-500">
-                <span className="lg:hidden">Status: </span>{user.isActive ? 'Active' : 'Inactive'}
+                <span className="lg:hidden">Status: </span>
+                {user.isActive ? "Active" : "Inactive"}
               </Text>
               <Text className="font-medium text-violet-500">
-                <span className="lg:hidden">Created at: </span>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+                <span className="lg:hidden">Created at: </span>
+                {user.createdAt
+                  ? new Date(user.createdAt).toLocaleDateString()
+                  : "N/A"}
               </Text>
             </div>
           ))}
