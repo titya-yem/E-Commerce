@@ -44,8 +44,7 @@ const AdminAppointments = () => {
   const isMd = useMediaQuery("(min-width: 768px)");
   const isXl = useMediaQuery("(min-width: 1280px)");
 
-  if (isLoading)
-    return <Heading className="text-center py-10">Loading...</Heading>;
+  if (isLoading) <Heading className="text-center py-10">Loading...</Heading>;
   if (isError)
     return (
       <Heading className="text-center py-10">
@@ -74,7 +73,7 @@ const AdminAppointments = () => {
   return (
     <div className="px-6 lg:px-4 pb-6 lg:pb-0 w-full">
       {/* Search bar */}
-      <div className="flex flex-col md:flex-row md:justify-between items-center mt-4 gap-4">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mt-4 md:my-4 gap-4">
         <h2 className="text-xl lg:text-2xl xl:w-3xl text-center md:text-left font-medium">
           Appointments
         </h2>
@@ -87,7 +86,7 @@ const AdminAppointments = () => {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-[200px] mb-4"
+          className="w-[200px] mb-4 md:mb-0"
         />
       </div>
 

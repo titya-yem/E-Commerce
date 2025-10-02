@@ -59,7 +59,7 @@ const AdminContact = () => {
     <div className="px-6 lg:px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center">
-        <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left pt-5 font-medium">
+        <h2 className="text-xl lg:text-2xl xl:w-3xl text-center lg:text-left font-medium">
           Contact
         </h2>
 
