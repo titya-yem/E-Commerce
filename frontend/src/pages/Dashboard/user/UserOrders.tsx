@@ -2,10 +2,9 @@ import { useState } from "react";
 import type { RootState } from "@/store/store";
 import type { Order } from "@/types/orderTypes";
 import { Box, Heading, Text, Flex, Button } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import UserOrderDetails from "./userDetailOrder";
+import { useFetch } from "@/hooks/useFetch";
 
 const UserOrders = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -13,14 +12,9 @@ const UserOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
 
-  const { data, isError, error, isLoading } = useQuery({
+  const { data, isError, error, isLoading } = useFetch<Order[]>({
+    url: "api/order/me",
     queryKey: ["Orders"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/order/me`
-      );
-      return res.data;
-    },
   });
 
   if (isLoading)

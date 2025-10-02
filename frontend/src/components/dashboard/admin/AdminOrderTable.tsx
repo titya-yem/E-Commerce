@@ -17,7 +17,10 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/api/order/${id}/status`, { status });
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/order/${id}/status`,
+        { status }
+      );
       return res.data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["orders"] }),
@@ -55,29 +58,43 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
           className="grid md:grid-cols-3 gap-2 p-4 border-b text-center xl:grid-cols-[100px_250px_170px_150px_150px_120px] 2xl:grid-cols-[150px_300px_200px_180px_150px_150px] *:text-sm *:font-medium xl:gap-0 xl:border-none"
         >
           <Text className="text-blue-500">
-            <Text as="span" className="lg:hidden">Name: </Text>{user?.userName ?? "N/A"}
+            <Text as="span" className="lg:hidden">
+              Name:{" "}
+            </Text>
+            {user?.userName ?? "N/A"}
           </Text>
           <Text className="underline text-cyan-500">
-            <Text as="span" className="lg:hidden">Email: </Text>
-            <a href={`mailto:{order.email}`}>
-              {order.user?.email ?? "N/A"}
-            </a>
+            <Text as="span" className="lg:hidden">
+              Email:{" "}
+            </Text>
+            <a href={`mailto:{order.email}`}>{order.user?.email ?? "N/A"}</a>
           </Text>
 
           {/* View Order Details */}
           <Box className="w-2/3 mx-auto">
-            <AdminProductDetails order={order} onDelete={(id: string) => deleteOrder.mutate(id)} />
+            <AdminProductDetails
+              order={order}
+              onDelete={(id: string) => deleteOrder.mutate(id)}
+            />
           </Box>
 
           <Text className="font-medium rounded-md text-purple-500">
-            <Text as="span" className="lg:hidden">Date: </Text>
+            <Text as="span" className="lg:hidden">
+              Date:{" "}
+            </Text>
             {order.createdAt
-              ? new Date(order.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+              ? new Date(order.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
               : "N/A"}
           </Text>
 
           <Text className="font-medium rounded-md text-amber-500">
-            <Text as="span" className="lg:hidden">Amount: </Text>
+            <Text as="span" className="lg:hidden">
+              Amount:{" "}
+            </Text>
             ${order.totalAmount?.toFixed(2) ?? "0.00"}
           </Text>
 
@@ -86,7 +103,9 @@ const AdminOrderTable: React.FC<AdminOrderTableProps> = ({ currentOrders }) => {
             <Select.Root
               size="2"
               defaultValue={order.status ?? "Pending"}
-              onValueChange={(value) => updateStatus.mutate({ id: order._id, status: value })}
+              onValueChange={(value) =>
+                updateStatus.mutate({ id: order._id, status: value })
+              }
             >
               <Select.Trigger color="orange" variant="soft" />
               <Select.Content color="orange" position="popper">

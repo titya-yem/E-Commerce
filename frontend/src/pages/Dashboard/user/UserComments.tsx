@@ -1,8 +1,9 @@
 import UserCommentForm from "@/components/dashboard/UserCommentForm";
+import { useFetch } from "@/hooks/useFetch";
 import type { Comment } from "@/types/commentTypes";
 import { Box, Button, Dialog, Flex, Heading, Text } from "@radix-ui/themes";
 import { AlertDialog } from "@radix-ui/themes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 
@@ -12,14 +13,9 @@ const UserComments = () => {
   const [addingProduct, setAddingProduct] = useState(false);
   const commentsPerPage = 5;
 
-  const { data, isError, error, isLoading } = useQuery<Comment[]>({
+  const { data, isError, error, isLoading } = useFetch<Comment[]>({
+    url: "api/comment/me",
     queryKey: ["Comments"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/comment/me`
-      );
-      return res.data;
-    },
   });
 
   const deleteComment = useMutation({

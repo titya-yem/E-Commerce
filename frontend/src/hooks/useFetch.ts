@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 
 interface FetchParams {
-  url?: string;
+  url: string;
   queryKey: string[];
 }
 

@@ -1,22 +1,13 @@
 import WelcomeDashboard from "@/components/dashboard/WelcomeDashboard";
 import type { AppointmentTypes } from "@/types/AppointmentTypes";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useParams } from "react-router";
 import UserProfile from "./UserProfile";
+import { useFetch } from "@/hooks/useFetch";
 
 const UserDashboard = () => {
-  const { appointmentId } = useParams<{ appointmentId: string }>();
-
-  const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["Appointments", appointmentId],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/appointment/my-appointments`
-      );
-      return res.data as AppointmentTypes[];
-    },
+  const { data, isError, error, isLoading } = useFetch<AppointmentTypes[]>({
+    url: "api/appointment/my-appointments",
+    queryKey: ["userAppointments"],
   });
 
   if (isLoading)
