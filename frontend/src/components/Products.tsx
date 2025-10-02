@@ -8,6 +8,7 @@ import { Box, Container, Flex, Select } from "@radix-ui/themes";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // Helper function to slugify product names
 const slugify = (name: string) => {
@@ -45,9 +46,15 @@ const ProductsComponent: React.FC = () => {
   return (
     <Container>
       <Flex justify="between" align="center">
-        <h4 className="text-xl md:text-2xl text-center font-semibold py-10 md:py-14">
+        <motion.h4
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="text-xl md:text-2xl text-center font-semibold py-10 md:py-14"
+        >
           Food <span className="text-[#43606D]">& Supplies</span>
-        </h4>
+        </motion.h4>
 
         <Select.Root
           size="3"

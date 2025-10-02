@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { Comment } from "../types/commentTypes";
 import { Button } from "./ui/button";
 import { useFetch } from "@/hooks/useFetch";
+import { motion } from "framer-motion";
 
 const Recommendation: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,9 +40,15 @@ const Recommendation: React.FC = () => {
       <Container>
         <Box className="space-y-6">
           <Box>
-            <h1 className="text-2xl lg:text-4xl mx-auto md:my-4 lg:mb-14 text-center font-bold uppercase">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="text-2xl lg:text-4xl mx-auto md:my-4 lg:mb-14 text-center font-bold uppercase"
+            >
               What our clients say about us
-            </h1>
+            </motion.h1>
           </Box>
           <Box>
             {/* Display the current comment */}

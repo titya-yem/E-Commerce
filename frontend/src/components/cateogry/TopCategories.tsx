@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import CategoryFood from "./CategoryFood";
 import PetFoodCategories from "./PetFoodCategory";
 import { useFetch } from "@/hooks/useFetch";
+import { motion } from "framer-motion";
 
 const TopCategories: React.FC = () => {
   const [startIndex, setStartIndex] = useState(0);
@@ -55,9 +56,15 @@ const TopCategories: React.FC = () => {
   return (
     <Container className="py-10 bg-[#FAD046]">
       <Box className="relative">
-        <h1 className="uppercase text-2xl lg:text-4xl text-center font-bold">
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.6, y: 30 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="uppercase text-2xl lg:text-4xl text-center font-bold"
+        >
           Top Categories
-        </h1>
+        </motion.h1>
         <img
           src={birds}
           alt="category birds"
@@ -73,11 +80,21 @@ const TopCategories: React.FC = () => {
       </div>
       <Box>
         <div className="w-[189px] h-[20px] bg-[#302B2B] rounded-xl my-8 mx-auto"></div>
-        <LinkButton
-          link="shop"
-          name="Check Our Shop"
-          classname="block md:hidden mx-auto text-center"
-        />
+
+        {/* Checkout button on mobile view */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <LinkButton
+            link="shop"
+            name="Check Our Shop"
+            classname="block md:hidden mx-auto text-center"
+          />
+        </motion.div>
+
         <Box className="!hidden md:!flex justify-between items-center px-2 h-[310px] bg-[#E3462C] rounded-lg">
           {/* Backward Button */}
           <Button

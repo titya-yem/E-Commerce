@@ -3,6 +3,7 @@ import aboutFormImage from "@/assets/image/appointmnet-image.png";
 import AppointmentForm from "@/components/AppointmentForm";
 import { Box, Container, Flex } from "@radix-ui/themes";
 import { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const AppointmentPage = () => {
   return (
@@ -12,9 +13,15 @@ const AppointmentPage = () => {
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row justify-between items-center relative top-12 lg:top-16">
           <Box className="px-4 md:w-[56%]">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl lg:mb-20 text-white font-bold uppercase text-center md:text-left">
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.6, x: -100 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl lg:mb-20 text-white font-bold uppercase text-center md:text-left"
+            >
               Book an Appointment with us today for your pets
-            </h1>
+            </motion.h1>
           </Box>
           <Box>
             <img

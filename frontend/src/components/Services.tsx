@@ -12,6 +12,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const { data, isError, error, isLoading } = useFetch<Service[]>({
@@ -29,12 +30,24 @@ const Services = () => {
 
   return (
     <Container className="my-10 pb-10 px-2">
-      <h1 className="text-2xl lg:text-4xl mx-auto mb-6 md:mb-10 text-center font-bold uppercase">
+      <motion.h1
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.8 }}
+        className="text-2xl lg:text-4xl mx-auto mb-6 md:mb-10 text-center font-bold uppercase"
+      >
         Services
-      </h1>
+      </motion.h1>
 
       {/* Responsive Grid */}
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.6, y: 20 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+      >
         {data?.map((service: Service) => (
           <Box key={service._id} className="md:col-span-1">
             <Card
@@ -96,7 +109,7 @@ const Services = () => {
             </Card>
           </Box>
         ))}
-      </div>
+      </motion.div>
     </Container>
   );
 };
