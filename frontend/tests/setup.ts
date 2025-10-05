@@ -1,5 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import '@testing-library/jest-dom'
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserverMock as any;
 
 class MockIntersectionObserver implements IntersectionObserver {
   root: Element | null = null

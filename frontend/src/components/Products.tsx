@@ -64,11 +64,21 @@ const ProductsComponent: React.FC = () => {
             setVisibleCount(10);
           }}
         >
-          <Select.Trigger color="blue" variant="soft" />
+          <Select.Trigger
+            color="blue"
+            variant="soft"
+            aria-label="All Categories"
+          />
           <Select.Content position="popper" side="bottom">
-            <Select.Item value="all">All Categories</Select.Item>
+            <Select.Item value="all" data-testid="category-option-all">
+              All Categories
+            </Select.Item>
             {categories.map((category) => (
-              <Select.Item key={category} value={category}>
+              <Select.Item
+                key={category}
+                value={category}
+                data-testid={`category-option-${category}`}
+              >
                 {category}
               </Select.Item>
             ))}
