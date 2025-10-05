@@ -10,6 +10,7 @@ const AboutSection = () => {
       <div className="flex flex-col md:flex-row justify-between items-center gap-8 lg:gap-12 py-8">
         <Box className="w-full md:w-1/2">
           <motion.h1
+            data-testid="about-us-heading"
             initial={{ opacity: 0, scale: 0.6, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
@@ -29,7 +30,9 @@ const AboutSection = () => {
         </Box>
 
         <Box className="md:w-1/2 space-y-6 *:text-center *:md:text-left">
+          {/* desktop heading */}
           <motion.h1
+            data-testid="about-us-heading-desktop"
             initial={{ opacity: 0, scale: 0.6, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4 }}

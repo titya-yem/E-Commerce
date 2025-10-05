@@ -38,9 +38,9 @@ const TopCategories: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
-        setItemsToShow(4); // Show 4 products for screens wider than 1024px
+        setItemsToShow(4);
       } else {
-        setItemsToShow(3); // Show 3 products for smaller screens
+        setItemsToShow(3);
       }
     };
 
@@ -49,9 +49,10 @@ const TopCategories: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (isLoading) <Heading>Loading...</Heading>;
-  if (isError) <Heading>Error: {(error as Error).message}</Heading>;
-  if (!data) return <Heading>No Products Available</Heading>;
+  if (isLoading) return <Heading>Loading...</Heading>;
+  if (isError) return <Heading>Error: {(error as Error).message}</Heading>;
+  if (!data || data.length === 0)
+    return <Heading>No Products Available</Heading>;
 
   return (
     <Container className="py-10 bg-[#FAD046]">
@@ -71,6 +72,7 @@ const TopCategories: React.FC = () => {
           className="hidden md:inline absolute top-1 w-[150px] xl:w-[180px]"
         />
       </Box>
+
       <div className="flex flex-wrap gap-2 justify-between items-center w-2/3 mx-auto mt-10">
         <PetFoodCategories name="Rabbit" image={rabbitImage} />
         <PetFoodCategories name="Cat" image={catImage} />
@@ -78,10 +80,10 @@ const TopCategories: React.FC = () => {
         <PetFoodCategories name="Bird" image={birdImage} />
         <PetFoodCategories name="Fish" image={fishImage} />
       </div>
+
       <Box>
         <div className="w-[189px] h-[20px] bg-[#302B2B] rounded-xl my-8 mx-auto"></div>
 
-        {/* Checkout button on mobile view */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,10 +98,9 @@ const TopCategories: React.FC = () => {
         </motion.div>
 
         <Box className="!hidden md:!flex justify-between items-center px-2 h-[310px] bg-[#E3462C] rounded-lg">
-          {/* Backward Button */}
           <Button
             onClick={handleBackward}
-            disabled={startIndex === 0} // Disable if at the start
+            disabled={startIndex === 0}
             className="border shadow-md bg-transparent px-2 py-2 cursor-pointer hover:bg-transparent rounded-sm border-gray-300"
           >
             <img
@@ -110,13 +111,11 @@ const TopCategories: React.FC = () => {
             />
           </Button>
 
-          {/* Display Current Products */}
           <CategoryFood startIndex={startIndex} itemsToShow={itemsToShow} />
 
-          {/* Forward Button */}
           <Button
             onClick={handleForward}
-            disabled={startIndex + itemsToShow >= data.length} // Disable if at the end
+            disabled={startIndex + itemsToShow >= data.length}
             className="border shadow-md bg-transparent px-2 py-2 cursor-pointer hover:bg-transparent rounded-sm border-gray-300"
           >
             <img

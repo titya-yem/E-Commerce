@@ -20,13 +20,18 @@ const Services = () => {
     queryKey: ["Services"],
   });
 
-  if (isLoading) <Heading className="text-center py-10">Loading...</Heading>;
+  if (isLoading)
+    return <Heading className="text-center py-10">Loading...</Heading>;
   if (isError)
-    <Heading className="text-center py-10">
-      Error: {(error as Error).message}
-    </Heading>;
+    return (
+      <Heading className="text-center py-10">
+        Error: {(error as Error).message}
+      </Heading>
+    );
   if (!data || data.length === 0)
-    <Heading className="text-center py-10">No Services available</Heading>;
+    return (
+      <Heading className="text-center py-10">No Services available</Heading>
+    );
 
   return (
     <Container className="my-10 pb-10 px-2">

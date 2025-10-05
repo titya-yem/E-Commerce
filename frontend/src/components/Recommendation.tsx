@@ -17,8 +17,8 @@ const Recommendation: React.FC = () => {
     queryKey: ["comments"],
   });
 
-  if (isLoading) <Heading>Loading...</Heading>;
-  if (isError) <Heading>Error: {(error as Error).message}</Heading>;
+  if (isLoading) return <Heading>Loading...</Heading>;
+  if (isError) return <Heading>Error: {(error as Error).message}</Heading>;
   if (!data || data.length === 0) return <Heading>No comments found</Heading>;
 
   const totalComments = data.length;

@@ -28,11 +28,15 @@ const CategoryFood: React.FC<categoryProps> = ({
 
   if (isLoading)
     return <Heading className="text-xl text-center">Loading...</Heading>;
+
   if (isError)
-    <Heading className="text-xl text-center">
-      Error: {(error as Error).message}
-    </Heading>;
-  if (!data)
+    return (
+      <Heading className="text-xl text-center">
+        Error: {(error as Error).message}
+      </Heading>
+    );
+
+  if (!data || data.length === 0)
     return (
       <Heading className="text-xl text-center">No Products Available</Heading>
     );
@@ -40,13 +44,13 @@ const CategoryFood: React.FC<categoryProps> = ({
   return (
     <div className="flex justify-between items-center overflow-hidden gap-x-4 xl:gap-x-0 w-[85%]">
       {data.slice(startIndex, startIndex + itemsToShow).map((item) => (
-        <div key={item._id} className="w-[220px]">
+        <div key={item._id || item.id} className="w-[220px]">
           {/* Image Box */}
-          <Link to={`/shop/${slugify(item.name)}-${item._id}`}>
+          <Link to={`/shop/${slugify(item.name)}-${item._id || item.id}`}>
             <Box className="h-[140px] rounded-t-md flex items-center justify-center bg-white">
               <img
-                src={item.image}
-                alt="Pet food product"
+                src={item.image || "https://via.placeholder.com/150"}
+                alt={`Image of ${item.name}`}
                 className="mx-auto max-w-full max-h-full object-contain"
               />
             </Box>
@@ -58,8 +62,12 @@ const CategoryFood: React.FC<categoryProps> = ({
             <Flex justify="between" align="center" className="mb-3">
               <p className="font-semibold">${item.price}</p>
               <Flex gapX="2" align="center">
-                <img src={star} alt={`Rating ${item.rating}`} />
-                <span>{item.rating}</span>
+                <img
+                  src={star}
+                  alt={`Rating ${item.rating || "N/A"}`}
+                  className="w-4 h-4"
+                />
+                <span>{item.rating || "N/A"}</span>
               </Flex>
             </Flex>
             <Button
@@ -67,10 +75,10 @@ const CategoryFood: React.FC<categoryProps> = ({
               onClick={() =>
                 dispatch(
                   addToCart({
-                    id: item._id,
+                    id: item.id || item._id,
                     name: item.name,
                     price: item.price,
-                    image: item.image,
+                    image: item.image || "https://via.placeholder.com/150",
                     quantity: 1,
                     category: item.category,
                     description: item.description,
