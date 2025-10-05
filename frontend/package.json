@@ -32,6 +32,7 @@
     "cmdk": "^1.1.1",
     "lucide-react": "^0.532.0",
     "motion": "^12.23.13",
+    "picomatch": "^4.0.3",
     "react": "^19.1.1",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.1",
