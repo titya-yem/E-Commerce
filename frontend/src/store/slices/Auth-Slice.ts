@@ -28,7 +28,7 @@ export const fetchAuthStatus = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/auth/me", {
-        withCredentials: true, // ensures cookie is sent
+        withCredentials: true,
       });
       return response.data;
     } catch (error: any) {
@@ -37,18 +37,15 @@ export const fetchAuthStatus = createAsyncThunk(
   }
 );
 
-// Slice
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // Set auth when user logs in
     setAuth: (state, action) => {
       state.isAuthenticated = true;
       state.user = action.payload;
       state.loading = false;
     },
-    // Clear auth when user logs out
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
@@ -76,3 +73,6 @@ const authSlice = createSlice({
 export const { logout, setAuth } = authSlice.actions;
 
 export default authSlice.reducer;
+
+// ✅ Export types so test can import them
+export type { User, AuthState };

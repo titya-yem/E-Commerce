@@ -133,9 +133,7 @@ describe("ProductsComponent", () => {
     await user.click(selectTrigger);
 
     const catOption = await within(document.body).findByTestId(
-      "category-option-Cat",
-      {},
-      { timeout: 3000 }
+      "category-option-Cat"
     );
     await user.click(catOption);
 
