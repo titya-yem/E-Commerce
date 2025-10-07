@@ -12,13 +12,17 @@ const TotalAppointments = () => {
   });
 
   if (isLoading)
-    <Heading as="h1" className="text-center">
-      Loading...
-    </Heading>;
+    return (
+      <Heading as="h1" className="text-center">
+        Loading...
+      </Heading>
+    );
   if (isError)
-    <Heading as="h1" className="text-center">
-      Error: {(error as Error).message}
-    </Heading>;
+    return (
+      <Heading as="h1" className="text-center">
+        Error: {(error as Error).message}{" "}
+      </Heading>
+    );
   if (!data || data.length === 0)
     return (
       <Box className="space-y-8 mt-5 h-[370px] shadow-md rounded-lg bg-white">
