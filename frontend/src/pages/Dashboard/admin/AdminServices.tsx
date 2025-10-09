@@ -70,10 +70,6 @@ const AdminServices = () => {
         Error: {(error as Error).message}
       </Heading>
     );
-  if (!data || data.length === 0)
-    return (
-      <Heading className="text-center py-10">No Services available</Heading>
-    );
 
   return (
     <div className="px-4 w-full 2xl:w-[1600px] 2xl:mx-auto">
@@ -86,8 +82,12 @@ const AdminServices = () => {
         </Button>
       </Flex>
 
+      {(!data || data.length === 0) && (
+        <Heading className="text-center py-10">No Services available</Heading>
+      )}
+
       <div className="flex flex-wrap gap-4 my-2 items-center justify-center 2xl:justify-start">
-        {data.map((service: Service, index: number) => (
+        {data?.map((service: Service, index: number) => (
           <Box
             key={service._id || index}
             maxWidth="295px"
@@ -142,116 +142,116 @@ const AdminServices = () => {
             </Card>
           </Box>
         ))}
-
-        {/* Add Service Dialog */}
-        {addingProduct && (
-          <Dialog.Root
-            open={true}
-            onOpenChange={(open) => !open && setAddingProduct(false)}
-          >
-            <Dialog.Content maxWidth="600px">
-              <Dialog.Title>Add Service</Dialog.Title>
-              <Dialog.Description size="2" mb="2">
-                Fill in the service details below.
-              </Dialog.Description>
-
-              <AdminAddServices
-                onSuccess={() => {
-                  setAddingProduct(false);
-                  queryClient.invalidateQueries({ queryKey: ["services"] });
-                }}
-              />
-
-              <Flex justify="end" mt="4">
-                <Button
-                  variant="soft"
-                  color="gray"
-                  onClick={() => setAddingProduct(false)}
-                >
-                  Cancel
-                </Button>
-              </Flex>
-            </Dialog.Content>
-          </Dialog.Root>
-        )}
-
-        {/* Update Service Dialog */}
-        {editingService && (
-          <Dialog.Root
-            open={true}
-            onOpenChange={(open) => !open && setEditingService(null)}
-          >
-            <Dialog.Content maxWidth="600px">
-              <Dialog.Title>Update Service</Dialog.Title>
-              <Dialog.Description size="2" mb="2">
-                Edit service details below.
-              </Dialog.Description>
-
-              <ServiceEditForm
-                service={editingService}
-                onCancel={() => setEditingService(null)}
-                onSave={(updated) => updateService.mutate(updated)}
-                onDelete={() => setDeleteServiceId(editingService._id!)}
-              />
-            </Dialog.Content>
-          </Dialog.Root>
-        )}
-
-        {/* Delete Confirmation AlertDialog */}
-        <AlertDialog.Root
-          open={!!deleteServiceId}
-          onOpenChange={(open) => !open && setDeleteServiceId(null)}
-        >
-          <AlertDialog.Content maxWidth="400px">
-            <AlertDialog.Title>Delete Service</AlertDialog.Title>
-            <AlertDialog.Description size="2" mb="4">
-              Are you sure you want to delete this service?{" "}
-              <Text as="span" color="red" weight="medium">
-                It will be permanently deleted.
-              </Text>
-            </AlertDialog.Description>
-
-            <Flex justify="end" gap="2">
-              <AlertDialog.Cancel>
-                <Button
-                  variant="soft"
-                  color="gray"
-                  onClick={() => setDeleteServiceId(null)}
-                >
-                  Cancel
-                </Button>
-              </AlertDialog.Cancel>
-
-              <AlertDialog.Action>
-                <Button
-                  color="red"
-                  onClick={() => {
-                    if (deleteServiceId) {
-                      deleteService.mutate(deleteServiceId, {
-                        onSuccess: () => {
-                          setDeleteServiceId(null);
-                          queryClient.invalidateQueries({
-                            queryKey: ["services"],
-                          });
-                          toast.success("Service deleted successfully");
-                        },
-                        onError: (err: any) => {
-                          toast.error(
-                            err?.response?.data?.message ||
-                              "Failed to delete service"
-                          );
-                        },
-                      });
-                    }
-                  }}
-                >
-                  Delete
-                </Button>
-              </AlertDialog.Action>
-            </Flex>
-          </AlertDialog.Content>
-        </AlertDialog.Root>
       </div>
+
+      {/* Add Service Dialog */}
+      {addingProduct && (
+        <Dialog.Root
+          open={true}
+          onOpenChange={(open) => !open && setAddingProduct(false)}
+        >
+          <Dialog.Content maxWidth="600px">
+            <Dialog.Title>Add Service</Dialog.Title>
+            <Dialog.Description size="2" mb="2">
+              Fill in the service details below.
+            </Dialog.Description>
+
+            <AdminAddServices
+              onSuccess={() => {
+                setAddingProduct(false);
+                queryClient.invalidateQueries({ queryKey: ["services"] });
+              }}
+            />
+
+            <Flex justify="end" mt="4">
+              <Button
+                variant="soft"
+                color="gray"
+                onClick={() => setAddingProduct(false)}
+              >
+                Cancel
+              </Button>
+            </Flex>
+          </Dialog.Content>
+        </Dialog.Root>
+      )}
+
+      {/* Update Service Dialog */}
+      {editingService && (
+        <Dialog.Root
+          open={true}
+          onOpenChange={(open) => !open && setEditingService(null)}
+        >
+          <Dialog.Content maxWidth="600px">
+            <Dialog.Title>Update Service</Dialog.Title>
+            <Dialog.Description size="2" mb="2">
+              Edit service details below.
+            </Dialog.Description>
+
+            <ServiceEditForm
+              service={editingService}
+              onCancel={() => setEditingService(null)}
+              onSave={(updated) => updateService.mutate(updated)}
+              onDelete={() => setDeleteServiceId(editingService._id!)}
+            />
+          </Dialog.Content>
+        </Dialog.Root>
+      )}
+
+      {/* Delete Confirmation AlertDialog */}
+      <AlertDialog.Root
+        open={!!deleteServiceId}
+        onOpenChange={(open) => !open && setDeleteServiceId(null)}
+      >
+        <AlertDialog.Content maxWidth="400px">
+          <AlertDialog.Title>Delete Service</AlertDialog.Title>
+          <AlertDialog.Description size="2" mb="4">
+            Are you sure you want to delete this service?{" "}
+            <Text as="span" color="red" weight="medium">
+              It will be permanently deleted.
+            </Text>
+          </AlertDialog.Description>
+
+          <Flex justify="end" gap="2">
+            <AlertDialog.Cancel>
+              <Button
+                variant="soft"
+                color="gray"
+                onClick={() => setDeleteServiceId(null)}
+              >
+                Cancel
+              </Button>
+            </AlertDialog.Cancel>
+
+            <AlertDialog.Action>
+              <Button
+                color="red"
+                onClick={() => {
+                  if (deleteServiceId) {
+                    deleteService.mutate(deleteServiceId, {
+                      onSuccess: () => {
+                        setDeleteServiceId(null);
+                        queryClient.invalidateQueries({
+                          queryKey: ["services"],
+                        });
+                        toast.success("Service deleted successfully");
+                      },
+                      onError: (err: any) => {
+                        toast.error(
+                          err?.response?.data?.message ||
+                            "Failed to delete service"
+                        );
+                      },
+                    });
+                  }
+                }}
+              >
+                Delete
+              </Button>
+            </AlertDialog.Action>
+          </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </div>
   );
 };

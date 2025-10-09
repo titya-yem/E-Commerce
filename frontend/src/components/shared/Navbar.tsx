@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   return (
-    <Container className="bg-[#e3462c]">
+    <Container className="cursor-pointer bg-[#e3462c]">
       <Flex justify="between" align="center" className="py-4 px-4">
         {/* Logo */}
         <Box>

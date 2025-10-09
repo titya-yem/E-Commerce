@@ -44,7 +44,8 @@ const AdminAppointments = () => {
   const isMd = useMediaQuery("(min-width: 768px)");
   const isXl = useMediaQuery("(min-width: 1280px)");
 
-  if (isLoading) <Heading className="text-center py-10">Loading...</Heading>;
+  if (isLoading)
+    return <Heading className="text-center py-10">Loading...</Heading>;
   if (isError)
     return (
       <Heading className="text-center py-10">
