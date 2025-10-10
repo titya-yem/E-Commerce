@@ -24,7 +24,7 @@ import adminAnalyticsRoutes from "./routes/adminAnalytics.route";
 import webhookRoute from "./routes/webhook.route";
 
 const app = express();
-if (process.env.NPDE_ENV !== "test") connectDB();
+if (process.env.NODE_ENV !== "test") connectDB();
 
 // Webhook Routes
 app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoute);
@@ -57,3 +57,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+export default app;
