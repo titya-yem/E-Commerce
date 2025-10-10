@@ -24,7 +24,7 @@ import adminAnalyticsRoutes from "./routes/adminAnalytics.route";
 import webhookRoute from "./routes/webhook.route";
 
 const app = express();
-connectDB();
+if (process.env.NPDE_ENV !== "test") connectDB();
 
 // Webhook Routes
 app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoute);
