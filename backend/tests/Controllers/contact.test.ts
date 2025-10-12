@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "../../src/index";
-import { describe, it, expect, vi, beforeAll } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { Request, Response, NextFunction } from "express";
 
 // Use string for mockUserId to avoid ObjectId mismatch

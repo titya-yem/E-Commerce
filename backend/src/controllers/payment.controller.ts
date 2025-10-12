@@ -16,7 +16,7 @@ export const createCheckoutSession = async (req: CustomRequest, res: Response): 
   const { error } = checkoutValidation.validate(req.body, { abortEarly: false });
   
   console.log("Request body:", req.body);
-console.log("User:", req.user);
+  console.log("User:", req.user);
 
   if (error) {
     return res.status(400).json({ message: error.details.map((d) => d.message).join(", ") });
