@@ -5,6 +5,7 @@ import admin from "../middlewares/admin.middleware"
 
 const router = Router();
 
+// Public Route
 router.post("/create", createContact);
 
 // Admin route

@@ -47,6 +47,7 @@ describe("Appointment API", () => {
     expect(res.status).toBe(201); // Created successfully
     expect(res.body).toHaveProperty("_id"); // response contains _id
     expect(res.body.email).toBe("test@gmail.com"); // email matches
+    expect(res.body.type).toBe("Vacation")
 
     appointmentId = res.body._id; // store the ID for update/delete
   });
