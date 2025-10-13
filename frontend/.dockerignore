@@ -7,16 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node / Bun modules
 node_modules
+frontend/node_modules
+frontend/.bun
+
+# Build output
 dist
 dist-ssr
-*.local
+frontend/dist
 
-# ENV
-.env
+# Environment files (copy only during build)
 .local.env
 
-# Editor directories and files
+# Editor files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -27,11 +31,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# docker
-frontend/node_modules
-frontend/.bun
-frontend/dist
-frontend/.vscode
+# Tests and logs
 frontend/tests
 frontend/*.log
-
+*.local

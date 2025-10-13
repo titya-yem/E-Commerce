@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import type { CommentForms } from "@/types/commentTypes";
 
 const ProductDetailsComment = () => {
-  const { register, handleSubmit, reset, formState } = useForm<CommentForms>();
+const { register } = useForm<CommentForms>();
 
   return (
     <Dialog.Root>
