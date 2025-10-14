@@ -1,7 +1,7 @@
 import sittingDog from "@/assets/image/client-dog.png";
 import whiteDog from "@/assets/image/client-image.png";
-import leftArrow from "@/assets/svg/BackwardArrow.svg";
-import rightArrow from "@/assets/svg/ForwardArrow.svg";
+import leftArrow from "@/assets/svg/backwardArrow.svg";
+import rightArrow from "@/assets/svg/forwardArrow.svg";
 import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import type { Comment } from "../types/commentTypes";

@@ -1,11 +1,11 @@
 import birds from "@/assets/image/Category-birds.png";
-import leftArrow from "@/assets/svg/BackwardArrow.svg";
-import birdImage from "@/assets/svg/CircleBird.svg";
-import catImage from "@/assets/svg/CircleCat.svg";
-import dogImage from "@/assets/svg/CircleDog.svg";
-import fishImage from "@/assets/svg/CircleFish.svg";
-import rabbitImage from "@/assets/svg/CircleRabbit.svg";
-import rightArrow from "@/assets/svg/ForwardArrow.svg";
+import leftArrow from "@/assets/svg/backwardArrow.svg";
+import birdImage from "@/assets/svg/circleBird.svg";
+import catImage from "@/assets/svg/circleCat.svg";
+import dogImage from "@/assets/svg/circleDog.svg";
+import fishImage from "@/assets/svg/circleFish.svg";
+import rabbitImage from "@/assets/svg/circleRabbit.svg";
+import rightArrow from "@/assets/svg/forwardArrow.svg";
 import type { Product } from "@/types/productTypes";
 import { Box, Container, Heading } from "@radix-ui/themes";
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import star from "@/assets/svg/Star.svg";
+import star from "@/assets/svg/star.svg";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { AppDispatch } from "@/store/store";
 import type { categoryProps, Product } from "@/types/productTypes";

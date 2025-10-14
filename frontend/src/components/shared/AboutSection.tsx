@@ -1,5 +1,5 @@
 import aboutImage from "@/assets/image/About-image.png";
-import circle from "@/assets/svg/PositiveCircle.svg";
+import circle from "@/assets/svg/positiveCircle.svg";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import LinkButton from "./LinkButton";
 import { motion } from "framer-motion";

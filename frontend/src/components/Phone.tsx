@@ -1,4 +1,4 @@
-import phoneIcon from "@/assets/svg/Phone.svg";
+import phoneIcon from "@/assets/svg/phone.svg";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 

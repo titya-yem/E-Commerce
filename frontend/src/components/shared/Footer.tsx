@@ -1,8 +1,8 @@
 import logo from "@/assets/image/Logo.png";
-import addressIcon from "@/assets/svg/Address.svg";
-import emailIcon from "@/assets/svg/Email.svg";
+import addressIcon from "@/assets/svg/address.svg";
+import emailIcon from "@/assets/svg/email.svg";
 import phoneIcon from "@/assets/svg/footer-phone.svg";
-import line from "@/assets/svg/Line.svg";
+import line from "@/assets/svg/line.svg";
 import { NavbarLists } from "@/constants/Navbar";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
           </h1>
           <Flex gapX="4">
             <Box>
-              {NavbarLists.slice(0,4).map((list) => (
+              {NavbarLists.slice(0, 4).map((list) => (
                 <ul key={list.link}>
                   <li className="underline underline-offset-4 pb-3 hover:font-medium duration-200">
                     <Link to={list.link}>{list.label}</Link>
@@ -49,8 +49,8 @@ const Footer: React.FC = () => {
                 </ul>
               ))}
             </Box>
-            <Box>  
-              {NavbarLists.slice(4,8).map((list) => (
+            <Box>
+              {NavbarLists.slice(4, 8).map((list) => (
                 <ul key={list.link}>
                   <li className="underline underline-offset-4 pb-3 hover:font-medium duration-200">
                     <Link to={list.link}>{list.label}</Link>
@@ -76,7 +76,10 @@ const Footer: React.FC = () => {
             <div className="flex items-center justify-center gap-x-4">
               <img src={emailIcon} alt="Contact us via our Email" />
               <Text as="p">
-                <a href="mailto:thitya.yem.photo@gmail.com" className="underline">
+                <a
+                  href="mailto:thitya.yem.photo@gmail.com"
+                  className="underline"
+                >
                   thitya.yem.photo@gmail.com
                 </a>
               </Text>
@@ -88,9 +91,12 @@ const Footer: React.FC = () => {
           </Box>
         </Box>
       </div>
-      
+
       <img src={line} alt="footer-line" className="mt-8 mb-6" />
-      <Text as="p" className="text-sm text-center md:text-start md:pl-3 text-amber-50">
+      <Text
+        as="p"
+        className="text-sm text-center md:text-start md:pl-3 text-amber-50"
+      >
         Copyright by Pet Shop. (Titya Yem)
       </Text>
       <ScrollToTop />

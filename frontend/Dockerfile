@@ -1,29 +1,23 @@
-# Stage 1: Build with Node
-FROM node:20 AS build
+# Use Bun for everything (install, build, serve)
+FROM oven/bun:1
+
+# Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy dependency files first for caching
 COPY package.json bun.lock ./
-RUN npm install
 
-# Copy source files and environment
-COPY .env ./
+# Install dependencies
+RUN bun install --frozen-lockfile
+
+# Copy all source files
 COPY . .
 
-# Fix all SVG folder names and filenames to lowercase
-RUN find src/assets/svg -depth -type d -exec bash -c 'd="$1"; mv "$d" "$(dirname "$d")/$(basename "$d" | tr "[:upper:]" "[:lower:]")"' _ {} \;
-RUN find src/assets/svg -type f -name "*.svg" -exec bash -c 'f="$1"; mv "$f" "$(dirname "$f")/$(basename "$f" | tr "[:upper:]" "[:lower:]")"' _ {} \;
+# Build your Vite app
+RUN bun run build
 
-# Build Vite app
-RUN npm run build
-
-# Stage 2: Serve with Bun
-FROM oven/bun:1 AS runtime
-WORKDIR /app
-
-# Copy built files
-COPY --from=build /app/dist /app/dist
-
+# Expose the Vite preview port
 EXPOSE 4173
 
+# Serve built app
 CMD ["bun", "run", "preview", "--port", "4173", "--host"]
