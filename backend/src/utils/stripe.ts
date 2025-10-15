@@ -5,7 +5,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2025-07-30.basil",
+  apiVersion: "2025-09-30.clover" as unknown as Stripe.LatestApiVersion,
 });
 
 console.log("Stripe secret key loaded successfully");

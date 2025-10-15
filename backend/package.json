@@ -22,7 +22,7 @@
     "mongodb": "^6.18.0",
     "mongoose": "^8.16.5",
     "morgan": "^1.10.1",
-    "stripe": "^18.4.0"
+    "stripe": "^19.1.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
