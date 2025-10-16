@@ -1,10 +1,10 @@
-import bearing from "@/assets/svg/products/bearing.svg";
-import Kiki from "@/assets/svg/products/kiki.svg";
+import bearing from "@/assets/svg/products/Bearing.svg";
+import Kiki from "@/assets/svg/products/Kiki.svg";
 import Lara from "@/assets/svg/products/lara.svg";
 import meO from "@/assets/svg/products/me-o.svg";
-import moderna from "@/assets/svg/products/moderna.svg";
+import moderna from "@/assets/svg/products/Moderna.svg";
 import smartHeart from "@/assets/svg/products/smart-heart.svg";
-import whiskas from "@/assets/svg/products/whiskas.svg";
+import whiskas from "@/assets/svg/products/Whiskas.svg";
 import { Box, Container, Flex } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 

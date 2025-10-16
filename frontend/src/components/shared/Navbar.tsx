@@ -1,5 +1,5 @@
 import logo from "@/assets/image/Logo.png";
-import ShoppingBag from "@/assets/svg/shoppingBag.svg";
+import ShoppingBag from "@/assets/svg/ShoppingBag.svg";
 import { Box, Container, Flex } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";

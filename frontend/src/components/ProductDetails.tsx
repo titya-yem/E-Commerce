@@ -1,4 +1,4 @@
-import star from "@/assets/svg/star.svg";
+import star from "@/assets/svg/Star.svg";
 import { addToCart } from "@/store/slices/Cart-Slice";
 import type { Product } from "@/types/productTypes";
 import { Box, Container, Text } from "@radix-ui/themes";

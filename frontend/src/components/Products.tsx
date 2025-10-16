@@ -1,4 +1,4 @@
-import star from "@/assets/svg/star.svg";
+import star from "@/assets/svg/Star.svg";
 import { Button } from "@/components/ui/button";
 import { useFetch } from "@/hooks/useFetch";
 import { addToCart } from "@/store/slices/Cart-Slice";

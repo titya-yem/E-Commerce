@@ -1,8 +1,8 @@
 import logo from "@/assets/image/Logo.png";
-import addressIcon from "@/assets/svg/address.svg";
-import emailIcon from "@/assets/svg/email.svg";
+import addressIcon from "@/assets/svg/Address.svg";
+import emailIcon from "@/assets/svg/Email.svg";
 import phoneIcon from "@/assets/svg/footer-phone.svg";
-import line from "@/assets/svg/line.svg";
+import line from "@/assets/svg/Line.svg";
 import { NavbarLists } from "@/constants/Navbar";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { Link } from "react-router-dom";

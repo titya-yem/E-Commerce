@@ -1,4 +1,4 @@
-import toggle from "@/assets/svg/toggle.svg";
+import toggle from "@/assets/svg/Toggle.svg";
 import downArrow from "@/assets/svg/DashBoard/downArrow.svg";
 import upArrow from "@/assets/svg/DashBoard/upArrow.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { Button, Callout, Dialog, Flex, Table, Text } from "@radix-ui/themes";
 import type { Order } from "@/types/orderTypes";
-import InforCircle from "@/assets/svg/DashBoard/inforCircle.svg";
+import InforCircle from "@/assets/svg/DashBoard/InforCircle.svg";
 
 interface UserOrderDetailsProps {
   order: Order;
