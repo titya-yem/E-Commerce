@@ -32,6 +32,12 @@ const MobileNavbar: React.FC = () => {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signout`, {
         withCredentials: true,
       });
+
+      // remove everything from Local Storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("expire");
+
       dispatch(logout());
     } catch (error) {
       console.error("Logout failed:", error);

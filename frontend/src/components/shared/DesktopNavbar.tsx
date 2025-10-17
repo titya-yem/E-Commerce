@@ -27,6 +27,12 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signout`, {
         withCredentials: true,
       });
+
+      // remove everything from Local Storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("expire");
+
       dispatch(logout());
     } catch (error) {
       console.error("Logout failed:", error);
@@ -34,11 +40,10 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
   };
 
   const mainNavItems = NavbarLists.slice(0, 3);
-  const extraNavItems = NavbarLists.filter((item) =>
-    item.label === "Dashboard"
-      ? isAuthenticated
-      : ["Appointment", "Contact"].includes(item.label)
-  );
+  const extraNavItems = NavbarLists.filter((item) => {
+    if (item.label === "Dashboard") return isAuthenticated;
+    return ["Appointment", "Contact"].includes(item.label);
+  });
   const authItems = NavbarLists.filter((item) =>
     ["Sign In", "Sign Up"].includes(item.label)
   );

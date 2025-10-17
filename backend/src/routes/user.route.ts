@@ -10,8 +10,10 @@ import admin from "../middlewares/admin.middleware";
 
 const router = Router()
 
-// user routes & public routes
+// public route
 router.post("/signup", createUser);
+
+// user routes & public routes
 router.put("/:id", auth, updateUser);
 router.delete("/:id", auth, deleteUser);
 
