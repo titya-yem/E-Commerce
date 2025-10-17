@@ -10,7 +10,9 @@ export const useFetch = <T>({ url, queryKey }: FetchParams): UseQueryResult<T> =
     return useQuery<T>({
     queryKey: queryKey,
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/${url}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/${url}`,{
+        withCredentials: true
+      });
       return res.data;
     },
   });
