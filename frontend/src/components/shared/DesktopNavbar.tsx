@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // add useNavigate
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,8 +19,11 @@ interface DesktopNavbarProps {
 }
 
 const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // added
 
   const handleSignOut = async () => {
     try {
@@ -28,7 +31,6 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
         withCredentials: true,
       });
 
-      // remove everything from Local Storage
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       localStorage.removeItem("expire");
@@ -49,6 +51,13 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
   );
 
   const isActiveLink = (link: string) => location.pathname === link;
+
+  // New function to handle dashboard click dynamically
+  const handleDashboardClick = () => {
+    if (!user) return;
+    const path = user.role === "admin" ? "/admin/dashboard" : "/user/dashboard";
+    navigate(path);
+  };
 
   return (
     <>
@@ -76,16 +85,30 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ location }) => {
               <ul className="grid w-[240px] gap-2 p-4 shadow-md rounded-md">
                 {extraNavItems.map((item) => (
                   <li key={item.link}>
-                    <NavigationMenuLink asChild>
-                      <Link to={item.link} className="block p-2 rounded-md">
-                        <div className="font-medium">{item.label}</div>
+                    {item.label === "Dashboard" ? (
+                      <button
+                        onClick={handleDashboardClick}
+                        className="block w-full text-left text-sm p-2 rounded-md font-medium cursor-pointer hover:bg-gray-100"
+                      >
+                        {item.label}
                         {item.description && (
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-sm font-light text-gray-500">
                             {item.description}
                           </div>
                         )}
-                      </Link>
-                    </NavigationMenuLink>
+                      </button>
+                    ) : (
+                      <NavigationMenuLink asChild>
+                        <Link to={item.link} className="block p-2 rounded-md">
+                          <div className="font-medium">{item.label}</div>
+                          {item.description && (
+                            <div className="text-sm text-muted-foreground">
+                              {item.description}
+                            </div>
+                          )}
+                        </Link>
+                      </NavigationMenuLink>
+                    )}
                   </li>
                 ))}
 
